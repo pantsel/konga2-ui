@@ -11,6 +11,8 @@ export class BootService {
 
   async init(): Promise<any> {
 
+    console.log('[BootService]:init');
+
     const csrfToken = await this.http.get(`${environment.apiPrefix}/security/csrfToken`).toPromise();
     const me = await this.http.get(`${environment.apiPrefix}/auth/me`).toPromise();
 
