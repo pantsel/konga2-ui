@@ -8,10 +8,12 @@ import { environment } from '../../../environments/environment';
 export class BootService {
   constructor(private http: HttpClient) {}
 
-  init(): Promise<any> {
-    return this.http
-      .get(`${environment.apiUrl}/security/csrfToken`)
-      .toPromise();
+  async init(): Promise<any> {
+
+    const csrfToken = await this.http.get(`${environment.apiUrl}/security/csrfToken`).toPromise();
+    const me = await this.http.get(`${environment.apiUrl}/api/v1/auth/me`).toPromise();
+
+    return csrfToken;
   }
 
   getUrlParam(name) {
