@@ -6,7 +6,7 @@ export const environment = {
   production: true,
   test: false,
   i18nPrefix: '/angular-ngrx-material-starter',
-  apiUrl: 'http://localhost:1337',
+  apiUrl: '',
   apiPrefix: '/api/v1',
   versions: {
     app: packageJson.version,

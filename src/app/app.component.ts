@@ -77,6 +77,7 @@ export class AppComponent implements OnInit {
     this.language$ = this.store.pipe(select(selectSettingsLanguage));
     this.theme$ = this.store.pipe(select(selectEffectiveTheme));
 
+    // Act on auth events
     this.isAuthenticated$.subscribe(data => {
       console.log('[DEBUG] [AppComponent] Authenticated state changed =>', data)
       const path = data ? ['about'] : ['login'];

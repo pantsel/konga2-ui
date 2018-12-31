@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   test: true,
   i18nPrefix: '',
-  apiUrl: 'http://localhost:1337',
+  apiUrl: '',
   apiPrefix: '/api/v1',
   versions: {
     app: packageJson.version,

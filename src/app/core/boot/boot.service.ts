@@ -11,8 +11,8 @@ export class BootService {
 
   async init(): Promise<any> {
 
-    const csrfToken = await this.http.get(`${environment.apiUrl}/security/csrfToken`).toPromise();
-    const me = await this.http.get(`${environment.apiUrl}/api/v1/auth/me`).toPromise();
+    const csrfToken = await this.http.get(`${environment.apiPrefix}/security/csrfToken`).toPromise();
+    const me = await this.http.get(`${environment.apiPrefix}/auth/me`).toPromise();
 
     return _.merge(csrfToken, {
       me: me
