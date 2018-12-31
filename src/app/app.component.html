@@ -39,10 +39,6 @@
             </button>
           </span>
 
-          <button mat-button mat-stroked-button color="accent" *ngIf="!(isAuthenticated$ | async)" (click)="onLoginClick()">
-            {{ 'konga.menu.login' | translate }}
-          </button>
-
           <button *ngIf="(isAuthenticated$ | async)"
                   mat-icon-button
                   [matMenuTriggerFor]="toolbarUserMenu">

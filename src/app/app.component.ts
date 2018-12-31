@@ -9,7 +9,7 @@ import {
   routeAnimations,
   AppState,
   LocalStorageService,
-  selectIsAuthenticated
+  selectIsAuthenticated, startingPage, loginPage
 } from '@app/core';
 import { environment as env } from '@env/environment';
 
@@ -80,16 +80,13 @@ export class AppComponent implements OnInit {
     // Act on auth events
     this.isAuthenticated$.subscribe(data => {
       console.log('[DEBUG] [AppComponent] Authenticated state changed =>', data)
-      const path = data ? ['about'] : ['login'];
+      const path = data ? [startingPage] : [loginPage];
       setTimeout(() => {
         this.router.navigate(path);
       })
     })
   }
 
-  onLoginClick() {
-    this.store.dispatch(new ActionAuthLogin({}));
-  }
 
   onLogoutClick() {
     this.auth.logout();

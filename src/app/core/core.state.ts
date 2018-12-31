@@ -42,3 +42,6 @@ export interface AppState {
   auth: AuthState;
   router: RouterReducerState<RouterStateUrl>;
 }
+
+export const startingPage = 'about';
+export const loginPage = 'login';
