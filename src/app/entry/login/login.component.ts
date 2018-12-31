@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '@app/core/api/api.service';
-import { Store } from '@ngrx/store';
-import { ActionAuthLogin, AppState } from '@app/core';
+import {select, Store} from '@ngrx/store';
+import {ActionAuthLogin, AppState, selectIsAuthenticated} from '@app/core';
 import { Router } from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
+import {Observable} from 'rxjs';
+import {AuthService} from '@app/core/auth/auth.service';
 
 @Component({
   selector: 'anms-login',
@@ -21,8 +23,10 @@ export class LoginComponent implements OnInit {
     public translate: TranslateService,
     private router: Router,
     private store: Store<AppState>,
+    private auth: AuthService,
     public api: ApiService
   ) {}
+
 
   ngOnInit() {
     this.form = this.fb.group({
@@ -34,32 +38,29 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  signIn(credentials) {
+  async signIn(credentials) {
     this.errorMsg = '';
 
     console.log('SIGNING IN =>', credentials);
 
     this.submitting = true;
 
-    this.api.post(`auth/login`, credentials).subscribe(
-      response => {
-        console.log('LOGIN SUCCESS', response);
-        this.store.dispatch(new ActionAuthLogin(response));
-        this.submitting = false;
-        this.router.navigate(['/about']);
-      },
-      error => {
-        console.error('LOGIN FAILED', error);
-        this.submitting = false;
-        switch (error.status) {
-          case 401:
-            this.errorMsg = this.translate.instant('errors.login.unauthorized');
-            break;
-          default:
-            this.errorMsg = error.statusText;
+    try {
+      const loggedInUser = await this.auth.login(credentials);
+      console.log('LOGIN SUCCESS', loggedInUser);
+      this.submitting = false;
+    } catch (error) {
+      console.error('LOGIN FAILED', error);
+      switch (error.status) {
+        case 401:
+          this.errorMsg = this.translate.instant('errors.login.unauthorized');
+          break;
+        default:
+          this.errorMsg = error.statusText;
 
-        }
       }
-    );
+    }
+
+    this.submitting = false;
   }
 }

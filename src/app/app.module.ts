@@ -11,6 +11,7 @@ import { StaticModule } from './static';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { EntryModule } from '@app/entry/entry.module';
+import {AuthService} from '@app/core/auth/auth.service';
 
 @NgModule({
   imports: [
@@ -31,7 +32,7 @@ import { EntryModule } from '@app/entry/entry.module';
     AppRoutingModule
   ],
   declarations: [AppComponent],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { StoreModule } from '@ngrx/store';
+import {Store, StoreModule} from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
@@ -25,14 +25,17 @@ import { AuthEffects } from './auth/auth.effects';
 import { AuthGuardService } from './auth/auth-guard.service';
 import { AnimationsService } from './animations/animations.service';
 import { TitleService } from './title/title.service';
-import { reducers, metaReducers } from './core.state';
+import {reducers, metaReducers, AppState} from './core.state';
 import { AppErrorHandler } from './error-handler/app-error-handler.service';
 import { CustomSerializer } from './router/custom-serializer';
 import { NotificationService } from './notifications/notification.service';
 import { ApiService } from '@app/core/api/api.service';
 import { BootService } from '@app/core/boot/boot.service';
+import * as _ from 'lodash';
+import {ActionAuthLogin} from '@app/core/auth/auth.actions';
+import {AuthService} from '@app/core/auth/auth.service';
 
-export const loadConfig = (bootProvider: BootService) => {
+export const loadConfig = (bootProvider: BootService, store: Store<AppState>) => {
   return (): Promise<any> => {
     return new Promise((resolve, reject) => {
       bootProvider
@@ -40,6 +43,14 @@ export const loadConfig = (bootProvider: BootService) => {
         .then(result => {
           console.log('bootProvider.load():result', result);
           window['_csrf'] = result._csrf;
+
+          // Check if the user is already logged in
+          if (_.get(result, 'me.id')) {
+            console.log('User logged in!', result.me);
+            store.dispatch(new ActionAuthLogin(result.me));
+          }
+
+
           // document.body.classList.remove('is-loading'); // Hide loader
           // document.body.classList.add('loaded'); // Hide loader
           resolve(result);
@@ -95,7 +106,7 @@ export const loadConfig = (bootProvider: BootService) => {
     {
       provide: APP_INITIALIZER,
       useFactory: loadConfig,
-      deps: [BootService],
+      deps: [BootService, Store],
       multi: true
     }
   ],
