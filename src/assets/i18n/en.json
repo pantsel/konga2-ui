@@ -61,5 +61,10 @@
   "konga.settings.title": "Settings",
   "konga.title.long": "Konga 2",
   "konga.title.short": "Konga 2",
-  "konga.entry.login.signin": "Sign in"
+  "konga.entry.login.signin": "Sign in",
+
+  "errors.validation.required": "The field is required",
+  "errors.validation.email": "Invalid email",
+  "errors.login.unauthorized": "Invalid email and/or password",
+  "input.label.password": "Password"
 }

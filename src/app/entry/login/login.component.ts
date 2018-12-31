@@ -4,6 +4,7 @@ import { ApiService } from '@app/core/api/api.service';
 import { Store } from '@ngrx/store';
 import { ActionAuthLogin, AppState } from '@app/core';
 import { Router } from '@angular/router';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'anms-login',
@@ -17,6 +18,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     public fb: FormBuilder,
+    public translate: TranslateService,
     private router: Router,
     private store: Store<AppState>,
     public api: ApiService
@@ -49,6 +51,14 @@ export class LoginComponent implements OnInit {
       error => {
         console.error('LOGIN FAILED', error);
         this.submitting = false;
+        switch (error.status) {
+          case 401:
+            this.errorMsg = this.translate.instant('errors.login.unauthorized');
+            break;
+          default:
+            this.errorMsg = error.statusText;
+
+        }
       }
     );
   }

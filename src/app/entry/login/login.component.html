@@ -1,6 +1,11 @@
-<div class="container">
+<div class="container mt-4 pt-4">
   <mat-card class="login-card mt-4 ml-auto mr-auto" style="max-width: 420px">
     <mat-card-content>
+
+      <div class="text-center mb-4">
+        <img src="logo.png">
+      </div>
+
       <form (submit)="signIn(form.value)" [formGroup]="form" *ngIf="form" class="sign-up-form mt-4">
         <div class="alert alert-danger" *ngIf="errorMsg">
           {{errorMsg}}
@@ -11,26 +16,26 @@
           <input matInput formControlName="emailAddress" placeholder="">
           <mat-icon matPrefix>email</mat-icon>
           <mat-error *ngIf="form.controls['emailAddress'].hasError('required')">
-            {{'FIELD_REQUIRED' | translate}}
+            {{'errors.validation.required' | translate}}
           </mat-error>
           <mat-error *ngIf="form.controls['emailAddress'].hasError('email')">
-            {{'VALIDATION_EMAIL' | translate}}
+            {{'errors.validation.email' | translate}}
           </mat-error>
         </mat-form-field>
 
         <!-- PASSWORD -->
         <mat-form-field appearance="outline" class="w-100">
-          <mat-label>{{'PASSWORD' | translate}} <span class="text-danger">*</span></mat-label>
+          <mat-label>{{'input.label.password' | translate}} <span class="text-danger">*</span></mat-label>
           <input matInput formControlName="password" placeholder="" type="password">
           <mat-icon matPrefix>lock</mat-icon>
           <mat-error *ngIf="form.controls['password'].hasError('required')">
-            {{'FIELD_REQUIRED' | translate}}
+            {{'errors.validation.required' | translate}}
           </mat-error>
         </mat-form-field>
 
         <button mat-flat-button color="primary"
                 style="width: 100%"
-                class="btn-large" [disabled]="!form.valid || submitting">
+                class="btn-large mt-2 text-center" [disabled]="!form.valid || submitting">
           <mat-progress-spinner mode="indeterminate"
                                 *ngIf="submitting"
                                 color="primary" diameter="36" class="float-left">
