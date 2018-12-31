@@ -4,7 +4,8 @@ import { ActionAuthLogin, ActionAuthLogout } from './auth.actions';
 
 describe('AuthReducer', () => {
   const TEST_INITIAL_STATE: AuthState = {
-    isAuthenticated: false
+    isAuthenticated: false,
+    user: {}
   };
 
   it('should return default state', () => {
@@ -15,7 +16,7 @@ describe('AuthReducer', () => {
   });
 
   it('should set authentication to true on login', () => {
-    const action = new ActionAuthLogin();
+    const action = new ActionAuthLogin({});
     const state = authReducer(TEST_INITIAL_STATE, action);
 
     expect(state.isAuthenticated).toBe(true);

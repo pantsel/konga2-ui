@@ -14,6 +14,10 @@ import { AuthState } from './auth/auth.models';
 import { authReducer } from './auth/auth.reducer';
 import { RouterStateUrl } from './router/router.state';
 
+export const startingPage = 'about';
+
+export const loginPage = 'login';
+
 export const reducers: ActionReducerMap<AppState> = {
   auth: authReducer,
   router: routerReducer
@@ -42,6 +46,3 @@ export interface AppState {
   auth: AuthState;
   router: RouterReducerState<RouterStateUrl>;
 }
-
-export const startingPage = 'about';
-export const loginPage = 'login';

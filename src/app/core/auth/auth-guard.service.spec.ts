@@ -11,7 +11,10 @@ describe('AuthGuardService', () => {
   let state: AppState;
 
   const authState: AuthState = {
-    isAuthenticated: true
+    isAuthenticated: true,
+    user: {
+      id: 'test'
+    }
   };
 
   beforeEach(() => {

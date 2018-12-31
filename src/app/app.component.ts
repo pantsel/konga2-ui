@@ -4,8 +4,6 @@ import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import {
-  ActionAuthLogin,
-  ActionAuthLogout,
   routeAnimations,
   AppState,
   LocalStorageService,
@@ -37,9 +35,9 @@ export class AppComponent implements OnInit {
   logo = require('../assets/logo.png');
   languages = ['en'];
   navigation = [
-    { link: 'about', label: 'konga.menu.about' },
-    { link: 'features', label: 'konga.menu.features' },
-    { link: 'examples', label: 'konga.menu.examples' }
+    // { link: 'about', label: 'konga.menu.about' },
+    // { link: 'features', label: 'konga.menu.features' },
+    // { link: 'examples', label: 'konga.menu.examples' }
   ];
   navigationSideMenu = [
     ...this.navigation,
