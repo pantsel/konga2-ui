@@ -11,7 +11,7 @@ import { State as BaseExamplesState } from '../examples.state';
 interface State extends BaseSettingsState, BaseExamplesState {}
 
 @Component({
-  selector: 'anms-examples',
+  selector: 'konga-examples',
   templateUrl: './examples.component.html',
   styleUrls: ['./examples.component.scss'],
   animations: [routeAnimations],
@@ -21,13 +21,13 @@ export class ExamplesComponent implements OnInit {
   isAuthenticated$: Observable<boolean>;
 
   examples = [
-    { link: 'todos', label: 'anms.examples.menu.todos' },
-    { link: 'stock-market', label: 'anms.examples.menu.stocks' },
-    { link: 'theming', label: 'anms.examples.menu.theming' },
-    { link: 'crud', label: 'anms.examples.menu.crud' },
-    { link: 'form', label: 'anms.examples.menu.form' },
-    { link: 'notifications', label: 'anms.examples.menu.notifications' },
-    { link: 'authenticated', label: 'anms.examples.menu.auth', auth: true }
+    { link: 'todos', label: 'konga.examples.menu.todos' },
+    { link: 'stock-market', label: 'konga.examples.menu.stocks' },
+    { link: 'theming', label: 'konga.examples.menu.theming' },
+    { link: 'crud', label: 'konga.examples.menu.crud' },
+    { link: 'form', label: 'konga.examples.menu.form' },
+    { link: 'notifications', label: 'konga.examples.menu.notifications' },
+    { link: 'authenticated', label: 'konga.examples.menu.auth', auth: true }
   ];
 
   constructor(private store: Store<State>) {}

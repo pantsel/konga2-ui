@@ -22,7 +22,7 @@ import {
 } from './settings';
 
 @Component({
-  selector: 'anms-root',
+  selector: 'konga-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   animations: [routeAnimations]
@@ -33,15 +33,15 @@ export class AppComponent implements OnInit {
   version = env.versions.app;
   year = new Date().getFullYear();
   logo = require('../assets/logo.png');
-  languages = ['en', 'de', 'sk', 'fr', 'es', 'pt-br', 'zh-cn'];
+  languages = ['en'];
   navigation = [
-    { link: 'about', label: 'anms.menu.about' },
-    { link: 'features', label: 'anms.menu.features' },
-    { link: 'examples', label: 'anms.menu.examples' }
+    { link: 'about', label: 'konga.menu.about' },
+    { link: 'features', label: 'konga.menu.features' },
+    { link: 'examples', label: 'konga.menu.examples' }
   ];
   navigationSideMenu = [
     ...this.navigation,
-    { link: 'settings', label: 'anms.menu.settings' }
+    { link: 'settings', label: 'konga.menu.settings' }
   ];
 
   isAuthenticated$: Observable<boolean>;
@@ -75,7 +75,7 @@ export class AppComponent implements OnInit {
   }
 
   onLoginClick() {
-    this.store.dispatch(new ActionAuthLogin());
+    this.store.dispatch(new ActionAuthLogin({}));
   }
 
   onLogoutClick() {

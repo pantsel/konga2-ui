@@ -21,7 +21,18 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatDividerModule } from '@angular/material/divider';
-import { MatSliderModule } from '@angular/material/';
+import {
+  MatAutocompleteModule,
+  MatBadgeModule,
+  MatButtonToggleModule,
+  MatDialogModule,
+  MatFormFieldModule,
+  MatGridListModule,
+  MatRadioModule,
+  MatSliderModule,
+  MatStepperModule,
+  MatTableModule
+} from '@angular/material/';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material';
 
@@ -93,31 +104,43 @@ library.add(
 
 import { BigInputComponent } from './big-input/big-input.component';
 import { BigInputActionComponent } from './big-input/big-input-action.component';
+import { LayoutModule } from '@angular/cdk/layout';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
 
     TranslateModule,
 
-    MatButtonModule,
-    MatToolbarModule,
     MatSelectModule,
-    MatTabsModule,
-    MatInputModule,
-    MatProgressSpinnerModule,
-    MatChipsModule,
-    MatCardModule,
-    MatSidenavModule,
+    MatFormFieldModule,
+    FormsModule,
+    MatButtonModule,
     MatCheckboxModule,
-    MatListModule,
     MatMenuModule,
     MatIconModule,
+    MatToolbarModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatInputModule,
+    MatRadioModule,
+    MatGridListModule,
+    MatProgressSpinnerModule,
+    MatTableModule,
+    MatCardModule,
+    MatChipsModule,
+    MatBadgeModule,
+    MatListModule,
+    MatDialogModule,
     MatTooltipModule,
     MatSnackBarModule,
-    MatSlideToggleModule,
-    MatDividerModule,
+    LayoutModule,
+    MatAutocompleteModule,
+    MatButtonToggleModule,
+    MatTabsModule,
+    MatStepperModule,
 
     FontAwesomeModule
   ],

@@ -3,17 +3,19 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AboutComponent } from './about/about.component';
 import { FeaturesComponent } from './features/features.component';
+import { AuthGuardService } from '@app/core';
 
 const routes: Routes = [
   {
     path: 'about',
     component: AboutComponent,
-    data: { title: 'anms.menu.about' }
+    canActivate: [AuthGuardService],
+    data: { title: 'konga.menu.about' }
   },
   {
     path: 'features',
     component: FeaturesComponent,
-    data: { title: 'anms.menu.features' }
+    data: { title: 'konga.menu.features' }
   }
 ];
 

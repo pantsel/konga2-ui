@@ -1,4 +1,10 @@
-import { NgModule, Optional, SkipSelf, ErrorHandler } from '@angular/core';
+import {
+  NgModule,
+  Optional,
+  SkipSelf,
+  ErrorHandler,
+  APP_INITIALIZER
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
@@ -23,7 +29,32 @@ import { reducers, metaReducers } from './core.state';
 import { AppErrorHandler } from './error-handler/app-error-handler.service';
 import { CustomSerializer } from './router/custom-serializer';
 import { NotificationService } from './notifications/notification.service';
-import { GoogleAnalyticsEffects } from './google-analytics/google-analytics.effects';
+import { ApiService } from '@app/core/api/api.service';
+import { BootService } from '@app/core/boot/boot.service';
+
+export const loadConfig = (bootProvider: BootService) => {
+  return (): Promise<any> => {
+    return new Promise((resolve, reject) => {
+      bootProvider
+        .init()
+        .then(result => {
+          console.log('bootProvider.load():result', result);
+          window['_csrf'] = result._csrf;
+          // document.body.classList.remove('is-loading'); // Hide loader
+          // document.body.classList.add('loaded'); // Hide loader
+          resolve(result);
+        })
+        .catch(error => {
+          console.error('bootProvider.load():error', error);
+          // ToDo: Redirect to error page
+          alert(
+            `${error.error}. Maybe the connection to the server was refused.`
+          );
+          reject(error);
+        });
+    });
+  };
+};
 
 @NgModule({
   imports: [
@@ -34,7 +65,7 @@ import { GoogleAnalyticsEffects } from './google-analytics/google-analytics.effe
     // ngrx
     StoreModule.forRoot(reducers, { metaReducers }),
     StoreRouterConnectingModule.forRoot(),
-    EffectsModule.forRoot([AuthEffects, GoogleAnalyticsEffects]),
+    EffectsModule.forRoot([AuthEffects]),
     environment.production
       ? []
       : StoreDevtoolsModule.instrument({
@@ -57,9 +88,16 @@ import { GoogleAnalyticsEffects } from './google-analytics/google-analytics.effe
     AuthGuardService,
     AnimationsService,
     httpInterceptorProviders,
+    ApiService,
     TitleService,
     { provide: ErrorHandler, useClass: AppErrorHandler },
-    { provide: RouterStateSerializer, useClass: CustomSerializer }
+    { provide: RouterStateSerializer, useClass: CustomSerializer },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: loadConfig,
+      deps: [BootService],
+      multi: true
+    }
   ],
   exports: [TranslateModule]
 })

@@ -2,6 +2,7 @@
 
 @import '../node_modules/bootstrap/scss/bootstrap-reboot';
 @import '../node_modules/bootstrap/scss/bootstrap-grid';
+@import '../node_modules/bootstrap/scss/utilities';
 @import 'styles-reset';
 
 @import '../node_modules/@angular/material/theming';
@@ -25,16 +26,16 @@
 @import 'app/examples/examples/examples.component.scss-theme';
 
 @mixin custom-components-theme($theme) {
-  @include anms-styles-reset-theme($theme);
-  @include anms-app-component-theme($theme);
-  @include anms-about-component-theme($theme);
-  @include anms-big-input-component-theme($theme);
-  @include anms-notifications-component-theme($theme);
-  @include anms-todos-container-component-theme($theme);
-  @include anms-stock-market-container-component-theme($theme);
-  @include anms-parent-component-theme($theme);
-  @include anms-child-component-theme($theme);
-  @include anms-examples-component-theme($theme);
+  @include konga-styles-reset-theme($theme);
+  @include konga-app-component-theme($theme);
+  @include konga-about-component-theme($theme);
+  @include konga-big-input-component-theme($theme);
+  @include konga-notifications-component-theme($theme);
+  @include konga-todos-container-component-theme($theme);
+  @include konga-stock-market-container-component-theme($theme);
+  @include konga-parent-component-theme($theme);
+  @include konga-child-component-theme($theme);
+  @include konga-examples-component-theme($theme);
 }
 
 .default-theme {
@@ -55,4 +56,9 @@
 .nature-theme {
   @include angular-material-theme($anms-nature-theme);
   @include custom-components-theme($anms-nature-theme);
+}
+
+.btn-large {
+  height: 56px;
+  font-size: 1em;
 }

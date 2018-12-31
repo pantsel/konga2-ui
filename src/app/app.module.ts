@@ -10,6 +10,7 @@ import { StaticModule } from './static';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { EntryModule } from '@app/entry/entry.module';
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import { AppComponent } from './app.component';
     // features
     StaticModule,
     SettingsModule,
+    EntryModule,
 
     // app
     AppRoutingModule

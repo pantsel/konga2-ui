@@ -1,11 +1,13 @@
 const packageJson = require('../../package.json');
 
 export const environment = {
-  appName: 'Angular Ngrx Material Starter',
+  appName: 'Konga',
   envName: 'PROD',
   production: true,
   test: false,
   i18nPrefix: '/angular-ngrx-material-starter',
+  apiUrl: 'http://localhost:1337',
+  apiPrefix: '/api/v1',
   versions: {
     app: packageJson.version,
     angular: packageJson.dependencies['@angular/core'],
