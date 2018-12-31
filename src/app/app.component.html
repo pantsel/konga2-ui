@@ -40,31 +40,39 @@
           </span>
 
           <button *ngIf="(isAuthenticated$ | async)"
-                  mat-icon-button
+                  mat-button
                   [matMenuTriggerFor]="toolbarUserMenu">
-            <fa-icon icon="user-circle"></fa-icon>
+            <mat-icon class="mr-2">account_circle</mat-icon>
+            Hello, {{authUser.fullName.split(' ')[0]}}
           </button>
           <mat-menu #toolbarUserMenu="matMenu">
-            <button mat-menu-item (click)="onLogoutClick()">
-              <mat-icon>power_settings_new</mat-icon>
-              <span>{{ 'konga.menu.logout' | translate }}</span>
-            </button>
+            <mat-list class="mt-0 pt-0">
+              <mat-list-item>
+                <h4 mat-line>{{authUser.fullName}}</h4>
+                <p mat-line> {{authUser.emailAddress}} </p>
+              </mat-list-item>
+            </mat-list>
+            <mat-divider></mat-divider>
             <button mat-menu-item routerLink="settings">
               <mat-icon>settings</mat-icon>
               <span>{{ 'konga.menu.settings' | translate }}</span>
+            </button>
+            <button mat-menu-item (click)="onLogoutClick()">
+              <mat-icon>power_settings_new</mat-icon>
+              <span>{{ 'konga.menu.logout' | translate }}</span>
             </button>
           </mat-menu>
 
 
 
 
-          <span *ngIf="language$ | async as language">
-            <mat-select [ngModel]="language" (selectionChange)="onLanguageSelect($event)">
-              <mat-option *ngFor="let l of languages" [value]="l">
-                {{ l.toUpperCase() }}
-              </mat-option>
-            </mat-select>
-          </span>
+          <!--<span *ngIf="language$ | async as language">-->
+            <!--<mat-select [ngModel]="language" (selectionChange)="onLanguageSelect($event)">-->
+              <!--<mat-option *ngFor="let l of languages" [value]="l">-->
+                <!--{{ l.toUpperCase() }}-->
+              <!--</mat-option>-->
+            <!--</mat-select>-->
+          <!--</span>-->
         </mat-toolbar>
       </div>
       <div class="content" [@routeAnimations]="o.isActivated && o.activatedRoute.routeConfig.path">

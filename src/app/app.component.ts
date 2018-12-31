@@ -7,7 +7,7 @@ import {
   routeAnimations,
   AppState,
   LocalStorageService,
-  selectIsAuthenticated, startingPage, loginPage
+  selectIsAuthenticated, startingPage, loginPage, selectAuth
 } from '@app/core';
 import { environment as env } from '@env/environment';
 
@@ -45,9 +45,11 @@ export class AppComponent implements OnInit {
   ];
 
   isAuthenticated$: Observable<boolean>;
+  auth$: Observable<any>;
   stickyHeader$: Observable<boolean>;
   language$: Observable<string>;
   theme$: Observable<string>;
+  authUser: any = {};
 
   constructor(
     private store: Store<AppState>,
@@ -71,11 +73,17 @@ export class AppComponent implements OnInit {
     }
 
     this.isAuthenticated$ = this.store.pipe(select(selectIsAuthenticated));
+    this.auth$ = this.store.pipe(select(selectAuth));
     this.stickyHeader$ = this.store.pipe(select(selectSettingsStickyHeader));
     this.language$ = this.store.pipe(select(selectSettingsLanguage));
     this.theme$ = this.store.pipe(select(selectEffectiveTheme));
 
     // Act on auth events
+    this.auth$.subscribe(data => {
+      this.authUser = data.user;
+
+    })
+
     this.isAuthenticated$.subscribe(data => {
       console.log('[DEBUG] [AppComponent] Authenticated state changed =>', data)
       const path = data ? [startingPage] : [loginPage];
