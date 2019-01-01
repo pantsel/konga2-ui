@@ -44,9 +44,9 @@ export const loadConfig = (bootProvider: BootService, store: Store<AppState>) =>
           window['_csrf'] = result._csrf;
 
           // Check if the user is already logged in
-          if (_.get(result, 'me.id')) {
-            console.log('User logged in!', result.me);
-            store.dispatch(new ActionAuthLogin(result.me));
+          if (_.get(result, 'loggedInUser.id')) {
+            console.log('User logged in!', result.loggedInUser);
+            store.dispatch(new ActionAuthLogin(result.loggedInUser));
           }
 
 

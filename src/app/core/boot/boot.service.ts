@@ -14,11 +14,9 @@ export class BootService {
     console.log('[BootService]:init');
 
     const csrfToken = await this.http.get(`${environment.apiPrefix}/security/csrfToken`).toPromise();
-    const me = await this.http.get(`${environment.apiPrefix}/auth/me`).toPromise();
+    const init = await this.http.get(`${environment.apiPrefix}/app/init`).toPromise();
 
-    return _.merge(csrfToken, {
-      me: me
-    });
+    return _.merge(csrfToken, init);
   }
 
   getUrlParam(name) {

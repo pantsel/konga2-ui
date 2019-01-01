@@ -4,7 +4,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { AboutComponent } from './about/about.component';
 import { FeaturesComponent } from './features/features.component';
 import { LoginComponent } from '@app/entry/login/login.component';
-import Signals = NodeJS.Signals;
 import { SignUpComponent } from '@app/entry/sign-up/sign-up.component';
 
 const routes: Routes = [
