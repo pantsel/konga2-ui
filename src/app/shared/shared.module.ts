@@ -27,7 +27,7 @@ import {
   MatButtonToggleModule,
   MatDialogModule,
   MatFormFieldModule,
-  MatGridListModule,
+  MatGridListModule, MatPaginatorModule,
   MatRadioModule,
   MatSliderModule,
   MatStepperModule,
@@ -141,6 +141,7 @@ import { LayoutModule } from '@angular/cdk/layout';
     MatButtonToggleModule,
     MatTabsModule,
     MatStepperModule,
+    MatPaginatorModule,
 
     FontAwesomeModule
   ],
@@ -172,6 +173,8 @@ import { LayoutModule } from '@angular/cdk/layout';
     MatSliderModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatTableModule,
+    MatPaginatorModule,
 
     FontAwesomeModule,
 
