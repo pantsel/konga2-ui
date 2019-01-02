@@ -31,10 +31,10 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.form = this.fb.group({
       emailAddress: [
-        'tselentispanagis@gmail.com',
+        '',
         Validators.compose([Validators.required, Validators.email])
       ],
-      password: ['911982pt', Validators.required]
+      password: ['', Validators.required]
     });
   }
 
