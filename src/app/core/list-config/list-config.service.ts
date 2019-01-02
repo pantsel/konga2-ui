@@ -7,6 +7,7 @@ import {DomSanitizer} from '@angular/platform-browser';
 export class ListConfigService {
 
   public models: any;
+  public defaultLimit: 30;
 
   constructor(domSanitizer: DomSanitizer) {
     this.models = {
@@ -27,7 +28,6 @@ export class ListConfigService {
           property: 'fullName',
           searchable: true,
           sortable: true,
-          inSearch: true,
           inTitle: true
         },
         {
@@ -35,17 +35,13 @@ export class ListConfigService {
           property: 'emailAddress',
           searchable: true,
           sortable: true,
-          inSearch: true,
           inTitle: true
         },
         {
           title: 'konga.created_at',
           property: 'createdAt',
           type: 'date',
-          searchable: true,
           sortable: true,
-          inSearch: true,
-          inTitle: true
         }
       ]
     }

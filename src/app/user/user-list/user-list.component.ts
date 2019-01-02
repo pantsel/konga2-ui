@@ -6,6 +6,8 @@ import {MatPaginator, MatSort} from '@angular/material';
 import {merge, Observable, of as observableOf} from 'rxjs';
 import {catchError, map, startWith, switchMap} from 'rxjs/operators';
 import {DataTableComponent} from '@app/core/data-table/data-table.component';
+import {FormBuilder} from '@angular/forms';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'anms-user-list',
@@ -16,9 +18,11 @@ export class UserListComponent extends DataTableComponent implements OnInit {
 
 
   constructor(public api: ApiService,
+              public fb: FormBuilder,
+              public translate: TranslateService,
               public listConfig: ListConfigService) {
 
-    super(api);
+    super(api, translate, fb);
     this.titleItems = _.get(this.listConfig, 'models.user');
   }
 

@@ -1,18 +1,61 @@
 <div class="container mt-4">
-  <h1>{{'konga.users.list.title' | translate}}</h1>
-  <div class="table-responsive">
-    <table class="table table-hover">
-      <tr>
-        <th *ngFor="let item of titleItems">
-          {{item.title | translate}}
-        </th>
-      </tr>
-      <tr *ngFor="let item of data.results">
-        <td width="1"><mat-icon>{{item.isSuperAdmin ? 'stars' : 'account_box'}}</mat-icon></td>
-        <td>{{item.fullName}}</td>
-        <td>{{item.emailAddress}}</td>
-        <td>{{item.createdAt | date}}</td>
-      </tr>
-    </table>
+
+  <div class="row mb-4 align-items-center">
+    <div class="col-md-8">
+      <h1>{{'konga.users.list.title' | translate}}</h1>
+    </div>
+    <div class="col-md-4">
+      <form [formGroup]="form" *ngIf="form" class="sign-up-form mt-4">
+        <mat-form-field appearance="outline" class="w-100">
+          <input matInput
+                 formControlName="term"
+                 placeholder="{{'konga.search_for' | translate}} {{getSearchableTitleItemsTitles().join(', ')}}...">
+          <mat-icon matPrefix>search</mat-icon>
+          <mat-progress-spinner mode="indeterminate"
+                                *ngIf="isLoading"
+                                matSuffix
+                                color="primary" diameter="30"></mat-progress-spinner>
+        </mat-form-field>
+      </form>
+
+    </div>
   </div>
+
+  <mat-card class="mb-4">
+    <mat-paginator [length]="data?.totalCount"
+                   [pageSize]="limit"
+                   (page)="pageEvent = onPageChange($event)"
+                   [pageSizeOptions]="pageSizeOptions">
+    </mat-paginator>
+    <div class="table-responsive">
+      <table class="table table-hover mb-0">
+        <tr>
+          <th *ngFor="let item of titleItems">
+            <a href="javascript:void(0)" (click)="sort(item.property)" class="float-left mr-2">
+              {{item.title | translate}}
+
+            </a>
+            <div *ngIf="sortAttr === item.property" class="d-inline-block">
+              <mat-icon>{{sortDir === 'DESC' ? 'arrow_downward' : 'arrow_upward' }}</mat-icon>
+            </div>
+          </th>
+        </tr>
+        <tr *ngFor="let item of data.results">
+          <td width="1"><mat-icon>{{item.isSuperAdmin ? 'stars' : 'account_box'}}</mat-icon></td>
+          <td>
+            <a href="">
+              <strong>{{item.fullName}}</strong>
+            </a>
+          </td>
+          <td>{{item.emailAddress}}</td>
+          <td>{{item.createdAt | date}}</td>
+        </tr>
+      </table>
+    </div>
+    <mat-paginator [length]="data?.totalCount"
+                   [pageSize]="limit"
+                   (page)="pageEvent = onPageChange($event)"
+                   [pageSizeOptions]="pageSizeOptions">
+    </mat-paginator>
+  </mat-card>
 </div>

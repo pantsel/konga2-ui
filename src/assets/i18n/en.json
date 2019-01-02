@@ -66,6 +66,8 @@
   "konga.entry.welcome.create_user": "Create User",
   "konga.entry.welcome.text": "Since this is the first time you run Konga, you will need to create a Super Admin.",
   "konga.entry.welcome.create_super_admin_success": "Super Admin created successfully! You can now sign in with your credentials",
+  "konga.search_placeholder" : "Type your search term...",
+  "konga.search_for" : "Search for",
 
   "errors.validation.required": "The field is required",
   "errors.validation.email": "Invalid email",
