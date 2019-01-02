@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit {
           this.errorMsg = this.translate.instant('errors.login.unauthorized');
           break;
         default:
-          this.errorMsg = error.statusText;
+          this.errorMsg = this.translate.instant(error.statusText);
 
       }
     }

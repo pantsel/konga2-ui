@@ -69,5 +69,9 @@
   "errors.login.unauthorized": "Invalid email and/or password",
   "input.label.password": "Password",
 
-  "konga.users.list.title": "Users list"
+  "konga.users.list.title": "Users list",
+  "konga.name": "Name",
+  "konga.created_at": "Created at",
+
+  "konga.errors.user_not_active": "The user is not active"
 }

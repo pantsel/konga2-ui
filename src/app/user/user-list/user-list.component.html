@@ -1,3 +1,19 @@
 <div class="container mt-4">
   <h1>{{'konga.users.list.title' | translate}}</h1>
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <tr>
+        <th *ngFor="let item of titleItems">
+          {{item.title | translate}}
+        </th>
+        <th>{{'konga.created_at' | translate}}</th>
+      </tr>
+      <tr *ngFor="let item of data.results">
+        <td>{{item.fullName}}</td>
+        <td>{{item.emailAddress}}</td>
+        <td>{{item.createdAt | date}}</td>
+      </tr>
+    </table>
+  </div>
+
 </div>

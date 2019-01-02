@@ -90,8 +90,12 @@ export class AppComponent implements OnInit {
         setTimeout(() => {
           this.router.navigate([loginPage]);
         })
+      }else{
+        const paths = ['/login', '/sign-up'];
+        if (paths.indexOf(window.location.pathname) > -1) {
+          this.router.navigate([startingPage]);
+        }
       }
-
     })
   }
 

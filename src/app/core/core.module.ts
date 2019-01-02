@@ -33,6 +33,7 @@ import { ApiService } from '@app/core/api/api.service';
 import { BootService } from '@app/core/boot/boot.service';
 import * as _ from 'lodash';
 import {ActionAuthLogin} from '@app/core/auth/auth.actions';
+import {ListConfigService} from '@app/core/list-config/list-config.service';
 
 export const loadConfig = (bootProvider: BootService, store: Store<AppState>) => {
   return (): Promise<any> => {
@@ -100,6 +101,7 @@ export const loadConfig = (bootProvider: BootService, store: Store<AppState>) =>
     httpInterceptorProviders,
     ApiService,
     TitleService,
+    ListConfigService,
     { provide: ErrorHandler, useClass: AppErrorHandler },
     { provide: RouterStateSerializer, useClass: CustomSerializer },
     {
