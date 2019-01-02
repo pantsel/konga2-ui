@@ -51,14 +51,7 @@ export class LoginComponent implements OnInit {
       this.submitting = false;
     } catch (error) {
       console.error('LOGIN FAILED', error);
-      switch (error.status) {
-        case 401:
-          this.errorMsg = this.translate.instant('errors.login.unauthorized');
-          break;
-        default:
-          this.errorMsg = this.translate.instant(error.statusText);
-
-      }
+      this.errorMsg = this.api.getErrorMessage(error);
     }
 
     this.submitting = false;

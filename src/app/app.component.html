@@ -18,11 +18,12 @@
 
     <div class="wrapper">
 
-      <div class="toolbar" [style.position]="(stickyHeader$ | async) ? 'fixed' : 'inherit'" [class.mat-elevation-z4]="(stickyHeader$ | async)">
+      <div class="toolbar"
+           *ngIf="shouldShowToolbar()"
+           [style.position]="(stickyHeader$ | async) ? 'fixed' : 'inherit'" [class.mat-elevation-z4]="(stickyHeader$ | async)">
         <mat-toolbar color="primary">
           <button mat-icon-button class="d-md-none" (click)="sidenav.open()">
             <fa-icon icon="bars"></fa-icon>
-
           </button>
 
           <span routerLink="" class="branding spacer center d-inline d-sm-none">
@@ -32,7 +33,7 @@
           <span routerLink="" class="branding spacer d-none d-md-inline"><img [src]="logo" /> {{ 'konga.title.long' | translate
             }}</span>
 
-          <span class="d-none d-md-inline">
+          <span class="d-none d-md-inline" *ngIf="(isAuthenticated$ | async)">
             <button mat-button class="nav-button" *ngFor="let item of navigation" [routerLink]="[item.link]"
               routerLinkActive="active">
               {{item.label | translate}}
@@ -79,7 +80,7 @@
         <router-outlet #o="outlet"></router-outlet>
       </div>
 
-      <div class="footer">
+      <div class="footer" *ngIf="shouldShowToolbar()">
         <div class="row">
           <div class="col-12 signature">
             &#169; <span class="year" data-testid="footer-year">{{year}}</span> - Panagis Tselentis

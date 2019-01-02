@@ -25,7 +25,7 @@ import { AuthEffects } from './auth/auth.effects';
 import { AuthGuardService } from './auth/auth-guard.service';
 import { AnimationsService } from './animations/animations.service';
 import { TitleService } from './title/title.service';
-import {reducers, metaReducers, AppState} from './core.state';
+import {reducers, metaReducers, AppState, onboardingPage} from './core.state';
 import { AppErrorHandler } from './error-handler/app-error-handler.service';
 import { CustomSerializer } from './router/custom-serializer';
 import { NotificationService } from './notifications/notification.service';
@@ -43,6 +43,14 @@ export const loadConfig = (bootProvider: BootService, store: Store<AppState>) =>
         .then(result => {
           console.log('bootProvider.load():result', result);
           window['_csrf'] = result._csrf;
+
+          // If there is no superAdmin registered yet,
+          // navigate to the welcome page to create one.
+          if (!_.get(result, 'hasSuperAdmin')) {
+            console.log('No SuperAdmin found. Redirecting to welcome page');
+            window['_needsOnboarding'] = true;
+            return  resolve(result);
+          }
 
           // Check if the user is already logged in
           if (_.get(result, 'loggedInUser.id')) {

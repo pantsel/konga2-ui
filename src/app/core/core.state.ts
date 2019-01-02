@@ -18,6 +18,8 @@ export const startingPage = 'dashboard';
 
 export const loginPage = 'login';
 
+export const onboardingPage = 'welcome';
+
 export const reducers: ActionReducerMap<AppState> = {
   auth: authReducer,
   router: routerReducer

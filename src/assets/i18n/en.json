@@ -63,11 +63,17 @@
   "konga.title.long": "Konga 2",
   "konga.title.short": "Konga 2",
   "konga.entry.login.signin": "Sign in",
+  "konga.entry.welcome.create_user": "Create User",
+  "konga.entry.welcome.text": "Since this is the first time you run Konga, you will need to create a Super Admin.",
+  "konga.entry.welcome.create_super_admin_success": "Super Admin created successfully! You can now sign in with your credentials",
 
   "errors.validation.required": "The field is required",
   "errors.validation.email": "Invalid email",
+  "errors.validation.password_confirm_mismatch": "The confirmation doesn't match the given password",
   "errors.login.unauthorized": "Invalid email and/or password",
   "input.label.password": "Password",
+  "input.label.confirm_password": "Confirm Password",
+  "input.label.name": "Name",
 
   "konga.users.list.title": "Users list",
   "konga.name": "Name",

@@ -1,0 +1,67 @@
+<div class="container mt-4 text-center" style="max-width: 400px">
+  <div class="text-center m-4">
+    <img src="logo.png">
+  </div>
+  <h1>Welcome to the Jungle!</h1>
+  <p>
+    {{'konga.entry.welcome.text' | translate}}
+  </p>
+  <form (submit)="submit(form.value)" [formGroup]="form" *ngIf="form" class="sign-up-form mt-4">
+    <div class="alert alert-danger" *ngIf="errorMsg">
+      {{errorMsg}}
+    </div>
+
+    <!-- FULL NAME -->
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>{{'input.label.name' | translate}} <span class="text-danger">*</span></mat-label>
+      <input matInput formControlName="fullName" placeholder="">
+      <mat-icon matPrefix>account_circle</mat-icon>
+      <mat-error *ngIf="form.controls['fullName'].hasError('required')">
+        {{'errors.validation.required' | translate}}
+      </mat-error>
+    </mat-form-field>
+
+    <!-- EMAIL -->
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Email <span class="text-danger">*</span></mat-label>
+      <input matInput formControlName="emailAddress" placeholder="">
+      <mat-icon matPrefix>email</mat-icon>
+      <mat-error *ngIf="form.controls['emailAddress'].hasError('required')">
+        {{'errors.validation.required' | translate}}
+      </mat-error>
+      <mat-error *ngIf="form.controls['emailAddress'].hasError('email')">
+        {{'errors.validation.email' | translate}}
+      </mat-error>
+    </mat-form-field>
+
+    <!-- PASSWORD -->
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>{{'input.label.password' | translate}} <span class="text-danger">*</span></mat-label>
+      <input matInput formControlName="password" placeholder="" type="password">
+      <mat-icon matPrefix>lock</mat-icon>
+      <mat-error *ngIf="form.controls['password'].hasError('required')">
+        {{'errors.validation.required' | translate}}
+      </mat-error>
+    </mat-form-field>
+
+    <!-- PASSWORD CONFIRMATION -->
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>{{'input.label.confirm_password' | translate}} <span class="text-danger">*</span></mat-label>
+      <input matInput formControlName="passwordConfirmation" placeholder="" type="password">
+      <mat-icon matPrefix>repeat</mat-icon>
+      <mat-error *ngIf="form.controls['passwordConfirmation'].hasError('mismatch')">
+        {{'errors.validation.password_confirm_mismatch' | translate}}
+      </mat-error>
+    </mat-form-field>
+
+    <button mat-flat-button color="accent"
+            style="width: 100%"
+            class="btn-large mt-2 text-center" [disabled]="!form.valid || submitting">
+      <mat-progress-spinner mode="indeterminate"
+                            *ngIf="submitting"
+                            color="primary" diameter="36" class="float-left">
+      </mat-progress-spinner>
+      {{'konga.entry.welcome.create_user' | translate}}
+    </button>
+  </form>
+</div>

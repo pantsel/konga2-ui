@@ -7,7 +7,7 @@ import {
   routeAnimations,
   AppState,
   LocalStorageService,
-  selectIsAuthenticated, selectAuth, startingPage, loginPage
+  selectIsAuthenticated, selectAuth, startingPage, loginPage, onboardingPage
 } from '@app/core';
 import { environment as env } from '@env/environment';
 
@@ -88,7 +88,8 @@ export class AppComponent implements OnInit {
       console.log('[DEBUG] [AppComponent] Authenticated state changed =>', data)
       if (!data) {
         setTimeout(() => {
-          this.router.navigate([loginPage]);
+          const path = window['_needsOnboarding'] ? onboardingPage : loginPage;
+          this.router.navigate([path]);
         })
       }else{
         const paths = ['/login', '/sign-up'];
@@ -106,5 +107,9 @@ export class AppComponent implements OnInit {
 
   onLanguageSelect({ value: language }) {
     this.store.dispatch(new ActionSettingsChangeLanguage({ language }));
+  }
+
+  shouldShowToolbar() {
+    return window.location.pathname.indexOf('welcome') < 0;
   }
 }

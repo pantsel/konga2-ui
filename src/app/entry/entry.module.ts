@@ -5,9 +5,10 @@ import { SharedModule } from '@app/shared';
 import { EntryRoutingModule } from '@app/entry/entry-routing.module';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { WelcomeComponent } from './welcome/welcome.component';
 
 @NgModule({
-  declarations: [LoginComponent, SignUpComponent],
+  declarations: [LoginComponent, SignUpComponent, WelcomeComponent],
   imports: [
     CommonModule,
     SharedModule,
