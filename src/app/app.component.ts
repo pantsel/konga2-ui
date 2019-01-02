@@ -86,10 +86,12 @@ export class AppComponent implements OnInit {
 
     this.isAuthenticated$.subscribe(data => {
       console.log('[DEBUG] [AppComponent] Authenticated state changed =>', data)
-      const path = data ? [startingPage] : [loginPage];
-      setTimeout(() => {
-        this.router.navigate(path);
-      })
+      if (!data) {
+        setTimeout(() => {
+          this.router.navigate([loginPage]);
+        })
+      }
+
     })
   }
 

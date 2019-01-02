@@ -67,5 +67,7 @@
   "errors.validation.required": "The field is required",
   "errors.validation.email": "Invalid email",
   "errors.login.unauthorized": "Invalid email and/or password",
-  "input.label.password": "Password"
+  "input.label.password": "Password",
+
+  "konga.users.list.title": "Users list"
 }

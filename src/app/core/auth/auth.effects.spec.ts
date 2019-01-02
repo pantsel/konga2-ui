@@ -32,7 +32,7 @@ describe('AuthEffects', () => {
     });
 
     it('should call setItem on LocalStorageService', () => {
-      const loginAction = new ActionAuthLogin();
+      const loginAction = new ActionAuthLogin({});
       const source = cold('a', { a: loginAction });
       const actions = new Actions(source);
       const effect = new AuthEffects(actions, localStorageService, router);
