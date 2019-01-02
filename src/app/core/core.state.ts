@@ -14,7 +14,7 @@ import { AuthState } from './auth/auth.models';
 import { authReducer } from './auth/auth.reducer';
 import { RouterStateUrl } from './router/router.state';
 
-export const startingPage = 'about';
+export const startingPage = 'dashboard';
 
 export const loginPage = 'login';
 

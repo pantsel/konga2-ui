@@ -12,6 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { EntryModule } from '@app/entry/entry.module';
 import {AuthService} from '@app/core/auth/auth.service';
+import {DashboardModule} from '@app/dashboard/dashboard.module';
 
 @NgModule({
   imports: [
@@ -24,9 +25,9 @@ import {AuthService} from '@app/core/auth/auth.service';
     SharedModule,
 
     // features
-    StaticModule,
     SettingsModule,
     EntryModule,
+    DashboardModule,
 
     // app
     AppRoutingModule

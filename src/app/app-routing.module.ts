@@ -2,11 +2,12 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { SettingsContainerComponent } from './settings';
+import {AuthGuardService} from '@app/core';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'about',
+    redirectTo: 'dashboard',
     pathMatch: 'full'
   },
   {
@@ -19,12 +20,17 @@ const routes: Routes = [
     loadChildren: 'app/examples/examples.module#ExamplesModule'
   },
   {
+    path: 'users',
+    loadChildren: 'app/user/user.module#UserModule',
+    canActivate: [AuthGuardService]
+  },
+  {
     path: 'entry',
     loadChildren: 'app/entry/entry.module#EntryModule'
   },
   {
     path: '**',
-    redirectTo: 'about'
+    redirectTo: 'dashboard'
   }
 ];
 

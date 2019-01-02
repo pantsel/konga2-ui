@@ -18,7 +18,6 @@
 @import 'styles-reset.scss-theme';
 @import 'app/app.component.scss-theme';
 @import 'app/shared/big-input/big-input.component.scss-theme';
-@import 'app/static/about/about.component.scss-theme';
 @import 'app/examples/notifications/components/notifications.component.scss-theme';
 @import 'app/examples/todos/components/todos-container.component.scss-theme';
 @import 'app/examples/stock-market/components/stock-market-container.component.scss-theme';
@@ -29,7 +28,6 @@
 @mixin custom-components-theme($theme) {
   @include konga-styles-reset-theme($theme);
   @include konga-app-component-theme($theme);
-  @include konga-about-component-theme($theme);
   @include konga-big-input-component-theme($theme);
   @include konga-notifications-component-theme($theme);
   @include konga-todos-container-component-theme($theme);

@@ -7,7 +7,7 @@ import {
   routeAnimations,
   AppState,
   LocalStorageService,
-  selectIsAuthenticated, startingPage, loginPage, selectAuth
+  selectIsAuthenticated, selectAuth, startingPage, loginPage
 } from '@app/core';
 import { environment as env } from '@env/environment';
 
@@ -35,7 +35,7 @@ export class AppComponent implements OnInit {
   logo = require('../assets/logo.png');
   languages = ['en'];
   navigation = [
-    // { link: 'about', label: 'konga.menu.about' },
+    { link: 'users', label: 'konga.menu.users' },
     // { link: 'features', label: 'konga.menu.features' },
     // { link: 'examples', label: 'konga.menu.examples' }
   ];
