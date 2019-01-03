@@ -5,6 +5,8 @@ import {PageEvent} from '@angular/material';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {debounceTime, switchMap, tap} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
+import {DialogService} from '@app/core/dialog/dialog.service';
+import {ListConfigService} from '@app/core/list-config/list-config.service';
 
 @Component({
   selector: 'anms-data-table',
@@ -26,6 +28,8 @@ export class DataTableComponent implements OnInit {
   @Input() sortAttr = 'createdAt';
   @Input() sortDir = 'DESC';
   @Input() pageSizeOptions = [5, 10, 25, 100]
+  @Input() endpoint: string;
+  @Input() model: string;
 
   @Output() searchTerm: EventEmitter<any> = new EventEmitter();
 
@@ -33,14 +37,19 @@ export class DataTableComponent implements OnInit {
   searchableTitleItems = [];
 
 
-
   constructor(public api: ApiService,
               public translate: TranslateService,
+              public dialog: DialogService,
+              public listConfig: ListConfigService,
               public fb: FormBuilder) {
 
   }
 
   ngOnInit() {
+
+    const config = _.get(this.listConfig, `models.${this.model}`);
+    this.endpoint = config.endpoint;
+    this.titleItems = config.titleItems;
 
     this.form = this.fb.group({
       term: ['']
@@ -88,7 +97,7 @@ export class DataTableComponent implements OnInit {
         where.or.push(obj)
       })
 
-      const res: any = await  this.api.get(`users`, {
+      const res: any = await this.api.get(this.endpoint, {
         sort: `${this.sortAttr} ${this.sortDir}`,
         limit: this.limit,
         where: JSON.stringify(where),
@@ -106,6 +115,11 @@ export class DataTableComponent implements OnInit {
   onPageChange($event: PageEvent) {
     console.log('Page change =>', $event);
     this.page = $event.pageIndex;
+
+    // If limit has changed, go back to page 1
+    if (this.limit !== $event.pageSize) {
+      this.page = 0;
+    }
     this.limit = $event.pageSize;
     this.loadData();
   }
@@ -115,6 +129,25 @@ export class DataTableComponent implements OnInit {
     this.sortDir = sortDesc ? 'DESC' : 'ASC';
     this.sortAttr = attr;
     this.loadData();
+  }
+
+  onDeleteItem(item) {
+    const title = this.translate.instant('konga.delete_item_title');
+    const text = this.translate.instant('konga.delete_item_text');
+    this.dialog.confirm(title, text)
+      .then(confirm => {
+        if (confirm) {
+          this.deleteItem(item);
+        }
+      });
+  }
+
+  deleteItem(item) {
+    this.api.delete(`${this.endpoint}/${item.id}`)
+      .subscribe(deleted => {
+        console.log('Item deleted =>', deleted);
+        this.loadData();
+      })
   }
 
 }

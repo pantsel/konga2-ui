@@ -9,41 +9,44 @@ export class ListConfigService {
   public models: any;
   public defaultLimit: 30;
 
-  constructor(domSanitizer: DomSanitizer) {
+  constructor() {
     this.models = {
-      user : [
-        {
-          title: '',
-          property: 'isSuperAdmin',
-          type: 'html',
-          width: 1,
-          html: (isSuperAdmin) => {
-            return domSanitizer.bypassSecurityTrustHtml(`
-            <mat-icon>${isSuperAdmin ? 'stars' : 'account_box'}</mat-icon>
-          `);
+      user : {
+        endpoint: `users`,
+        titleItems: [
+          {
+            title: '',
+            property: 'active',
+            width: 1,
+            sortable: true
+          },
+          {
+            title: '',
+            property: 'isSuperAdmin',
+            width: 1,
+            sortable: true
+          },
+          {
+            title: 'konga.name',
+            property: 'fullName',
+            searchable: true,
+            sortable: true,
+            inTitle: true
+          },
+          {
+            title: 'Email',
+            property: 'emailAddress',
+            searchable: true,
+            sortable: true,
+            inTitle: true
+          },
+          {
+            title: 'konga.created_at',
+            property: 'createdAt',
+            sortable: true,
           }
-        },
-        {
-          title: 'konga.name',
-          property: 'fullName',
-          searchable: true,
-          sortable: true,
-          inTitle: true
-        },
-        {
-          title: 'Email',
-          property: 'emailAddress',
-          searchable: true,
-          sortable: true,
-          inTitle: true
-        },
-        {
-          title: 'konga.created_at',
-          property: 'createdAt',
-          type: 'date',
-          sortable: true,
-        }
-      ]
+        ]
+      }
     }
   }
 }

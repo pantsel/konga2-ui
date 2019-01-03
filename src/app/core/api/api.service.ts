@@ -57,6 +57,8 @@ export class ApiService {
   }
 
   delete(endpoint: string, options?: any) {
+    endpoint += `?_csrf=${window['_csrf']}`
+
     return this.http.delete(
       `${environment.apiUrl}${environment.apiPrefix}/${endpoint}`,
       options

@@ -67,7 +67,11 @@
   "konga.entry.welcome.text": "Since this is the first time you run Konga, you will need to create a Super Admin.",
   "konga.entry.welcome.create_super_admin_success": "Super Admin created successfully! You can now sign in with your credentials",
   "konga.search_placeholder" : "Type your search term...",
-  "konga.search_for" : "Search for",
+  "konga.search_by" : "Search by",
+  "konga.delete" : "Delete",
+  "konga.delete_item_title" : "Delete item",
+  "konga.delete_item_text" : "Are you sure you want to delete the selected item?",
+  "konga.cancel" : "Cancel",
 
   "errors.validation.required": "The field is required",
   "errors.validation.email": "Invalid email",

@@ -153,6 +153,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 
     TranslateModule,
 
+    MatDialogModule,
     MatButtonModule,
     MatMenuModule,
     MatTabsModule,

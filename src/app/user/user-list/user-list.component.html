@@ -1,4 +1,4 @@
-<div class="container mt-4">
+<div class="container mt-4 pb-4">
 
   <div class="row mb-4 align-items-center">
     <div class="col-md-8">
@@ -9,7 +9,7 @@
         <mat-form-field appearance="outline" class="w-100">
           <input matInput
                  formControlName="term"
-                 placeholder="{{'konga.search_for' | translate}} {{getSearchableTitleItemsTitles().join(', ')}}...">
+                 placeholder="{{'konga.search_by' | translate}} {{getSearchableTitleItemsTitles().join(', ')}}...">
           <mat-icon matPrefix>search</mat-icon>
           <mat-progress-spinner mode="indeterminate"
                                 *ngIf="isLoading"
@@ -24,7 +24,8 @@
   <mat-card class="mb-4">
     <mat-paginator [length]="data?.totalCount"
                    [pageSize]="limit"
-                   (page)="pageEvent = onPageChange($event)"
+                   [pageIndex]="page"
+                   (page)="onPageChange($event)"
                    [pageSizeOptions]="pageSizeOptions">
     </mat-paginator>
     <div class="table-responsive">
@@ -39,9 +40,21 @@
               <mat-icon>{{sortDir === 'DESC' ? 'arrow_downward' : 'arrow_upward' }}</mat-icon>
             </div>
           </th>
+          <th></th>
         </tr>
         <tr *ngFor="let item of data.results">
-          <td width="1"><mat-icon>{{item.isSuperAdmin ? 'stars' : 'account_box'}}</mat-icon></td>
+          <td width="1">
+            <mat-icon
+                    [ngClass]="{'text-success' : item.active, 'text-danger': !item.active}"
+                    [matTooltipPosition]="'above'"
+                    matTooltip="{{item.active ? 'Active' : 'Inactive'}}">radio_button_checked</mat-icon>
+          </td>
+          <td width="1">
+            <mat-icon
+                    [ngClass]="{'text-warning' : item.isSuperAdmin, 'text-secondary': !item.isSuperAdmin}"
+                    [matTooltipPosition]="'above'"
+                    matTooltip="{{item.isSuperAdmin ? 'Super Admin' : 'User'}}">{{item.isSuperAdmin ? 'stars' : 'account_box'}}</mat-icon>
+          </td>
           <td>
             <a href="">
               <strong>{{item.fullName}}</strong>
@@ -49,6 +62,12 @@
           </td>
           <td>{{item.emailAddress}}</td>
           <td>{{item.createdAt | date}}</td>
+          <td width="1">
+            <button mat-button color="warn" (click)="onDeleteItem(item)">
+              <mat-icon matPrefix>delete</mat-icon>
+              {{'konga.delete' | translate}}
+            </button>
+          </td>
         </tr>
       </table>
     </div>

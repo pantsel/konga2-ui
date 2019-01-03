@@ -25,7 +25,7 @@ import { AuthEffects } from './auth/auth.effects';
 import { AuthGuardService } from './auth/auth-guard.service';
 import { AnimationsService } from './animations/animations.service';
 import { TitleService } from './title/title.service';
-import {reducers, metaReducers, AppState, onboardingPage} from './core.state';
+import {reducers, metaReducers, AppState} from './core.state';
 import { AppErrorHandler } from './error-handler/app-error-handler.service';
 import { CustomSerializer } from './router/custom-serializer';
 import { NotificationService } from './notifications/notification.service';
@@ -35,6 +35,7 @@ import * as _ from 'lodash';
 import {ActionAuthLogin} from '@app/core/auth/auth.actions';
 import {ListConfigService} from '@app/core/list-config/list-config.service';
 import {AppEventsService} from '@app/core/app-events/app-events.service';
+import {DialogModule} from '@app/core/dialog/dialog.module';
 
 export const loadConfig = (bootProvider: BootService, store: Store<AppState>) => {
   return (): Promise<any> => {
@@ -99,7 +100,9 @@ export const loadConfig = (bootProvider: BootService, store: Store<AppState>) =>
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       }
-    })
+    }),
+
+    DialogModule
   ],
   declarations: [],
   providers: [
