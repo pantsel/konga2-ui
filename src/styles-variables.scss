@@ -1,5 +1,19 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto:400,700|Material+Icons');
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,700|Material+Icons|Montserrat:400,700');
 @import '~@angular/material/theming';
+
+// stylelint-disable value-keyword-case
+$font-family-sans-serif:      'Montserrat', sans-serif !default;
+$font-family-monospace:       SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !default;
+$font-family-base:            $font-family-sans-serif !default;
+// stylelint-enable value-keyword-case
+
+//$font-size-base:              0.9rem !default;
+
+//** By default, this inherits from the `<body>`.
+$headings-font-weight:    700;
+//$headings-line-height:    1.1;
+//$headings-color:          #444;
+
 
 $toolbar-breakpoint: 600px;
 

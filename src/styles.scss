@@ -1,9 +1,5 @@
 @import 'styles-variables';
-@import '../node_modules/bootstrap/scss/bootstrap-reboot';
-@import '../node_modules/bootstrap/scss/bootstrap-grid';
-@import '../node_modules/bootstrap/scss/utilities';
-@import '../node_modules/bootstrap/scss/alert';
-@import '../node_modules/bootstrap/scss/tables';
+@import "bootstrap";
 @import 'styles-reset';
 
 @import '../node_modules/@angular/material/theming';
