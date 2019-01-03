@@ -34,6 +34,7 @@ import { BootService } from '@app/core/boot/boot.service';
 import * as _ from 'lodash';
 import {ActionAuthLogin} from '@app/core/auth/auth.actions';
 import {ListConfigService} from '@app/core/list-config/list-config.service';
+import {AppEventsService} from '@app/core/app-events/app-events.service';
 
 export const loadConfig = (bootProvider: BootService, store: Store<AppState>) => {
   return (): Promise<any> => {
@@ -110,6 +111,7 @@ export const loadConfig = (bootProvider: BootService, store: Store<AppState>) =>
     ApiService,
     TitleService,
     ListConfigService,
+    AppEventsService,
     { provide: ErrorHandler, useClass: AppErrorHandler },
     { provide: RouterStateSerializer, useClass: CustomSerializer },
     {
