@@ -35,14 +35,21 @@ export class AppComponent implements OnInit {
   logo = require('../assets/logo.png');
   languages = ['en'];
   navigation = [
-    { link: 'dashboard', label: 'konga.menu.dashboard' },
-    { link: 'users', label: 'konga.menu.users' },
+
     // { link: 'features', label: 'konga.menu.features' },
     // { link: 'examples', label: 'konga.menu.examples' }
   ];
   navigationSideMenu = [
     ...this.navigation,
-    { link: 'settings', label: 'konga.menu.settings' }
+    { link: 'dashboard',
+      icon: 'dashboard',
+      label: 'konga.menu.dashboard' },
+    { link: 'users',
+      icon: 'supervised_user_circle',
+      label: 'konga.menu.users' },
+    { link: 'settings',
+      icon: 'settings',
+      label: 'konga.menu.settings' }
   ];
 
   isAuthenticated$: Observable<boolean>;
@@ -111,6 +118,12 @@ export class AppComponent implements OnInit {
   }
 
   shouldShowToolbar() {
-    return window.location.pathname.indexOf('welcome') < 0;
+    return window.location.pathname.indexOf('welcome') < 0
+      && window.location.pathname.indexOf('login') < 0;
+  }
+
+  shouldShowSidenav() {
+    return window.location.pathname.indexOf('welcome') < 0
+      && window.location.pathname.indexOf('login') < 0;
   }
 }

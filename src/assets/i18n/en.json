@@ -82,6 +82,7 @@
   "konga.create_user": "Create user",
   "konga.new_user": "New user",
   "konga.create_user_success": "A new user was created successfully",
+  "konga.create": "Create",
 
   "konga.user.tab_details_label" : "User Details",
   "konga.user.tab_security_label" : "Security",

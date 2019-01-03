@@ -2,7 +2,7 @@
 
   <div class="row mb-4 align-items-center">
     <div class="col-md-8">
-      <h1>{{'konga.users.list.title' | translate}}</h1>
+      <h1 class="m-0 p-0">{{'konga.users.list.title' | translate}}</h1>
     </div>
     <div class="col-md-4">
       <form [formGroup]="form" *ngIf="form" class="sign-up-form mt-4">
@@ -21,23 +21,20 @@
     </div>
   </div>
 
-  <mat-card class="mb-4">
-    <mat-paginator [length]="data?.totalCount"
-                   [pageSize]="limit"
-                   [pageIndex]="page"
-                   (page)="onPageChange($event)"
-                   [pageSizeOptions]="pageSizeOptions">
-    </mat-paginator>
+  <mat-card class="mb-4 p-0">
     <div class="table-responsive">
-      <table class="table table-hover mb-0">
+      <table class="table mb-0">
         <tr>
           <th *ngFor="let item of titleItems">
-            <a href="javascript:void(0)" (click)="sort(item.property)" class="float-left mr-2">
-              {{item.title | translate}}
-
-            </a>
-            <div *ngIf="sortAttr === item.property" class="d-inline-block">
-              <mat-icon>{{sortDir === 'DESC' ? 'arrow_downward' : 'arrow_upward' }}</mat-icon>
+            <div class="d-flex align-items-center">
+              <a href="javascript:void(0)" (click)="sort(item.property)"
+                 [ngClass]="{'text-success': sortAttr === item.property}"
+                 class="float-left mr-2">
+                {{item.title | translate}}
+              </a>
+              <span *ngIf="sortAttr === item.property" class="d-inline-flex" [ngClass]="{'text-success': sortAttr === item.property}">
+                <mat-icon style="font-size: 0.9rem; height: 0.9rem">{{sortDir === 'DESC' ? 'arrow_downward' : 'arrow_upward' }}</mat-icon>
+              </span>
             </div>
           </th>
           <th></th>
@@ -71,6 +68,7 @@
         </tr>
       </table>
     </div>
+    <mat-divider></mat-divider>
     <mat-paginator [length]="data?.totalCount"
                    [pageSize]="limit"
                    (page)="pageEvent = onPageChange($event)"

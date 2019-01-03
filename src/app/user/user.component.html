@@ -26,66 +26,8 @@
         </a>
       </mat-nav-list>
     </div>
-    <div class="col-md-8">
+    <div class="col-md-8 pt-2">
       <router-outlet name='user'></router-outlet>
     </div>
   </div>
-
-  <!--<mat-tab-group mat-stretch-tabs dynamicHeight="true" color="accent">-->
-  <!--<mat-tab label="{{'konga.user.tab_details_label' | translate}}">-->
-  <!--<div class="mt-4 mb-4">-->
-  <!--<form (submit)="updateDetails(detailsForm.value)" [formGroup]="detailsForm" *ngIf="detailsForm" class="mt-4">-->
-  <!--<div class="alert alert-danger" *ngIf="detailsFormErrorMsg">-->
-  <!--{{detailsFormErrorMsg}}-->
-  <!--</div>-->
-
-  <!--&lt;!&ndash; FULL NAME &ndash;&gt;-->
-  <!--<mat-form-field appearance="outline" class="w-100">-->
-  <!--<mat-label>{{'input.label.name' | translate}} <span class="text-danger">*</span></mat-label>-->
-  <!--<input matInput formControlName="fullName" placeholder="">-->
-  <!--<mat-icon matPrefix>account_circle</mat-icon>-->
-  <!--<mat-error *ngIf="detailsForm.controls['fullName'].hasError('required')">-->
-  <!--{{'errors.validation.required' | translate}}-->
-  <!--</mat-error>-->
-  <!--</mat-form-field>-->
-
-  <!--&lt;!&ndash; EMAIL &ndash;&gt;-->
-  <!--<mat-form-field appearance="outline" class="w-100">-->
-  <!--<mat-label>Email <span class="text-danger">*</span></mat-label>-->
-  <!--<input matInput formControlName="emailAddress" placeholder="">-->
-  <!--<mat-icon matPrefix>email</mat-icon>-->
-  <!--<mat-error *ngIf="detailsForm.controls['emailAddress'].hasError('required')">-->
-  <!--{{'errors.validation.required' | translate}}-->
-  <!--</mat-error>-->
-  <!--<mat-error *ngIf="detailsForm.controls['emailAddress'].hasError('email')">-->
-  <!--{{'errors.validation.email' | translate}}-->
-  <!--</mat-error>-->
-  <!--</mat-form-field>-->
-
-  <!--&lt;!&ndash; SUPER ADMIN &ndash;&gt;-->
-  <!--<div class="mb-3" *ngIf="authUser?.isSuperAdmin">-->
-  <!--<mat-checkbox-->
-  <!--formControlName="isSuperAdmin">Super Admin</mat-checkbox>-->
-  <!--</div>-->
-
-
-  <!--<button mat-flat-button color="accent"-->
-  <!--style="width: 100%"-->
-  <!--class="btn-large mt-2 text-center" [disabled]="!detailsForm.valid || submitting">-->
-  <!--<mat-progress-spinner mode="indeterminate"-->
-  <!--*ngIf="submitting"-->
-  <!--color="primary" diameter="36" class="float-left">-->
-  <!--</mat-progress-spinner>-->
-  <!--{{'konga.update' | translate}}-->
-  <!--</button>-->
-  <!--</form>-->
-  <!--</div>-->
-  <!--</mat-tab>-->
-  <!--<mat-tab label="{{'konga.user.tab_security_label' | translate}}">-->
-  <!--<div class="mt-4 mb-4"></div>-->
-  <!--</mat-tab>-->
-  <!--<mat-tab label="{{'konga.user.tab_permissions_label' | translate}}">-->
-  <!--<div class="mt-4 mb-4"></div>-->
-  <!--</mat-tab>-->
-  <!--</mat-tab-group>-->
 </div>

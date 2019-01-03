@@ -111,3 +111,24 @@ mat-tab-group[vertical] {
     right: 3rem;
   }
 }
+
+.table {
+  tr {
+
+    th, td {
+      vertical-align: middle !important;
+    }
+
+    th {
+      background: $gray-200;
+    }
+  }
+}
+
+input.mat-input-element {
+  padding-bottom: 0.15rem;
+}
+
+.main-sidenav {
+  background: map_get($mat-konga, 900);
+}
