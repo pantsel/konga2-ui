@@ -9,6 +9,7 @@ import {DataTableComponent} from '@app/core/data-table/data-table.component';
 import {FormBuilder} from '@angular/forms';
 import {TranslateService} from '@ngx-translate/core';
 import {DialogService} from '@app/core/dialog/dialog.service';
+import {NotificationService} from '@app/core';
 
 @Component({
   selector: 'anms-user-list',
@@ -22,9 +23,10 @@ export class UserListComponent extends DataTableComponent implements OnInit {
               public fb: FormBuilder,
               public dialog: DialogService,
               public translate: TranslateService,
+              public notificationsService: NotificationService,
               public listConfig: ListConfigService) {
 
-    super(api, translate, dialog, listConfig, fb);
+    super(api, translate, dialog, notificationsService, listConfig, fb);
 
     this.model = `user`;
   }

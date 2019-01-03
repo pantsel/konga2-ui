@@ -7,6 +7,7 @@ import {debounceTime, switchMap, tap} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
 import {DialogService} from '@app/core/dialog/dialog.service';
 import {ListConfigService} from '@app/core/list-config/list-config.service';
+import {NotificationService} from '@app/core';
 
 @Component({
   selector: 'anms-data-table',
@@ -40,6 +41,7 @@ export class DataTableComponent implements OnInit {
   constructor(public api: ApiService,
               public translate: TranslateService,
               public dialog: DialogService,
+              public notificationsService: NotificationService,
               public listConfig: ListConfigService,
               public fb: FormBuilder) {
 
@@ -146,6 +148,7 @@ export class DataTableComponent implements OnInit {
     this.api.delete(`${this.endpoint}/${item.id}`)
       .subscribe(deleted => {
         console.log('Item deleted =>', deleted);
+        this.notificationsService.success(this.translate.instant('konga.delete_item_success'))
         this.loadData();
       })
   }

@@ -72,6 +72,7 @@
   "konga.delete_item_title" : "Delete item",
   "konga.delete_item_text" : "Are you sure you want to delete the selected item?",
   "konga.cancel" : "Cancel",
+  "konga.delete_item_success": "Item deleted!",
 
   "errors.validation.required": "The field is required",
   "errors.validation.email": "Invalid email",
