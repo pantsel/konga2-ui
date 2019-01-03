@@ -58,3 +58,21 @@
   font-size: 1.2em;
 }
 
+/**
+Vertical tabs
+ */
+
+mat-tab-group[vertical] .mat-tab-labels {
+  display: flex;
+  flex-direction: column!important;
+}
+
+mat-tab-group[vertical] {
+  display: flex;
+  flex-direction: row!important;
+}
+
+.mat-list-item.active {
+  font-weight: 700;
+  color: map_get($mat-konga-teal, 500) !important;
+}

@@ -77,9 +77,9 @@
   "konga.update" : "Save Changes",
   "konga.changes_saved": "Changes saved successfully!",
 
-  "konga.user.tab_details_label" : "USER DETAILS",
-  "konga.user.tab_security_label" : "SECURITY",
-  "konga.user.tab_permissions_label" : "PERMISSIONS",
+  "konga.user.tab_details_label" : "User Details",
+  "konga.user.tab_security_label" : "Security",
+  "konga.user.tab_permissions_label" : "Permissions",
 
   "errors.validation.required": "The field is required",
   "errors.validation.email": "Invalid email",

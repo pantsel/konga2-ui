@@ -6,19 +6,19 @@ import {AppState, NotificationService, selectAuth} from '@app/core';
 import {TranslateService} from '@ngx-translate/core';
 import {select, Store} from '@ngrx/store';
 import {Observable} from 'rxjs';
+import {SharedUserService} from '@app/user/shared-user.service';
 
 @Component({
-  selector: 'anms-user-update',
-  templateUrl: './user-update.component.html',
-  styleUrls: ['./user-update.component.css']
+  selector: 'anms-user-details',
+  templateUrl: './user-details.component.html',
+  styleUrls: ['./user-details.component.css']
 })
-export class UserUpdateComponent implements OnInit {
+export class UserDetailsComponent implements OnInit {
 
   detailsForm: FormGroup;
   detailsFormErrorMsg: string;
   submitting: boolean;
 
-  private sub: any;
   public id: any;
   public user: any;
 
@@ -28,17 +28,19 @@ export class UserUpdateComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               public fb: FormBuilder,
               public translate: TranslateService,
+              private sharedUserService: SharedUserService,
               public store: Store<AppState>,
               public notificationsService: NotificationService,
               private api: ApiService) {
-    this.sub = this.route.params.subscribe(params => {
-      this.id = +params['id']; // (+) converts string 'id' to a number
-      this.fetchUser();
-    });
 
     this.auth$ = this.store.pipe(select(selectAuth));
     this.auth$.subscribe(data => {
       this.authUser = data.user;
+    })
+
+    sharedUserService._user.subscribe(user => {
+      this.user = user;
+      if (user) this.createDetailsForm();
     })
   }
 
@@ -57,21 +59,13 @@ export class UserUpdateComponent implements OnInit {
     }
   }
 
-  fetchUser() {
-    this.api.get(`users/${this.id}`)
-      .subscribe(data => {
-        this.user = data;
-        this.createDetailsForm();
-      })
-  }
-
   updateDetails(data) {
     this.submitting = true;
     this.api.patch(`users/${this.user.id}`, data)
       .subscribe(result => {
         console.log('User details updated =>', result);
         this.submitting = false;
-        this.user = result;
+        this.sharedUserService._user.next(result);
         this.notificationsService.success(this.translate.instant('konga.changes_saved'));
       }, error => {
         this.detailsFormErrorMsg = this.api.getErrorMessage(error);
