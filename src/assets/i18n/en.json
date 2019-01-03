@@ -38,6 +38,7 @@
   "konga.menu.login": "Sign in",
   "konga.menu.logout": "Logout",
   "konga.menu.settings": "Settings",
+  "konga.menu.my_account": "My account",
   "konga.settings.animations.elements": "Navigation page elements slide up",
   "konga.settings.animations.page": "Navigation whole page transition",
   "konga.settings.animations.title": "Animations",
@@ -76,22 +77,26 @@
   "konga.please_wait": "Loading. Please wait...",
   "konga.update" : "Save Changes",
   "konga.changes_saved": "Changes saved successfully!",
+  "konga.active": "Active",
 
   "konga.user.tab_details_label" : "User Details",
   "konga.user.tab_security_label" : "Security",
   "konga.user.tab_permissions_label" : "Permissions",
+  "konga.user.edit_basic_details" : "Edit basic details",
 
   "errors.validation.required": "The field is required",
   "errors.validation.email": "Invalid email",
   "errors.validation.password_confirm_mismatch": "The confirmation doesn't match the given password",
   "errors.login.unauthorized": "Invalid email and/or password",
   "input.label.password": "Password",
+  "input.label.new_password": "New password",
   "input.label.confirm_password": "Confirm Password",
   "input.label.name": "Name",
 
   "konga.users.list.title": "Users",
   "konga.name": "Name",
   "konga.created_at": "Created at",
+  "konga.change_password": "Change password",
 
   "konga.errors.user_not_active": "The user is not active",
   "konga.errors.delete_self": "You can't delete yourself!"

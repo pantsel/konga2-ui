@@ -76,3 +76,26 @@ mat-tab-group[vertical] {
   font-weight: 700;
   color: map_get($mat-konga-teal, 500) !important;
 }
+
+.main-sidenav {
+  .mat-drawer-inner-container {
+    background: map_get($mat-konga, 800);
+
+    .branding {
+      background: map_get($mat-konga, 900);
+      color: #fff
+    }
+
+    .mat-list-item.active {
+      font-weight: 400;
+      background: map_get($mat-konga, 300) !important;
+      color: #fff !important;
+    }
+
+    .mat-list-item {
+      color: $gray-500
+    }
+
+  }
+
+}

@@ -54,6 +54,10 @@
               </mat-list-item>
             </mat-list>
             <mat-divider></mat-divider>
+            <button mat-menu-item [routerLink]="['users', authUser?.id]">
+              <mat-icon>account_circle</mat-icon>
+              <span>{{ 'konga.menu.my_account' | translate }}</span>
+            </button>
             <button mat-menu-item routerLink="settings">
               <mat-icon>settings</mat-icon>
               <span>{{ 'konga.menu.settings' | translate }}</span>
@@ -81,18 +85,20 @@
       </div>
 
       <div class="footer" *ngIf="shouldShowToolbar()">
-        <div class="row">
-          <div class="col-12 signature">
-            &#169; <span class="year" data-testid="footer-year">{{year}}</span> - Panagis Tselentis
-            <br class="d-block d-sm-none">
-            <a [matTooltip]="'konga.footer.changelog' | translate"
-               matTooltipPosition="before"
-               href="https://github.com/pantsel/konga2-ui/blob/master/CHANGELOG.md">
-              <fa-icon icon="rocket"></fa-icon>
-              {{version}} <span *ngIf="!isProd">[{{envName}}]</span>
-            </a>
-          </div>
-        </div>
+       <div class="container-fluid">
+         <div class="row">
+           <div class="col-12 signature">
+             &#169; <span class="year" data-testid="footer-year">{{year}}</span> - Panagis Tselentis
+             <br class="d-block d-sm-none">
+             <a [matTooltip]="'konga.footer.changelog' | translate"
+                matTooltipPosition="before"
+                href="https://github.com/pantsel/konga2-ui/blob/master/CHANGELOG.md">
+               <fa-icon icon="rocket"></fa-icon>
+               {{version}} <span *ngIf="!isProd">[{{envName}}]</span>
+             </a>
+           </div>
+         </div>
+       </div>
       </div>
 
     </div>

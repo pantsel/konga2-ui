@@ -34,7 +34,7 @@
 
     .footer {
       color: mat-color($primary, lighter);
-      background-color: mat-color($primary, darker);
+      background-color: $gray-300;
 
       .links,
       .signature {

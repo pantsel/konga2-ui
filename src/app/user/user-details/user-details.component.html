@@ -1,4 +1,6 @@
-<!--<h2>{{'konga.user.tab_details_label' | translate}}</h2>-->
+<h2 class="text-capitalize">
+    {{'konga.user.edit_basic_details' | translate}}
+</h2>
 <form (submit)="updateDetails(detailsForm.value)" [formGroup]="detailsForm" *ngIf="detailsForm" class="mt-4">
     <div class="alert alert-danger" *ngIf="detailsFormErrorMsg">
         {{detailsFormErrorMsg}}
@@ -27,14 +29,22 @@
         </mat-error>
     </mat-form-field>
 
-    <!-- SUPER ADMIN -->
-    <div class="mb-3" *ngIf="authUser?.isSuperAdmin">
-        <mat-checkbox
-                formControlName="isSuperAdmin">Super Admin
-        </mat-checkbox>
+    <div class="row">
+        <div class="col-md-6">
+            <!-- SUPER ADMIN -->
+            <div class="mb-3" *ngIf="authUser?.isSuperAdmin">
+                <mat-checkbox
+                        formControlName="isSuperAdmin">Super Admin
+                </mat-checkbox>
+            </div>
+        </div>
+        <div class="col-md-6 text-right">
+            <!-- ACTIVE -->
+            <div class="mb-3" *ngIf="authUser?.isSuperAdmin">
+                <mat-slide-toggle formControlName="active">{{'konga.active' | translate}}</mat-slide-toggle>
+            </div>
+        </div>
     </div>
-
-
     <button mat-flat-button color="accent"
             style="width: 100%"
             class="btn-large mt-2 text-center" [disabled]="!detailsForm.valid || submitting">

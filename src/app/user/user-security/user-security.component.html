@@ -1,3 +1,38 @@
-<p>
-  user-security works!
-</p>
+<h2 class="text-capitalize">
+  {{'konga.change_password' | translate}}
+</h2>
+<form (submit)="submit(form.value)" [formGroup]="form" *ngIf="form" class="mt-4">
+  <div class="alert alert-danger" *ngIf="errorMsg">
+    {{errorMsg}}
+  </div>
+
+  <!-- PASSWORD -->
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>{{'input.label.new_password' | translate}} <span class="text-danger">*</span></mat-label>
+    <input matInput formControlName="password" placeholder="" type="password">
+    <mat-icon matPrefix>lock</mat-icon>
+    <mat-error *ngIf="form.controls['password'].hasError('required')">
+      {{'errors.validation.required' | translate}}
+    </mat-error>
+  </mat-form-field>
+
+  <!-- PASSWORD CONFIRMATION -->
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>{{'input.label.confirm_password' | translate}} <span class="text-danger">*</span></mat-label>
+    <input matInput formControlName="passwordConfirmation" placeholder="" type="password">
+    <mat-icon matPrefix>repeat</mat-icon>
+    <mat-error *ngIf="form.controls['passwordConfirmation'].hasError('mismatch')">
+      {{'errors.validation.password_confirm_mismatch' | translate}}
+    </mat-error>
+  </mat-form-field>
+
+  <button mat-flat-button color="accent"
+          style="width: 100%"
+          class="btn-large mt-2 text-center" [disabled]="!form.valid || submitting">
+    <mat-progress-spinner mode="indeterminate"
+                          *ngIf="submitting"
+                          color="primary" diameter="36" class="float-left">
+    </mat-progress-spinner>
+    {{'konga.update' | translate}}
+  </button>
+</form>

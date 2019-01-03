@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ApiService} from '@app/core/api/api.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
@@ -51,12 +51,21 @@ export class UserDetailsComponent implements OnInit {
     this.detailsForm = this.fb.group({
       fullName: [this.user.fullName, Validators.compose([Validators.required])],
       emailAddress: [this.user.emailAddress, Validators.compose([Validators.required, Validators.email])],
+      active: [this.user.active],
       isSuperAdmin: [this.user.isSuperAdmin],
     });
 
-    if (this.authUser.id === this.user.id) {
-      this.detailsForm.get('isSuperAdmin').disable();
-    }
+    // A user can't change his own superAdmin and active statuses
+    setTimeout(() => {
+      if (this.authUser.id === this.user.id) {
+        this.detailsForm.get('isSuperAdmin').disable();
+        this.detailsForm.get('active').disable();
+      }else{
+        this.detailsForm.get('isSuperAdmin').enable();
+        this.detailsForm.get('active').enable();
+      }
+    })
+
   }
 
   updateDetails(data) {
