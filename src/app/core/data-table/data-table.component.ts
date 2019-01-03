@@ -7,7 +7,9 @@ import {debounceTime, switchMap, tap} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
 import {DialogService} from '@app/core/dialog/dialog.service';
 import {ListConfigService} from '@app/core/list-config/list-config.service';
-import {NotificationService} from '@app/core';
+import {AppState, NotificationService, selectAuth} from '@app/core';
+import {Observable} from 'rxjs';
+import {select, Store} from '@ngrx/store';
 
 @Component({
   selector: 'anms-data-table',
@@ -37,14 +39,21 @@ export class DataTableComponent implements OnInit {
   isLoading: boolean;
   searchableTitleItems = [];
 
+  authUser: any;
+  auth$: Observable<any>;
 
   constructor(public api: ApiService,
               public translate: TranslateService,
               public dialog: DialogService,
               public notificationsService: NotificationService,
+              public store: Store<AppState>,
               public listConfig: ListConfigService,
               public fb: FormBuilder) {
 
+    this.auth$ = this.store.pipe(select(selectAuth));
+    this.auth$.subscribe(data => {
+      this.authUser = data.user;
+    })
   }
 
   ngOnInit() {

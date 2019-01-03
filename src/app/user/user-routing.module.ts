@@ -6,6 +6,7 @@ import {UserComponent} from '@app/user/user.component';
 import {UserDetailsComponent} from '@app/user/user-details/user-details.component';
 import {UserSecurityComponent} from '@app/user/user-security/user-security.component';
 import {UserPermissionsComponent} from '@app/user/user-permissions/user-permissions.component';
+import {UserCreateComponent} from '@app/user/user-create/user-create.component';
 
 const routes: Routes = [
   {
@@ -13,6 +14,11 @@ const routes: Routes = [
     component: UserListComponent,
     pathMatch: 'full',
     data: { title: 'konga.menu.users' }
+  },
+  {
+    path: 'create',
+    component: UserCreateComponent,
+    data: { title: 'konga.menu.users_create' }
   },
   {
     path: ':id',

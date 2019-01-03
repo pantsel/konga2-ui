@@ -35,6 +35,7 @@ export class AppComponent implements OnInit {
   logo = require('../assets/logo.png');
   languages = ['en'];
   navigation = [
+    { link: 'dashboard', label: 'konga.menu.dashboard' },
     { link: 'users', label: 'konga.menu.users' },
     // { link: 'features', label: 'konga.menu.features' },
     // { link: 'examples', label: 'konga.menu.examples' }

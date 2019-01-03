@@ -99,3 +99,15 @@ mat-tab-group[vertical] {
   }
 
 }
+
+.fab {
+  position: fixed !important;
+
+  &.bottom {
+    bottom: 4.5rem;
+  }
+
+  &.right {
+    right: 3rem;
+  }
+}

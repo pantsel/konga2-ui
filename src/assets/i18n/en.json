@@ -39,6 +39,7 @@
   "konga.menu.logout": "Logout",
   "konga.menu.settings": "Settings",
   "konga.menu.my_account": "My account",
+  "konga.menu.dashboard": "Dashboard",
   "konga.settings.animations.elements": "Navigation page elements slide up",
   "konga.settings.animations.page": "Navigation whole page transition",
   "konga.settings.animations.title": "Animations",
@@ -78,6 +79,9 @@
   "konga.update" : "Save Changes",
   "konga.changes_saved": "Changes saved successfully!",
   "konga.active": "Active",
+  "konga.create_user": "Create user",
+  "konga.new_user": "New user",
+  "konga.create_user_success": "A new user was created successfully",
 
   "konga.user.tab_details_label" : "User Details",
   "konga.user.tab_security_label" : "Security",
