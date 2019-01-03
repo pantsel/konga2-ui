@@ -86,5 +86,6 @@
   "konga.name": "Name",
   "konga.created_at": "Created at",
 
-  "konga.errors.user_not_active": "The user is not active"
+  "konga.errors.user_not_active": "The user is not active",
+  "konga.errors.delete_self": "You can't delete yourself!"
 }
