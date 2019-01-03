@@ -56,7 +56,7 @@
                     matTooltip="{{item.isSuperAdmin ? 'Super Admin' : 'User'}}">{{item.isSuperAdmin ? 'stars' : 'account_box'}}</mat-icon>
           </td>
           <td>
-            <a href="">
+            <a [routerLink]="['/users', item.id]">
               <strong>{{item.fullName}}</strong>
             </a>
           </td>

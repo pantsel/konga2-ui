@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import {TranslateService} from '@ngx-translate/core';
+import * as _ from 'lodash';
 
 @Injectable({
   providedIn: 'root'
@@ -66,6 +67,9 @@ export class ApiService {
   }
 
   patch(endpoint: string, body: any, options?: any) {
+    Object.assign(body, {
+      _csrf: window['_csrf']
+    });
     return this.http.patch(
       `${environment.apiUrl}${environment.apiPrefix}/${endpoint}`,
       body,
@@ -79,7 +83,8 @@ export class ApiService {
         return this.translate.instant('errors.login.unauthorized');
         break;
       default:
-        return this.translate.instant(error.statusText);
+        const msg = _.get(error, 'error.message', error.statusText) || 'An unknown error occured.';
+        return this.translate.instant(msg);
     }
   }
 }

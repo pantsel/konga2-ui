@@ -73,6 +73,13 @@
   "konga.delete_item_text" : "Are you sure you want to delete the selected item?",
   "konga.cancel" : "Cancel",
   "konga.delete_item_success": "Item deleted!",
+  "konga.please_wait": "Loading. Please wait...",
+  "konga.update" : "Save Changes",
+  "konga.changes_saved": "Changes saved successfully!",
+
+  "konga.user.tab_details_label" : "USER DETAILS",
+  "konga.user.tab_security_label" : "SECURITY",
+  "konga.user.tab_permissions_label" : "PERMISSIONS",
 
   "errors.validation.required": "The field is required",
   "errors.validation.email": "Invalid email",
@@ -82,7 +89,7 @@
   "input.label.confirm_password": "Confirm Password",
   "input.label.name": "Name",
 
-  "konga.users.list.title": "Users list",
+  "konga.users.list.title": "Users",
   "konga.name": "Name",
   "konga.created_at": "Created at",
 

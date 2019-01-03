@@ -25,7 +25,7 @@ import {AuthService} from '@app/core/auth/auth.service';
   selector: 'konga-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  animations: [routeAnimations]
+  // animations: [routeAnimations]
 })
 export class AppComponent implements OnInit {
   isProd = env.production;
