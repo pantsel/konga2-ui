@@ -15,6 +15,10 @@ import {Observable} from 'rxjs';
 let auth$: Observable<any>;
 let authUser: any;
 
+export const onlyMe = (route: Route) => {
+  return (+authUser.id === +route['params'].id) ? true : ['superAdmin', 'createUser']
+}
+
 const routes: Routes = [
   {
     path: '',
@@ -46,9 +50,7 @@ const routes: Routes = [
     data: {
       title: 'konga.menu.users.update',
       permissions: {
-        only : (route: Route) => {
-          return (+authUser.id === +route['params'].id) ? true : ['superAdmin', 'createUser']
-        }
+        only : onlyMe
       }
     },
     children: [

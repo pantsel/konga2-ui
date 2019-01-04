@@ -72,9 +72,14 @@ mat-tab-group[vertical] {
   flex-direction: row!important;
 }
 
+
 .mat-list-item.active {
   font-weight: 700;
   color: map_get($mat-konga-teal, 500) !important;
+  mat-icon {
+    color: map_get($mat-konga-teal, 500) !important;
+  }
+
 }
 
 .main-sidenav {
@@ -89,7 +94,10 @@ mat-tab-group[vertical] {
     .mat-list-item.active {
       font-weight: 400;
       background: map_get($mat-konga, 300) !important;
-      color: #fff !important;
+      color: $gray-100 !important;
+      mat-icon {
+        color: $gray-100 !important;
+      }
     }
 
     .mat-list-item {

@@ -21,10 +21,7 @@ export class DataTableComponent implements OnInit {
 
   form: FormGroup;
 
-  @Input() data = {
-    totalCount: 0,
-    results: []
-  };
+  @Input() data: any;
   @Input() titleItems = [];
   @Input() limit = 30;
   @Input() page = 0;
@@ -92,6 +89,9 @@ export class DataTableComponent implements OnInit {
 
 
   async loadData() {
+
+    // await this.sleep(5000);
+
     try {
       const skip = this.limit * this.page;
       const where = {
@@ -162,4 +162,11 @@ export class DataTableComponent implements OnInit {
       })
   }
 
+  /**
+   * Utility function for testing
+   * @param ms
+   */
+  private sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
 }

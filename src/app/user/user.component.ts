@@ -1,8 +1,7 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ApiService} from '@app/core/api/api.service';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {AppState, NotificationService, selectAuth} from '@app/core';
+import {AppState, selectAuth} from '@app/core';
 import {TranslateService} from '@ngx-translate/core';
 import {select, Store} from '@ngrx/store';
 import {Observable} from 'rxjs';
@@ -26,6 +25,7 @@ export class UserComponent implements OnInit {
               private sharedUserService: SharedUserService,
               public store: Store<AppState>,
               private api: ApiService) {
+
     this.sub = this.route.params.subscribe(params => {
       this.id = +params['id']; // (+) converts string 'id' to a number
       this.fetchUser();
@@ -47,6 +47,7 @@ export class UserComponent implements OnInit {
   }
 
   fetchUser() {
+    this.sharedUserService._user.next(null); // Reset the user
     this.api.get(`users/${this.id}`)
       .subscribe(data => {
         this.sharedUserService._user.next(data);

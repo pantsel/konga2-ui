@@ -83,6 +83,8 @@
   "konga.new_user": "New user",
   "konga.create_user_success": "A new user was created successfully",
   "konga.create": "Create",
+  "konga.active": "Active",
+  "konga.inactive": "Inactive",
 
   "konga.user.tab_details_label" : "User Details",
   "konga.user.tab_security_label" : "Security",

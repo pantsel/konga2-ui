@@ -21,7 +21,9 @@
     </div>
   </div>
 
-  <mat-card class="mb-4 p-0">
+  <anms-page-loader *ngIf="!data?.results"></anms-page-loader>
+
+  <mat-card class="mb-4 p-0" *ngIf="data?.results">
     <div class="table-responsive">
       <table class="table mb-0">
         <tr>

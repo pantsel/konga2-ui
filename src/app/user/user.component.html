@@ -1,27 +1,32 @@
-<div class="container p-5 mt-5 text-center" *ngIf="!user">
-  <mat-progress-spinner mode="indeterminate"
-                        class="ml-auto mr-auto"
-                        color="primary" diameter="96"></mat-progress-spinner>
-  <p class="mt-4">{{'konga.please_wait' | translate}}</p>
-</div>
+<anms-page-loader *ngIf="!user"></anms-page-loader>
 <div class="container pb-4" *ngIf="user">
-  <h1 class="mb-4 pt-4">{{user.fullName}}</h1>
+  <h1 class="mb-4 pt-4">
+    {{user.fullName}}&nbsp;
+    <span class="badge badge-pill" [ngClass]="{'badge-danger': !user.active, 'badge-success': user.active}">
+      {{user.active ? ('konga.active' | translate) : ('konga.inactive' | translate)}}
+    </span>
+  </h1>
+  <mat-divider class="mb-5"></mat-divider>
+
   <div class="row">
     <div class="col-md-3">
       <mat-nav-list>
         <a mat-list-item
            routerLinkActive="active"
            [routerLink]="[{ outlets: { user: ['details'] } }]">
+          <mat-icon class="mr-3 text-secondary">info_outline</mat-icon>
           {{'konga.user.tab_details_label' | translate}}
         </a>
         <a mat-list-item
            routerLinkActive="active"
            [routerLink]="[{ outlets: { user: ['security'] } }]">
+          <mat-icon class="mr-3 text-secondary">security</mat-icon>
           {{'konga.user.tab_security_label' | translate}}
         </a>
         <a mat-list-item
            routerLinkActive="active"
            [routerLink]="[{ outlets: { user: ['permissions'] } }]">
+          <mat-icon class="mr-3 text-secondary">lock_open</mat-icon>
           {{'konga.user.tab_permissions_label' | translate}}
         </a>
       </mat-nav-list>

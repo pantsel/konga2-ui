@@ -105,6 +105,7 @@ library.add(
 import { BigInputComponent } from './big-input/big-input.component';
 import { BigInputActionComponent } from './big-input/big-input-action.component';
 import { LayoutModule } from '@angular/cdk/layout';
+import {PageLoaderModule} from '@app/shared/page-loader/page-loader.module';
 
 @NgModule({
   imports: [
@@ -143,7 +144,8 @@ import { LayoutModule } from '@angular/cdk/layout';
     MatStepperModule,
     MatPaginatorModule,
 
-    FontAwesomeModule
+    FontAwesomeModule,
+    PageLoaderModule
   ],
   declarations: [BigInputComponent, BigInputActionComponent],
   exports: [
@@ -180,7 +182,8 @@ import { LayoutModule } from '@angular/cdk/layout';
     FontAwesomeModule,
 
     BigInputComponent,
-    BigInputActionComponent
+    BigInputActionComponent,
+    PageLoaderModule
   ]
 })
 export class SharedModule {}

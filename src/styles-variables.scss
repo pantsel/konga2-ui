@@ -75,6 +75,8 @@ $headings-font-weight:    700;
 
 //** Colors **//
 $success: map_get($mat-konga-teal, 400) !default;
+$primary: map_get($mat-konga, 800) !default;
+$danger: map_get($mat-konga, A200) !default;
 $warning: #FBC02D !default;
 
 

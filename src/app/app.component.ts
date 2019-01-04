@@ -96,20 +96,18 @@ export class AppComponent implements OnInit {
     this.auth$.subscribe(data => {
       this.authUser = data.user;
 
-      if (this.authUser.isSuperAdmin) {
-        return;
+      if (!this.authUser.isSuperAdmin) {
+        // Filter navigation items based on permissions
+        this.navigationSideMenu = this.navigationSideMenu.filter(item => {
+          if (!item.permissions || !item.permissions.length) {
+            return true;
+          }
+
+          const permissions = this.permissionsService.getPermissions();
+          const permissionsNames = Object.keys(permissions);
+          return _.intersection(item.permissions, permissionsNames).length;
+        })
       }
-
-      // Filter navigation items based on permissions
-      this.navigationSideMenu = this.navigationSideMenu.filter(item => {
-        if (!item.permissions || !item.permissions.length) {
-          return true;
-        }
-
-        const permissions = this.permissionsService.getPermissions();
-        const permissionsNames = Object.keys(permissions);
-        return _.intersection(item.permissions, permissionsNames).length;
-      })
 
     })
 
