@@ -6,7 +6,7 @@ import {Router} from '@angular/router';
 import {AppEvent, AppEventsService} from '@app/core/app-events/app-events.service';
 import {Observable} from 'rxjs';
 import * as _ from 'lodash';
-import {NgxPermissionsService} from 'ngx-permissions';
+import {NgxPermissionsService, NgxRolesService} from 'ngx-permissions';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +20,7 @@ export class AuthService {
   constructor(private api: ApiService,
               private router: Router,
               private permissionsService: NgxPermissionsService,
+              private rolesService: NgxRolesService,
               private events: AppEventsService,
               private store: Store<AppState>) {
 
@@ -41,6 +42,13 @@ export class AuthService {
         // Load permissions
         this.authUser = auth.user;
         this.permissionsService.loadPermissions(_.get(auth, 'user.isSuperAdmin') ? ['superAdmin'] : []);
+        // if (_.get(auth, 'user.isSuperAdmin')) {
+        //   this.rolesService.addRoles({
+        //     'superAdmin': () => {
+        //       return true;
+        //     }
+        //   })
+        // }
       }
 
 

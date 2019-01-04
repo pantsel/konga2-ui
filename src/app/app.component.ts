@@ -2,6 +2,7 @@ import browser from 'browser-detect';
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import * as _ from 'lodash';
 
 import {
   routeAnimations,
@@ -20,6 +21,7 @@ import {
 } from './settings';
 import {Router} from '@angular/router';
 import {AuthService} from '@app/core/auth/auth.service';
+import {NgxPermissionsService} from 'ngx-permissions';
 
 @Component({
   selector: 'konga-root',
@@ -46,6 +48,7 @@ export class AppComponent implements OnInit {
       label: 'konga.menu.dashboard' },
     { link: 'users',
       icon: 'supervised_user_circle',
+      permissions: ['usersList'],
       label: 'konga.menu.users' },
     { link: 'settings',
       icon: 'settings',
@@ -63,8 +66,11 @@ export class AppComponent implements OnInit {
     private store: Store<AppState>,
     private router: Router,
     private auth: AuthService,
+    private permissionsService: NgxPermissionsService,
     private storageService: LocalStorageService
-  ) {}
+  ) {
+
+  }
 
   private static isIEorEdgeOrSafari() {
     return ['ie', 'edge', 'safari'].includes(browser().name);
@@ -90,6 +96,21 @@ export class AppComponent implements OnInit {
     this.auth$.subscribe(data => {
       this.authUser = data.user;
 
+      if (this.authUser.isSuperAdmin) {
+        return;
+      }
+
+      // Filter navigation items based on permissions
+      this.navigationSideMenu = this.navigationSideMenu.filter(item => {
+        if (!item.permissions || !item.permissions.length) {
+          return true;
+        }
+
+        const permissions = this.permissionsService.getPermissions();
+        const permissionsNames = Object.keys(permissions);
+        return _.intersection(item.permissions, permissionsNames).length;
+      })
+
     })
 
     this.isAuthenticated$.subscribe(data => {
@@ -107,7 +128,6 @@ export class AppComponent implements OnInit {
       }
     })
   }
-
 
   onLogoutClick() {
     this.auth.logout();
