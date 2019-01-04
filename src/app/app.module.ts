@@ -13,6 +13,7 @@ import { AppComponent } from './app.component';
 import { EntryModule } from '@app/entry/entry.module';
 import {AuthService} from '@app/core/auth/auth.service';
 import {DashboardModule} from '@app/dashboard/dashboard.module';
+import {NgxPermissionsModule} from 'ngx-permissions';
 
 @NgModule({
   imports: [
@@ -30,7 +31,10 @@ import {DashboardModule} from '@app/dashboard/dashboard.module';
     DashboardModule,
 
     // app
-    AppRoutingModule
+    AppRoutingModule,
+
+    // Specify your library as an import
+    NgxPermissionsModule.forRoot()
   ],
   declarations: [AppComponent],
   providers: [AuthService],
