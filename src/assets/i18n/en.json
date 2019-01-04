@@ -90,6 +90,9 @@
   "konga.user.tab_security_label" : "Security",
   "konga.user.tab_permissions_label" : "Permissions",
   "konga.user.edit_basic_details" : "Edit basic details",
+  "konga.user.permissions" : "Manage permissions",
+
+  "konga.permissions.super_admin_text": "This user is not affected by permissions",
 
   "errors.validation.required": "The field is required",
   "errors.validation.email": "Invalid email",

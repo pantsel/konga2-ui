@@ -94,7 +94,7 @@ export class AppComponent implements OnInit {
 
     // Act on auth events
     this.auth$.subscribe(data => {
-      if (_.get(data.user.id)) {
+      if (_.get(data, 'user.id')) {
         this.authUser = data.user;
 
         if (!this.authUser.isSuperAdmin) {

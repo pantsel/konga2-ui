@@ -1,3 +1,36 @@
-<p>
-  user-permissions works!
-</p>
+<h2 class="text-capitalize font-weight-normal">
+  {{'konga.user.permissions' | translate}}
+</h2>
+
+<div class="alert alert-danger mt-4" *ngIf="user.isSuperAdmin">
+  <h3>Super Admin</h3>
+  <p class="m-0">{{'konga.permissions.super_admin_text' | translate}}.</p>
+</div>
+
+<anms-page-loader *ngIf="!allPermissions"></anms-page-loader>
+
+
+<ng-container *ngIf="allPermissions && !user.isSuperAdmin">
+
+  <div class="mb-4">
+    <div *ngFor="let group of getPermissionGroups()" class="mt-5">
+      <h3 class="text-capitalize">{{group | translate}}</h3>
+      <mat-divider></mat-divider>
+      <div class="pt-4">
+        <mat-checkbox class="mr-4 mb-2 text-capitalize"
+                      [checked]="hasPermission(group, permission)"
+                      (change)="permissionChange($event, group, permission)"
+                      *ngFor="let permission of allPermissions[group]">{{permission}}</mat-checkbox>
+      </div>
+    </div>
+  </div>
+  <button mat-flat-button color="accent"
+          (click)="update()"
+          class="btn-large mt-4 text-center w-100" [disabled]="submitting">
+    <mat-progress-spinner mode="indeterminate"
+                          *ngIf="submitting"
+                          color="primary" diameter="36" class="float-left">
+    </mat-progress-spinner>
+    {{'konga.update' | translate}}
+  </button>
+</ng-container>
