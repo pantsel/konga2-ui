@@ -32,7 +32,7 @@ import { NotificationService } from './notifications/notification.service';
 import { ApiService } from '@app/core/api/api.service';
 import { BootService } from '@app/core/boot/boot.service';
 import * as _ from 'lodash';
-import {ActionAuthLogin} from '@app/core/auth/auth.actions';
+import {ActionAuthLogin, ActionAuthLogout} from '@app/core/auth/auth.actions';
 import {ListConfigService} from '@app/core/list-config/list-config.service';
 import {AppEventsService} from '@app/core/app-events/app-events.service';
 import {DialogModule} from '@app/core/dialog/dialog.module';
@@ -58,6 +58,9 @@ export const loadConfig = (bootProvider: BootService, store: Store<AppState>) =>
           if (_.get(result, 'loggedInUser.id')) {
             console.log('User logged in!', result.loggedInUser);
             store.dispatch(new ActionAuthLogin(result.loggedInUser));
+          }else{
+            console.log('User is not logged in!', result.loggedInUser);
+            store.dispatch(new ActionAuthLogout());
           }
 
 

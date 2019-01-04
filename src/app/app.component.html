@@ -83,7 +83,7 @@
                   mat-button
                   [matMenuTriggerFor]="toolbarUserMenu">
             <mat-icon class="mr-2">account_circle</mat-icon>
-            Hello, {{authUser.fullName.split(' ')[0]}}
+            Hello, {{authUser?.fullName?.split(' ')[0]}}
           </button>
           <mat-menu #toolbarUserMenu="matMenu">
             <mat-list class="mt-0 pt-0">

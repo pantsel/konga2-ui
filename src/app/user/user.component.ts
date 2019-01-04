@@ -50,6 +50,7 @@ export class UserComponent implements OnInit {
     this.sharedUserService._user.next(null); // Reset the user
     this.api.get(`users/${this.id}`)
       .subscribe(data => {
+        console.log('fetchUser =>', data);
         this.sharedUserService._user.next(data);
       })
   }
