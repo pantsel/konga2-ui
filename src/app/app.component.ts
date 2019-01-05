@@ -50,10 +50,15 @@ export class AppComponent implements OnInit {
       icon: 'supervised_user_circle',
       permissions: ['usersList'],
       label: 'konga.menu.users' },
+    { link: 'connections',
+      icon: 'cast',
+      permissions: ['connectionsList'],
+      label: 'konga.menu.connections' },
     { link: 'settings',
       icon: 'settings',
       permissions: ['settingsUpdate'],
       label: 'konga.menu.settings' }
+
   ];
 
   isAuthenticated$: Observable<boolean>;

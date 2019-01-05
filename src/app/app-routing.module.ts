@@ -14,7 +14,7 @@ const routes: Routes = [
   {
     path: 'settings',
     component: SettingsContainerComponent,
-    canActivate: [NgxPermissionsGuard],
+    canActivate: [AuthGuardService, NgxPermissionsGuard],
     data: {
       title: 'konga.menu.settings',
       permissions: {
@@ -29,6 +29,11 @@ const routes: Routes = [
   {
     path: 'users',
     loadChildren: 'app/user/user.module#UserModule',
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'connections',
+    loadChildren: 'app/connections/connections.module#ConnectionsModule',
     canActivate: [AuthGuardService]
   },
   {

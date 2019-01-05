@@ -50,7 +50,7 @@ export class UserPermissionsComponent extends BaseComponent implements OnInit {
   }
 
   hasPermission(group, permission) {
-    return this.user.permissions[group].indexOf(permission) > -1
+    return this.user.permissions[group] && this.user.permissions[group].indexOf(permission) > -1
   }
 
 

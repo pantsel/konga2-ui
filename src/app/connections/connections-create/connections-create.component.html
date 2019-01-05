@@ -1,0 +1,133 @@
+<h2>
+  {{'konga.new_connection' | translate}}
+  <button mat-icon-button class="float-right" (click)="onNoClick()">
+    <mat-icon>close</mat-icon>
+  </button>
+</h2>
+<p class="mb-4">{{'konga.new_connection.subtitle' | translate}}</p>
+
+
+<mat-tab-group mat-stretch-tabs dynamicHeight (selectedIndexChange)="typeChange($event)">
+  <mat-tab label="NO AUTH">
+    <div class="pt-4">
+      <div class="alert alert-info">
+        <small>
+          Konga will connect directly to Kong's admin API.
+          This method is mainly suitable for demo scenarios or internal access (ex. localhost).
+          Kong's admin API <strong>should not</strong> be publicly exposed.
+        </small>
+      </div>
+    </div>
+
+  </mat-tab>
+  <mat-tab label="KEY AUTH">
+    <div class="pt-4">
+      <div class="alert alert-info">
+        <small>
+          Konga will connect to Kong's admin via an exposed "loop-back" API using key authentication.<br>
+          <a href="https://docs.konghq.com/1.0.x/secure-admin-api/#kong-api-loopback" target="_blank">
+            Check out how to setup an API key based "loop-back" API.
+          </a>
+        </small>
+      </div>
+    </div>
+  </mat-tab>
+  <mat-tab label="JWT AUTH">
+    <div class="pt-4">
+      <div class="alert alert-info">
+        <small>
+          Konga will connect to Kong's admin via an exposed "loop-back" API using JWT authentication.<br>
+          <a href="https://docs.konghq.com/1.0.x/secure-admin-api/#kong-api-loopback" target="_blank">
+            Check out how to setup a JWT based "loop-back" API.
+          </a>
+        </small>
+      </div>
+    </div>
+  </mat-tab>
+</mat-tab-group>
+
+<form (submit)="submit(form.value)" [formGroup]="form" *ngIf="form">
+  <div class="alert alert-danger" *ngIf="errorMsg">
+    {{errorMsg}}
+  </div>
+
+  <!-- NAME -->
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>{{'input.label.name' | translate}} <span class="text-danger">*</span></mat-label>
+    <input matInput formControlName="name" placeholder="{{'kong.connections.input.name.placeholder' | translate}}">
+    <mat-error *ngIf="form.controls['name'].hasError('required')">
+      {{'errors.validation.required' | translate}}
+    </mat-error>
+  </mat-form-field>
+
+  <!-- KONG ADMIN URL -->
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>Kong Admin URL <span class="text-danger">*</span></mat-label>
+    <input matInput formControlName="kongAdminUrl" placeholder="{{'kong.connections.input.kongAdminUrl.placeholder' | translate}}">
+    <mat-error *ngIf="form.controls['kongAdminUrl'].hasError('required')">
+      {{'errors.validation.required' | translate}}
+    </mat-error>
+    <mat-error *ngIf="form.controls['kongAdminUrl'].hasError('pattern')">
+      {{'errors.validation.invalid' | translate}}
+    </mat-error>
+  </mat-form-field>
+
+  <ng-container *ngIf="form.controls['type'].value === 'key_auth'">
+    <!-- KONG API KEY -->
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Kong API Key <span class="text-danger">*</span></mat-label>
+      <input matInput formControlName="kongApiKey" placeholder="{{'kong.connections.input.kongApiKey.placeholder' | translate}}">
+      <mat-error *ngIf="form.controls['kongApiKey'].hasError('required')">
+        {{'errors.validation.required' | translate}}
+      </mat-error>
+    </mat-form-field>
+  </ng-container>
+
+  <ng-container *ngIf="form.controls['type'].value === 'jwt'">
+
+    <!-- JWT ALGO -->
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>JWT Algorithm <span class="text-danger">*</span></mat-label>
+      <mat-select placeholder="Favorite food" formControlName="jwtAlgorithm">
+        <mat-option *ngFor="let algo of jwtAlgos" [value]="algo">
+          {{algo}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+
+    <!-- JWT KEY -->
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>JWT Key <span class="text-danger">*</span></mat-label>
+      <input matInput formControlName="jwtKey" placeholder="{{'kong.connections.input.jwtKey.placeholder' | translate}}">
+      <mat-error *ngIf="form.controls['jwtKey'].hasError('required')">
+        {{'errors.validation.required' | translate}}
+      </mat-error>
+    </mat-form-field>
+
+    <!-- JWT SECRET -->
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>JWT Secret <span class="text-danger">*</span></mat-label>
+      <input matInput formControlName="jwtSecret" placeholder="{{'kong.connections.input.jwtSecret.placeholder' | translate}}">
+      <mat-error *ngIf="form.controls['jwtSecret'].hasError('required')">
+        {{'errors.validation.required' | translate}}
+      </mat-error>
+    </mat-form-field>
+
+  </ng-container>
+
+
+
+  <mat-divider class="mt-4 mb-4 d-block"></mat-divider>
+
+
+  <button mat-flat-button color="accent"
+          style="width: 100%"
+          class="btn-large mt-2 text-center" [disabled]="!form.valid || submitting">
+    <mat-progress-spinner mode="indeterminate"
+                          *ngIf="submitting"
+                          color="primary" diameter="36" class="float-left">
+    </mat-progress-spinner>
+    {{'konga.create_connection' | translate}}
+  </button>
+</form>
