@@ -41,19 +41,29 @@ export class AuthService {
       if (auth.isAuthenticated) {
         // Load permissions
         this.authUser = auth.user;
-        this.permissionsService.loadPermissions(_.get(auth, 'user.isSuperAdmin') ? ['superAdmin'] : []);
-        // if (_.get(auth, 'user.isSuperAdmin')) {
-        //   this.rolesService.addRoles({
-        //     'superAdmin': () => {
-        //       return true;
-        //     }
-        //   })
-        // }
+        this.permissionsService.loadPermissions(_.get(auth, 'user.isSuperAdmin') ? ['superAdmin'] : this.getAuthUserPermissions());
+
+        console.log(`[DEBUG] authUser:permissions =>`, this.permissionsService.getPermissions())
       }
 
 
     })
 
+  }
+
+  hasPermission(permission) {
+    return this.getAuthUserPermissions().indexOf(permission) > -1;
+  }
+
+  getAuthUserPermissions() {
+    const permissions = [];
+    Object.keys(_.get(this.authUser, 'permissions')).forEach(key => {
+      this.authUser.permissions[key].forEach(permission => {
+        permissions.push(key + permission.charAt(0).toUpperCase() + permission.slice(1));
+      });
+    })
+
+    return permissions;
   }
 
   public getAuthUser() {

@@ -106,6 +106,7 @@ import { BigInputComponent } from './big-input/big-input.component';
 import { BigInputActionComponent } from './big-input/big-input-action.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import {PageLoaderModule} from '@app/shared/page-loader/page-loader.module';
+import {NgxPermissionsModule} from 'ngx-permissions';
 
 @NgModule({
   imports: [
@@ -145,7 +146,9 @@ import {PageLoaderModule} from '@app/shared/page-loader/page-loader.module';
     MatPaginatorModule,
 
     FontAwesomeModule,
-    PageLoaderModule
+    PageLoaderModule,
+    // Specify your library as an import
+    NgxPermissionsModule
   ],
   declarations: [BigInputComponent, BigInputActionComponent],
   exports: [
@@ -183,7 +186,8 @@ import {PageLoaderModule} from '@app/shared/page-loader/page-loader.module';
 
     BigInputComponent,
     BigInputActionComponent,
-    PageLoaderModule
+    PageLoaderModule,
+    NgxPermissionsModule
   ]
 })
 export class SharedModule {}

@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { SettingsContainerComponent } from './settings';
 import {AuthGuardService} from '@app/core';
+import {NgxPermissionsGuard} from 'ngx-permissions';
 
 const routes: Routes = [
   {
@@ -13,7 +14,13 @@ const routes: Routes = [
   {
     path: 'settings',
     component: SettingsContainerComponent,
-    data: { title: 'konga.menu.settings' }
+    canActivate: [NgxPermissionsGuard],
+    data: {
+      title: 'konga.menu.settings',
+      permissions: {
+        only : ['superAdmin', 'settingsUpdate']
+      }
+    }
   },
   {
     path: 'examples',

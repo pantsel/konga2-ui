@@ -78,9 +78,8 @@
     </mat-paginator>
   </mat-card>
 </div>
-
 <button mat-fab class="fab bottom right"
-        (click)="openCreateUserModal()"
-        *ngIf="authUser?.isSuperAdmin">
+        *ngxPermissionsOnly="['superAdmin', 'usersCreate']"
+        (click)="openCreateUserModal()">
   <mat-icon matTooltip="{{'konga.create_user' | translate}}">add</mat-icon>
 </button>

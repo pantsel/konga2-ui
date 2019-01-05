@@ -7,13 +7,15 @@ import {TranslateService} from '@ngx-translate/core';
 import {select, Store} from '@ngrx/store';
 import {Observable} from 'rxjs';
 import {SharedUserService} from '@app/user/shared-user.service';
+import {BaseComponent} from '@app/core/base/base.component';
+import {DialogService} from '@app/core/dialog/dialog.service';
 
 @Component({
   selector: 'anms-user-details',
   templateUrl: './user-details.component.html',
   styleUrls: ['./user-details.component.css']
 })
-export class UserDetailsComponent implements OnInit {
+export class UserDetailsComponent extends BaseComponent implements OnInit {
 
   detailsForm: FormGroup;
   detailsFormErrorMsg: string;
@@ -22,21 +24,16 @@ export class UserDetailsComponent implements OnInit {
   public id: any;
   public user: any;
 
-  auth$: Observable<any>;
-  authUser: any;
-
   constructor(private route: ActivatedRoute,
               public fb: FormBuilder,
               public translate: TranslateService,
               private sharedUserService: SharedUserService,
               public store: Store<AppState>,
+              public dialog: DialogService,
               public notificationsService: NotificationService,
-              private api: ApiService) {
+              public api: ApiService) {
 
-    this.auth$ = this.store.pipe(select(selectAuth));
-    this.auth$.subscribe(data => {
-      this.authUser = data.user;
-    })
+    super(api, notificationsService, translate, dialog, store);
 
     sharedUserService._user.subscribe(user => {
       this.user = user;
@@ -45,6 +42,7 @@ export class UserDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
+    super.ngOnInit();
   }
 
   createDetailsForm() {

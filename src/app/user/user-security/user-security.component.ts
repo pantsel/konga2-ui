@@ -1,7 +1,7 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {SharedUserService} from '@app/user/shared-user.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {loginPage, NotificationService} from '@app/core';
+import {NotificationService} from '@app/core';
 import {ApiService} from '@app/core/api/api.service';
 import {TranslateService} from '@ngx-translate/core';
 

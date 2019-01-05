@@ -10,6 +10,7 @@ import {ListConfigService} from '@app/core/list-config/list-config.service';
 import {AppState, NotificationService, selectAuth} from '@app/core';
 import {Observable} from 'rxjs';
 import {select, Store} from '@ngrx/store';
+import {BaseComponent} from '@app/core/base/base.component';
 
 @Component({
   selector: 'anms-data-table',
@@ -17,7 +18,7 @@ import {select, Store} from '@ngrx/store';
   styleUrls: ['./data-table.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DataTableComponent implements OnInit {
+export class DataTableComponent extends BaseComponent implements OnInit {
 
   form: FormGroup;
 
@@ -36,9 +37,6 @@ export class DataTableComponent implements OnInit {
   isLoading: boolean;
   searchableTitleItems = [];
 
-  authUser: any;
-  auth$: Observable<any>;
-
   constructor(public api: ApiService,
               public translate: TranslateService,
               public dialog: DialogService,
@@ -47,13 +45,12 @@ export class DataTableComponent implements OnInit {
               public listConfig: ListConfigService,
               public fb: FormBuilder) {
 
-    this.auth$ = this.store.pipe(select(selectAuth));
-    this.auth$.subscribe(data => {
-      this.authUser = data.user;
-    })
+    super(api, notificationsService, translate, dialog, store);
   }
 
   ngOnInit() {
+
+    super.ngOnInit();
 
     const config = _.get(this.listConfig, `models.${this.model}`);
     this.endpoint = config.endpoint;

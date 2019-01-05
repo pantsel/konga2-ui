@@ -18,7 +18,7 @@ import {SharedUserService} from '@app/user/shared-user.service';
     CommonModule,
     SharedModule,
     DataTableModule,
-    UserRoutingModule
+    UserRoutingModule,
   ],
   providers: [SharedUserService]
 })

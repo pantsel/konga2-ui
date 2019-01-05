@@ -52,6 +52,7 @@ export class AppComponent implements OnInit {
       label: 'konga.menu.users' },
     { link: 'settings',
       icon: 'settings',
+      permissions: ['settingsUpdate'],
       label: 'konga.menu.settings' }
   ];
 

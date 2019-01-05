@@ -1,34 +1,31 @@
 import { Component, OnInit } from '@angular/core';
 import {ApiService} from '@app/core/api/api.service';
 import {SharedUserService} from '@app/user/shared-user.service';
-import {select, Store} from '@ngrx/store';
-import {AppState, NotificationService, selectAuth} from '@app/core';
-import {Observable} from 'rxjs';
-import * as _ from 'lodash';
+import {Store} from '@ngrx/store';
+import {AppState, NotificationService} from '@app/core';
 import {TranslateService} from '@ngx-translate/core';
+import {BaseComponent} from '@app/core/base/base.component';
+import {DialogService} from '@app/core/dialog/dialog.service';
 
 @Component({
   selector: 'anms-user-permissions',
   templateUrl: './user-permissions.component.html',
   styleUrls: ['./user-permissions.component.css']
 })
-export class UserPermissionsComponent implements OnInit {
+export class UserPermissionsComponent extends BaseComponent implements OnInit {
 
   allPermissions: any;
   user: any;
-  auth$: Observable<any>;
-  authUser: any;
   submitting: boolean;
 
-  constructor(private api: ApiService,
-              private store: Store<AppState>,
-              private translate: TranslateService,
-              private notificationService: NotificationService,
-              private sharedUserService: SharedUserService) {
-    this.auth$ = this.store.pipe(select(selectAuth));
-    this.auth$.subscribe(data => {
-      this.authUser = data.user;
-    })
+  constructor(public api: ApiService,
+              public store: Store<AppState>,
+              public dialog: DialogService,
+              public translate: TranslateService,
+              public notificationService: NotificationService,
+              public sharedUserService: SharedUserService) {
+
+    super(api, notificationService, translate, dialog, store);
 
     sharedUserService._user.subscribe(user => {
       this.user = user;

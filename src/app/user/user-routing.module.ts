@@ -16,7 +16,7 @@ let auth$: Observable<any>;
 let authUser: any;
 
 export const onlyMe = (route: Route) => {
-  return (+authUser.id === +route['params'].id) ? true : ['superAdmin', 'createUser']
+  return (+authUser.id === +route['params'].id) ? true : ['superAdmin', 'usersUpdate']
 }
 
 const routes: Routes = [
@@ -28,7 +28,7 @@ const routes: Routes = [
     data: {
       title: 'konga.menu.users',
       permissions: {
-        only : ['superAdmin', 'listUsers']
+        only : ['superAdmin', 'usersList']
       }
     }
   },
@@ -39,7 +39,7 @@ const routes: Routes = [
     data: {
       title: 'konga.menu.users_create',
       permissions: {
-        only : ['superAdmin', 'createUser']
+        only : ['superAdmin', 'usersCreate']
       }
     }
   },

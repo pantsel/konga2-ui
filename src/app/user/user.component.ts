@@ -1,40 +1,39 @@
 import { Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ApiService} from '@app/core/api/api.service';
-import {AppState, selectAuth} from '@app/core';
+import {AppState, NotificationService, selectAuth} from '@app/core';
 import {TranslateService} from '@ngx-translate/core';
 import {select, Store} from '@ngrx/store';
 import {Observable} from 'rxjs';
 import {SharedUserService} from '@app/user/shared-user.service';
+import {BaseComponent} from '@app/core/base/base.component';
+import {DialogService} from '@app/core/dialog/dialog.service';
 
 @Component({
   selector: 'anms-user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css']
 })
-export class UserComponent implements OnInit {
+export class UserComponent extends BaseComponent implements OnInit {
   private sub: any;
   public id: any;
   public user: any;
 
-  auth$: Observable<any>;
-  authUser: any;
 
   constructor(private route: ActivatedRoute,
               public translate: TranslateService,
+              public notificationService: NotificationService,
+              public dialog: DialogService,
               private sharedUserService: SharedUserService,
               public store: Store<AppState>,
-              private api: ApiService) {
+              public api: ApiService) {
+
+    super(api, notificationService, translate, dialog, store);
 
     this.sub = this.route.params.subscribe(params => {
       this.id = +params['id']; // (+) converts string 'id' to a number
       this.fetchUser();
     });
-
-    this.auth$ = this.store.pipe(select(selectAuth));
-    this.auth$.subscribe(data => {
-      this.authUser = data.user;
-    })
 
     sharedUserService._user.subscribe(user => {
       if (user) {
@@ -44,6 +43,7 @@ export class UserComponent implements OnInit {
   }
 
   ngOnInit() {
+    super.ngOnInit();
   }
 
   fetchUser() {
