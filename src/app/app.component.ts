@@ -1,5 +1,5 @@
 import browser from 'browser-detect';
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import * as _ from 'lodash';
@@ -22,6 +22,8 @@ import {
 import {Router} from '@angular/router';
 import {AuthService} from '@app/core/auth/auth.service';
 import {NgxPermissionsService} from 'ngx-permissions';
+import {ConnectionsService} from '@app/connections/connections.service';
+import {MatMenuTrigger} from '@angular/material';
 
 @Component({
   selector: 'konga-root',
@@ -30,6 +32,7 @@ import {NgxPermissionsService} from 'ngx-permissions';
   // animations: [routeAnimations]
 })
 export class AppComponent implements OnInit {
+
   isProd = env.production;
   envName = env.envName;
   version = env.versions.app;
@@ -68,9 +71,12 @@ export class AppComponent implements OnInit {
   theme$: Observable<string>;
   authUser: any = {};
 
+  connections: any;
+
   constructor(
     private store: Store<AppState>,
     private router: Router,
+    private connectionsService: ConnectionsService,
     private auth: AuthService,
     private permissionsService: NgxPermissionsService,
     private storageService: LocalStorageService
@@ -137,6 +143,7 @@ export class AppComponent implements OnInit {
     })
   }
 
+
   onLogoutClick() {
     this.auth.logout();
   }
@@ -154,4 +161,5 @@ export class AppComponent implements OnInit {
     return window.location.pathname.indexOf('welcome') < 0
       && window.location.pathname.indexOf('login') < 0;
   }
+
 }

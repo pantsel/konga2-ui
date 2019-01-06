@@ -1,6 +1,14 @@
 import { OnInit } from '@angular/core';
 import {ApiService} from '@app/core/api/api.service';
-import {AppState, NotificationService, selectAuth} from '@app/core';
+import {
+  AppState,
+  loginPage,
+  NotificationService,
+  onboardingPage,
+  selectAuth,
+  selectIsAuthenticated,
+  startingPage
+} from '@app/core';
 import {TranslateService} from '@ngx-translate/core';
 import {select, Store} from '@ngrx/store';
 import {DialogService} from '@app/core/dialog/dialog.service';
@@ -11,6 +19,7 @@ export abstract class BaseComponent implements OnInit {
 
   authUser: any;
   auth$: Observable<any>;
+  isAuthenticated$: Observable<boolean>;
 
   constructor(public api: ApiService,
               public notificationService: NotificationService,
@@ -22,6 +31,12 @@ export abstract class BaseComponent implements OnInit {
     this.auth$.subscribe(data => {
       this.authUser = data.user;
     })
+
+    this.isAuthenticated$ = this.store.pipe(select(selectIsAuthenticated));
+    this.isAuthenticated$.subscribe(data => {
+      console.log('[DEBUG] [BaseComponent] Authenticated state changed =>', data)
+    })
+
   }
 
   ngOnInit() {

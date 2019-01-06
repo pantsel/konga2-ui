@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import {ApiService} from '@app/core/api/api.service';
 import {KongApiService} from '@app/core/api/kong-api.service';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {select, Store} from '@ngrx/store';
 import {AppState, NotificationService, selectAuth} from '@app/core';
 import {TranslateService} from '@ngx-translate/core';
-import * as _ from "lodash";
+import * as _ from 'lodash';
 import {AuthService} from '@app/core/auth/auth.service';
 
 @Injectable({
@@ -16,12 +16,17 @@ export class ConnectionsService {
   authUser: any;
   auth$: Observable<any>;
 
+  public itemAdded$: EventEmitter<any> =  new EventEmitter<any>();
+  public itemDeleted$: EventEmitter<any> = new EventEmitter<any>();
+
+
   constructor(public api: ApiService,
               public translate: TranslateService,
               public authService: AuthService,
               public notificationsService: NotificationService,
               public store: Store<AppState>,
               public kong: KongApiService) {
+
 
     this.auth$ = this.store.pipe(select(selectAuth));
     this.auth$.subscribe(data => {
@@ -96,6 +101,11 @@ export class ConnectionsService {
         kongAdminUrl: connection.kongAdminUrl
       }))
     }
+  }
+
+  async loadConnections() {
+    const connections = await this.api.get(`connections`).toPromise();
+    return connections;
   }
 
   isActiveConnection(connection) {

@@ -14,6 +14,8 @@ import { EntryModule } from '@app/entry/entry.module';
 import {AuthService} from '@app/core/auth/auth.service';
 import {DashboardModule} from '@app/dashboard/dashboard.module';
 import {NgxPermissionsModule} from 'ngx-permissions';
+import {FooterModule} from '@app/footer/footer.module';
+import {ConnectionsService} from '@app/connections/connections.service';
 
 @NgModule({
   imports: [
@@ -27,6 +29,7 @@ import {NgxPermissionsModule} from 'ngx-permissions';
 
     // features
     SettingsModule,
+    FooterModule,
     EntryModule,
     DashboardModule,
 
@@ -37,7 +40,7 @@ import {NgxPermissionsModule} from 'ngx-permissions';
     NgxPermissionsModule.forRoot()
   ],
   declarations: [AppComponent],
-  providers: [AuthService],
+  providers: [AuthService, ConnectionsService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

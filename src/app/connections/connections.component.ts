@@ -55,6 +55,7 @@ export class ConnectionsComponent extends DataTableComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        this.connectionsService.itemAdded$.emit(result);
         this.loadData();
       }
     });
@@ -79,15 +80,15 @@ export class ConnectionsComponent extends DataTableComponent implements OnInit {
 
   async loadData() {
     super.loadData();
-    // Update connections on connectionsService
   }
 
   onDeleteItem(item) {
     if (this.isActiveConnection(item)) {
-      return this.dialog.warning(this.translate.instant('konga.connections.delete_active_connection_warn'))
+     return this.dialog.warning(this.translate.instant('konga.connections.delete_active_connection_warn'))
     }
 
-    super.deleteItem(item);
+    super.onDeleteItem(item);
+
   }
 
 

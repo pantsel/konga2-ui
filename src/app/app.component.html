@@ -86,39 +86,7 @@
         <router-outlet #o="outlet"></router-outlet>
       </div>
 
-      <div class="footer"
-           [style.width]="shouldShowSidenav() ?  'calc(100% - 250px)' : '100%'"
-           *ngIf="shouldShowToolbar()">
-       <div class="container-fluid">
-         <div class="row">
-           <div class="col-4"></div>
-           <div class="col-4"></div>
-           <div class="col-4 text-right">
-             <button *ngIf="(isAuthenticated$ | async)"
-                     mat-button
-                     color="accent"
-                     [matMenuTriggerFor]="footerConnectionsMenu">
-               <mat-icon class="mr-2">cast_connected</mat-icon>
-               Connected to <strong>{{authUser.connection?.name}}</strong>
-             </button>
-             <mat-menu #footerConnectionsMenu="matMenu">
-               <button mat-menu-item [routerLink]="['users', authUser?.id]">
-                 <mat-icon>account_circle</mat-icon>
-                 <span>{{ 'konga.menu.my_account' | translate }}</span>
-               </button>
-               <button mat-menu-item routerLink="settings">
-                 <mat-icon>settings</mat-icon>
-                 <span>{{ 'konga.menu.settings' | translate }}</span>
-               </button>
-               <button mat-menu-item (click)="onLogoutClick()">
-                 <mat-icon>power_settings_new</mat-icon>
-                 <span>{{ 'konga.menu.logout' | translate }}</span>
-               </button>
-             </mat-menu>
-           </div>
-         </div>
-       </div>
-      </div>
+      <anms-footer></anms-footer>
 
     </div>
 

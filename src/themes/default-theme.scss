@@ -1,4 +1,4 @@
-$custom-typography: mat-typography-config($font-family: $font-family-sans-serif);
+$custom-typography: mat-typography-config($font-family: '"Lato", sans-serif;');
 @include mat-core($custom-typography);
 
 $anms-primary: mat-palette($mat-konga, 800, 300, 900);
