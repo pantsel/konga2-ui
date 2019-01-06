@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto:400,700|Material+Icons|Montserrat:400,700');
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,700|Material+Icons|Lato:400,700');
 @import '~@angular/material/theming';
 
 $mat-konga: (
@@ -61,12 +61,12 @@ $mat-konga-teal: (
 );
 
 // stylelint-disable value-keyword-case
-$font-family-sans-serif:      'Montserrat', sans-serif !default;
+$font-family-sans-serif:      'Lato', sans-serif !default;
 $font-family-monospace:       SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !default;
 $font-family-base:            $font-family-sans-serif !default;
 // stylelint-enable value-keyword-case
 
-$font-size-base:              0.9rem !default;
+//$font-size-base:              0.9rem !default;
 
 //** By default, this inherits from the `<body>`.
 $headings-font-weight:    700;
