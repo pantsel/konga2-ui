@@ -41,44 +41,6 @@
             </button>
           </span>
 
-          <!--<button *ngIf="(isAuthenticated$ | async)"-->
-                  <!--[matMenuTriggerFor]="toolbarCreateMenu"-->
-                  <!--mat-flat-button color="accent">-->
-            <!--{{'konga.create' | translate}}-->
-            <!--<mat-icon matSuffix>keyboard_arrow_down</mat-icon>-->
-          <!--</button>-->
-          <!--<mat-menu #toolbarCreateMenu="matMenu">-->
-            <!--<mat-action-list>-->
-              <!--<button mat-list-item>-->
-                <!--<mat-icon matListIcon color="accent">account_circle</mat-icon>-->
-                <!--<h3 matLine class="text-left"><strong>Consumer</strong></h3>-->
-                <!--<p matLine class="help-block text-left">Create a new Consumer</p>-->
-              <!--</button>-->
-              <!--<button mat-list-item>-->
-                <!--<mat-icon matListIcon color="accent">account_circle</mat-icon>-->
-                <!--<h3 matLine class="text-left"><strong>Service</strong></h3>-->
-                <!--<p matLine class="help-block text-left">Create a new Service</p>-->
-              <!--</button>-->
-              <!--<button mat-list-item>-->
-                <!--<mat-icon matListIcon color="accent">account_circle</mat-icon>-->
-                <!--<h3 matLine class="text-left"><strong>User</strong></h3>-->
-                <!--<p matLine class="help-block text-left">Create a new Konga user</p>-->
-              <!--</button>-->
-              <!--<button mat-list-item>-->
-                <!--<mat-icon matListIcon color="accent">account_circle</mat-icon>-->
-                <!--<h3 matLine class="text-left"><strong>User</strong></h3>-->
-                <!--<p matLine class="help-block text-left">Create a new Konga user</p>-->
-              <!--</button>-->
-
-              <!--<button mat-list-item>-->
-                <!--<mat-icon matListIcon color="accent">account_circle</mat-icon>-->
-                <!--<h3 matLine class="text-left"><strong>User</strong></h3>-->
-                <!--<p matLine class="help-block text-left">Create a new Konga user</p>-->
-              <!--</button>-->
-              <!--<mat-divider></mat-divider>-->
-            <!--</mat-action-list>-->
-          <!--</mat-menu>-->
-
           <button *ngIf="(isAuthenticated$ | async)"
                   mat-button
                   [matMenuTriggerFor]="toolbarUserMenu">
@@ -129,15 +91,30 @@
            *ngIf="shouldShowToolbar()">
        <div class="container-fluid">
          <div class="row">
-           <div class="col-12 signature">
-             &#169; <span class="year" data-testid="footer-year">{{year}}</span> - Panagis Tselentis
-             <br class="d-block d-sm-none">
-             <a [matTooltip]="'konga.footer.changelog' | translate"
-                matTooltipPosition="before"
-                href="https://github.com/pantsel/konga2-ui/blob/master/CHANGELOG.md">
-               <fa-icon icon="rocket"></fa-icon>
-               {{version}} <span *ngIf="!isProd">[{{envName}}]</span>
-             </a>
+           <div class="col-4"></div>
+           <div class="col-4"></div>
+           <div class="col-4 text-right">
+             <button *ngIf="(isAuthenticated$ | async)"
+                     mat-button
+                     color="accent"
+                     [matMenuTriggerFor]="footerConnectionsMenu">
+               <mat-icon class="mr-2">cast_connected</mat-icon>
+               Connected to <strong>{{authUser.connection?.name}}</strong>
+             </button>
+             <mat-menu #footerConnectionsMenu="matMenu">
+               <button mat-menu-item [routerLink]="['users', authUser?.id]">
+                 <mat-icon>account_circle</mat-icon>
+                 <span>{{ 'konga.menu.my_account' | translate }}</span>
+               </button>
+               <button mat-menu-item routerLink="settings">
+                 <mat-icon>settings</mat-icon>
+                 <span>{{ 'konga.menu.settings' | translate }}</span>
+               </button>
+               <button mat-menu-item (click)="onLogoutClick()">
+                 <mat-icon>power_settings_new</mat-icon>
+                 <span>{{ 'konga.menu.logout' | translate }}</span>
+               </button>
+             </mat-menu>
            </div>
          </div>
        </div>

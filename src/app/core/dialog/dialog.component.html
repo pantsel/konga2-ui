@@ -1,19 +1,21 @@
 <div mat-dialog-content>
   <div class="text-{{data.type}} text-center">
     <p class="text-center">
-      <mat-icon class="mat-icon-large" *ngIf="data.type === 'danger'">sentiment_dissatisfied</mat-icon>
-      <mat-icon class="mat-icon-large" *ngIf="data.type === 'success'">check_circle_outline</mat-icon>
-      <mat-icon class="mat-icon-large" *ngIf="data.type === 'warning'">warning</mat-icon>
+      <mat-icon *ngIf="data.type === 'danger'">sentiment_dissatisfied</mat-icon>
+      <mat-icon *ngIf="data.type === 'success'">check_circle_outline</mat-icon>
+      <mat-icon *ngIf="data.type === 'warning'">warning</mat-icon>
     </p>
-    <p class="mat-headline" *ngIf="data.title">{{data.title}}</p>
-    <p class="mat-subheading-1 text-center" [innerHtml]="data.message"></p>
   </div>
+  <p class="mat-headline" *ngIf="data.title">{{data.title}}</p>
+  <p class="mat-subheading-1 text-center" [innerHtml]="data.message"></p>
 </div>
 <div mat-dialog-actions class="row">
   <div class="col" *ngIf="data.type === 'confirm'">
     <button class="w-100" mat-button (click)="onNoClick()">{{'konga.cancel' | translate}}</button>
   </div>
   <div class="col">
-    <button mat-button color="primary" [mat-dialog-close]="data" cdkFocusInitial class="w-100">OK</button>
+    <button mat-button color="primary" [mat-dialog-close]="data" cdkFocusInitial class="w-100">
+      <strong>OK</strong>
+    </button>
   </div>
 </div>

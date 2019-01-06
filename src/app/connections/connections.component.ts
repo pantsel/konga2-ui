@@ -13,6 +13,7 @@ import {ConnectionsCreateComponent} from '@app/connections/connections-create/co
 import {KongApiService} from '@app/core/api/kong-api.service';
 import {AuthService} from '@app/core/auth/auth.service';
 import * as _ from 'lodash';
+import {ConnectionsService} from '@app/connections/connections.service';
 
 @Component({
   selector: 'anms-connections',
@@ -27,6 +28,7 @@ export class ConnectionsComponent extends DataTableComponent implements OnInit {
               public dialog: DialogService,
               public translate: TranslateService,
               public authService: AuthService,
+              public connectionsService: ConnectionsService,
               public store: Store<AppState>,
               public notificationsService: NotificationService,
               public matDialog: MatDialog,
@@ -58,80 +60,39 @@ export class ConnectionsComponent extends DataTableComponent implements OnInit {
     });
   }
 
-
   async onToggleConnectionActive(connection) {
 
     connection.busy = true;
 
     if (this.isActiveConnection(connection)) {
-      await this.deactivateConnection(connection);
+      await this.connectionsService.deactivateConnection(connection);
     }else{
-      await this.activateConnection(connection);
+      const updatedConnection: any = await this.connectionsService.activateConnection(connection);
+
+      // Update item in list
+      const item = _.find(this.data.results, _item => _item.id === updatedConnection.id);
+      if (item) item.kongVersion = updatedConnection.kongVersion;
     }
 
     connection.busy = false;
   }
 
-  async deactivateConnection(connection) {
-    const updatedUser = await this.api.update(`users/${this.authUser.id}`, {
-      connection: null
-    }).toPromise();
-
-    console.log(`Updated User =>`, updatedUser);
-
-    // Update storage
-    this.authService.updateStoredUser(updatedUser);
-
-    this.notificationsService.success(this.translate.instant(`konga.connection_deactivated`, {
-      name: connection.name
-    }))
+  async loadData() {
+    super.loadData();
+    // Update connections on connectionsService
   }
 
-  async activateConnection(connection) {
-    // Activate connection
-    const kongInfo: any = await this.checkConnection(connection);
-    console.log('kongInfo =>', kongInfo);
-    if (!kongInfo) return false;
-
-    if (!connection.kongVersion || connection.kongVersion !== kongInfo.version ) {
-      // Update connection's kongVersion
-      connection = await this.api.update(`connections/${connection.id}`,{
-        kongVersion: kongInfo.version
-      }).toPromise();
-
-      // Update item in list
-      const item = _.find(this.data.results, _item => _item.id === connection.id);
-      if (item) item.kongVersion = connection.kongVersion;
+  onDeleteItem(item) {
+    if (this.isActiveConnection(item)) {
+      return this.dialog.warning(this.translate.instant('konga.connections.delete_active_connection_warn'))
     }
 
-    const updatedUser = await this.api.update(`users/${this.authUser.id}`, {
-      connection: connection.id
-    }).toPromise();
-
-    console.log(`Updated User =>`, updatedUser);
-
-    // Update storage
-    this.authService.updateStoredUser(updatedUser);
-
-    this.notificationsService.success(this.translate.instant(`konga.connection_activated`, {
-      name: connection.name
-    }))
+    super.deleteItem(item);
   }
 
-  async checkConnection(connection) {
-    try {
-      return await this.kong.get(``, {
-        connection_id: connection.id
-      }).toPromise()
-    }catch (e) {
-      this.notificationsService.error(this.translate.instant(`konga.error_establishing_connection`, {
-        kongAdminUrl: connection.kongAdminUrl
-      }))
-    }
-  }
 
   isActiveConnection(connection) {
-    return connection.id === _.get(this.authUser, 'connection.id', this.authUser.connection);
+    return this.connectionsService.isActiveConnection(connection);
   }
 
 }
