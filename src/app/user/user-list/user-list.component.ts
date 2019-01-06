@@ -10,6 +10,7 @@ import {AppState, NotificationService} from '@app/core';
 import {Store} from '@ngrx/store';
 import {UserCreateComponent} from '@app/user/user-create/user-create.component';
 import {Router} from '@angular/router';
+import {KongApiService} from '@app/core/api/kong-api.service';
 
 @Component({
   selector: 'anms-user-list',
@@ -19,6 +20,7 @@ import {Router} from '@angular/router';
 export class UserListComponent extends DataTableComponent implements OnInit {
 
   constructor(public api: ApiService,
+              public kong: KongApiService,
               public fb: FormBuilder,
               public dialog: DialogService,
               public translate: TranslateService,
@@ -28,7 +30,7 @@ export class UserListComponent extends DataTableComponent implements OnInit {
               public listConfig: ListConfigService,
               public router: Router) {
 
-    super(api, translate, dialog, notificationsService, store, listConfig, fb);
+    super(api, kong, translate, dialog, notificationsService, store, listConfig, fb);
 
     this.model = `user`;
   }

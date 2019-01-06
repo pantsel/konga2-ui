@@ -10,28 +10,28 @@ export class NotificationService {
 
   default(message: string) {
     this.show(message, {
-      duration: 2000,
+      duration: 3000,
       panelClass: 'default-notification-overlay'
     });
   }
 
   info(message: string) {
     this.show(message, {
-      duration: 2000,
+      duration: 3000,
       panelClass: 'info-notification-overlay'
     });
   }
 
   success(message: string) {
     this.show(message, {
-      duration: 2000,
+      duration: 3000,
       panelClass: 'success-notification-overlay'
     });
   }
 
   warn(message: string) {
     this.show(message, {
-      duration: 2500,
+      duration: 3000,
       panelClass: 'warning-notification-overlay'
     });
   }

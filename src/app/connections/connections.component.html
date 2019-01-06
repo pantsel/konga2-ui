@@ -24,50 +24,75 @@
 
   <anms-page-loader *ngIf="!data?.results"></anms-page-loader>
 
-  <mat-card class="mb-4 p-0" *ngIf="data?.results">
-    <div class="table-responsive">
-      <table class="table mb-0">
-        <tr>
-          <th *ngFor="let item of titleItems">
-            <div class="d-flex align-items-center">
-              <a href="javascript:void(0)" (click)="sort(item.property)"
-                 [ngClass]="{'text-success': sortAttr === item.property}"
-                 class="float-left mr-2">
-                {{item.title | translate}}
-              </a>
-              <span *ngIf="sortAttr === item.property" class="d-inline-flex" [ngClass]="{'text-success': sortAttr === item.property}">
+  <ng-container *ngIf="data?.results">
+    <p><strong>Active Connection</strong>: {{authUser.connection ? authUser.connection.name : 'N/A'}}</p>
+
+    <div class="alert alert-warning" *ngIf="!authUser.connection">
+      {{'konga.connections.no_active_connection_message' | translate}}
+    </div>
+
+    <mat-card class="mb-4 p-0">
+      <div class="table-responsive">
+        <table class="table mb-0">
+          <tr>
+            <th></th>
+            <th *ngFor="let item of titleItems">
+              <div class="d-flex align-items-center">
+                <a href="javascript:void(0)" (click)="sort(item.property)"
+                   [ngClass]="{'text-success': sortAttr === item.property}"
+                   class="float-left mr-2">
+                  {{item.title | translate}}
+                </a>
+                <span *ngIf="sortAttr === item.property" class="d-inline-flex" [ngClass]="{'text-success': sortAttr === item.property}">
                 <mat-icon style="font-size: 0.9rem; height: 0.9rem">{{sortDir === 'DESC' ? 'arrow_downward' : 'arrow_upward' }}</mat-icon>
               </span>
-            </div>
-          </th>
-          <th></th>
-        </tr>
-        <tr *ngFor="let item of data.results">
-          <td>
-            <a [routerLink]="['/connections', item.id]">
-              <strong>{{item.name}}</strong>
-            </a>
-          </td>
-          <td>{{item.type}}</td>
-          <td>{{item.kongAdminUrl}}</td>
-          <td>{{item.kongVersion}}</td>
-          <td>{{item.createdAt | date}}</td>
-          <td width="1">
-            <button mat-button color="warn" (click)="onDeleteItem(item)">
-              <mat-icon matPrefix>delete</mat-icon>
-              {{'konga.delete' | translate}}
-            </button>
-          </td>
-        </tr>
-      </table>
-    </div>
-    <mat-divider></mat-divider>
-    <mat-paginator [length]="data?.totalCount"
-                   [pageSize]="limit"
-                   (page)="pageEvent = onPageChange($event)"
-                   [pageSizeOptions]="pageSizeOptions">
-    </mat-paginator>
-  </mat-card>
+              </div>
+            </th>
+            <th></th>
+            <th></th>
+          </tr>
+          <tr *ngFor="let item of data.results">
+            <td width="1">
+              <mat-icon [ngClass]="{'text-success': isActiveConnection(item), 'text-secondary': !isActiveConnection(item)}">{{isActiveConnection(item) ? 'cast_connected': 'cast'}}</mat-icon>
+            </td>
+            <td>
+              <a [routerLink]="['/connections', item.id]">
+                <strong>{{item.name}}</strong>
+              </a>
+            </td>
+            <td>{{item.type}}</td>
+            <td>{{item.kongAdminUrl}}</td>
+            <td>{{item.kongVersion || 'N/A'}}</td>
+            <td>{{item.createdAt | date}}</td>
+            <td width="1">
+              <button mat-flat-button [color]="isActiveConnection(item) ? 'warn': 'accent'"
+                      [disabled]="item.busy"
+                      (click)="onToggleConnectionActive(item)">
+                <mat-progress-spinner mode="indeterminate"
+                                      *ngIf="item.busy"
+                                      color="primary" diameter="20" class="d-inline-block mr-2">
+                </mat-progress-spinner>
+                {{isActiveConnection(item) ? ('konga.deactivate' | translate) : ('konga.activate' | translate)}}
+              </button>
+            </td>
+            <td width="1">
+              <button mat-button color="warn" (click)="onDeleteItem(item)">
+                <mat-icon matPrefix>delete</mat-icon>
+                {{'konga.delete' | translate}}
+              </button>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <mat-divider></mat-divider>
+      <mat-paginator [length]="data?.totalCount"
+                     [pageSize]="limit"
+                     (page)="pageEvent = onPageChange($event)"
+                     [pageSizeOptions]="pageSizeOptions">
+      </mat-paginator>
+    </mat-card>
+  </ng-container>
+
 </div>
 
 <button mat-fab class="fab bottom right"

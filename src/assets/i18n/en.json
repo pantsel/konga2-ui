@@ -72,6 +72,8 @@
   "konga.search_placeholder" : "Type your search term...",
   "konga.search_by" : "Search by",
   "konga.delete" : "Delete",
+  "konga.activate": "Activate",
+  "konga.deactivate": "Deactivate",
   "konga.delete_item_title" : "Delete item",
   "konga.delete_item_text" : "Are you sure you want to delete the selected item?",
   "konga.cancel" : "Cancel",
@@ -86,6 +88,10 @@
   "konga.create": "Create",
   "konga.active": "Active",
   "konga.inactive": "Inactive",
+  "konga.error_establishing_connection": "Cannot connect to {{kongAdminUrl}}. Check your connection settings.",
+  "konga.connection_activated": "Connection `{{name}}` is now your active connection to Kong.",
+  "konga.connection_deactivated": "Connection `{{name}}` is no longer your active connection to Kong.",
+  "konga.connections.no_active_connection_message": "You need to activate a connection in order to be able to manage the affiliated Kong cluster",
 
   "konga.user.tab_details_label" : "User Details",
   "konga.user.tab_security_label" : "Security",
@@ -108,7 +114,7 @@
   "konga.users.list.title": "Users",
 
   "konga.connections.list.title": "Connections",
-  "konga.connections.list.subtitle": "Connections to Kong's Admin API",
+  "konga.connections.list.subtitle": "Create connections to Kong Nodes and activate the one you want use.",
   "konga.connection_type": "Type",
   "konga.create_connection": "Create Connection",
   "konga.new_connection": "New Connection",
@@ -125,5 +131,6 @@
   "konga.change_password": "Change password",
 
   "konga.errors.user_not_active": "The user is not active",
-  "konga.errors.delete_self": "You can't delete yourself!"
+  "konga.errors.delete_self": "You can't delete yourself!",
+  "konga.api_error.undefined_connection": "No connection is selected. Please activate a connection to Kong Admin"
 }

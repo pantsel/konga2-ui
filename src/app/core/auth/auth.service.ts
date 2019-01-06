@@ -70,6 +70,10 @@ export class AuthService {
     return this.authUser;
   }
 
+  public updateStoredUser(user) {
+    this.store.dispatch(new ActionAuthLogin(user));
+  }
+
   async login(credentials) {
     const user = await this.api.post(`auth/login`, credentials).toPromise();
     this.store.dispatch(new ActionAuthLogin(user));

@@ -1,17 +1,19 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {TranslateService} from '@ngx-translate/core';
+import {environment} from '@env/environment';
 import * as _ from 'lodash';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ApiService {
+export class KongApiService {
+
+  baseUrl = environment.apiUrl + '/kong';
   
-  baseUrl = environment.apiUrl + environment.apiPrefix;
-  
-  constructor(public http: HttpClient, private translate: TranslateService) {}
+  constructor(public http: HttpClient, private translate: TranslateService) {
+    
+  }
 
   get(endpoint: string, params?: any, options?: any) {
     // make request
@@ -70,17 +72,6 @@ export class ApiService {
   }
 
   patch(endpoint: string, body: any, options?: any) {
-    Object.assign(body, {
-      _csrf: window['_csrf']
-    });
-    return this.http.patch(
-      `${this.baseUrl}/${endpoint}`,
-      body,
-      options
-    );
-  }
-
-  update(endpoint: string, body: any, options?: any) {
     Object.assign(body, {
       _csrf: window['_csrf']
     });

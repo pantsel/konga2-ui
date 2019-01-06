@@ -11,6 +11,7 @@ import {AppState, NotificationService, selectAuth} from '@app/core';
 import {Observable} from 'rxjs';
 import {select, Store} from '@ngrx/store';
 import {BaseComponent} from '@app/core/base/base.component';
+import {KongApiService} from '@app/core/api/kong-api.service';
 
 @Component({
   selector: 'anms-data-table',
@@ -38,6 +39,7 @@ export class DataTableComponent extends BaseComponent implements OnInit {
   searchableTitleItems = [];
 
   constructor(public api: ApiService,
+              public Kong: KongApiService,
               public translate: TranslateService,
               public dialog: DialogService,
               public notificationsService: NotificationService,

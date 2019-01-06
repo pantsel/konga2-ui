@@ -4,5 +4,11 @@
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
+  },
+  "/kong/*": {
+    "target": "http://localhost:1337",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
   }
 }
