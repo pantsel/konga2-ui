@@ -4,6 +4,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {ApiService} from '@app/core/api/api.service';
 import {NotificationService} from '@app/core';
 import * as _ from 'lodash';
+import {ConnectionsService} from '@app/connections/connections.service';
 
 @Component({
   selector: 'anms-connection-form',
@@ -27,6 +28,7 @@ export class ConnectionFormComponent implements OnInit {
   constructor(public fb: FormBuilder,
               public translate: TranslateService,
               public api: ApiService,
+              public connectionsService: ConnectionsService,
               private notificationService: NotificationService) { }
 
   ngOnInit() {

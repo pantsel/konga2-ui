@@ -24,6 +24,9 @@ export class DashboardComponent extends BaseComponent implements OnInit {
               public connectionsService: ConnectionsService) {
     super(api, notificationService, translate, dialog, store);
 
+  }
+
+  ngOnInit() {
     this.connectionsService.totalCountChanged$.subscribe(count => {
       console.log('[DashboardComponent]: connectionsService.totalCountChanged$ =>', count);
       this.hasConnections = count > 0 ? true : false;
@@ -31,14 +34,18 @@ export class DashboardComponent extends BaseComponent implements OnInit {
         this.loadData();
       }
     })
-  }
-
-  ngOnInit() {
 
   }
 
-  onConnectionCreated(connection) {
-    this.connectionsService.itemAdded$.emit(connection);
+  async onConnectionCreated(connection) {
+    this.connectionsService.itemAdded$.next(connection);
+    this.connectionsService.activateConnection(connection)
+      .then(activated => {
+        console.log('[DashboardComponent]: connection activated', activated);
+        if (!activated) {
+
+        }
+      })
   }
 
   loadData() {

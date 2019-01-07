@@ -55,7 +55,7 @@ export class ConnectionChooserComponent extends BaseComponent implements OnInit 
       .then(connections => {
         console.log('[ConnectionChooserComponent]: Loaded connections', connections);
         this.connections = connections
-        this.connectionsService.totalCountChanged$.emit(this.connections.totalCount);
+        this.connectionsService.totalCountChanged$.next(this.connections.totalCount);
       });
   }
 
@@ -80,7 +80,9 @@ export class ConnectionChooserComponent extends BaseComponent implements OnInit 
 
     this.connections.totalCount++;
     this.connections.results.push(item);
-    this.connectionsService.totalCountChanged$.emit(this.connections.totalCount);
+    console.log('[ConnectionChooserComponent]: addConnection');
+    console.log('[ConnectionChooserComponent]: connections count', this.connections.totalCount);
+    this.connectionsService.totalCountChanged$.next(this.connections.totalCount);
   }
 
   deleteConnection(item) {
@@ -88,7 +90,9 @@ export class ConnectionChooserComponent extends BaseComponent implements OnInit 
     if (index > -1) {
       this.connections.results.splice(index, 1);
       this.connections.totalCount--;
-      this.connectionsService.totalCountChanged$.emit(this.connections.totalCount);
+      console.log('[ConnectionChooserComponent]: deleteConnection');
+      console.log('[ConnectionChooserComponent]: connections count', this.connections.totalCount);
+      this.connectionsService.totalCountChanged$.next(this.connections.totalCount);
     }
   }
 

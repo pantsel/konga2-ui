@@ -50,7 +50,7 @@ export class ConnectionsComponent extends DataTableComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.connectionsService.itemAdded$.emit(result);
+        this.connectionsService.itemAdded$.next(result);
         this.loadData();
       }
     });
@@ -68,7 +68,7 @@ export class ConnectionsComponent extends DataTableComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.connectionsService.itemUpdated$.emit(result);
+        this.connectionsService.itemUpdated$.next(result);
         this.loadData();
       }
     });
@@ -113,7 +113,7 @@ export class ConnectionsComponent extends DataTableComponent implements OnInit {
 
   deleteItem(item) {
     this.api.delete(`connections/${item.id}`).subscribe((deleted: any) => {
-      this.connectionsService.itemDeleted$.emit(deleted);
+      this.connectionsService.itemDeleted$.next(deleted);
       this.loadData();
     });
   }

@@ -16,11 +16,11 @@ export class ConnectionsService {
   authUser: any;
   auth$: Observable<any>;
 
-  public itemAdded$: EventEmitter<any> =  new EventEmitter<any>();
-  public itemDeleted$: EventEmitter<any> = new EventEmitter<any>();
-  public itemUpdated$: EventEmitter<any> = new EventEmitter<any>();
-  public itemActivated$: EventEmitter<any> = new EventEmitter<any>();
-  public totalCountChanged$: EventEmitter<any> = new EventEmitter<any>();
+  public itemAdded$:  BehaviorSubject<any> = <BehaviorSubject<any>>new BehaviorSubject(null)
+  public itemDeleted$:  BehaviorSubject<any> = <BehaviorSubject<any>>new BehaviorSubject(null)
+  public itemUpdated$:  BehaviorSubject<any> = <BehaviorSubject<any>>new BehaviorSubject(null)
+  public itemActivated$:  BehaviorSubject<any> = <BehaviorSubject<any>>new BehaviorSubject(null)
+  public totalCountChanged$:  BehaviorSubject<number> = <BehaviorSubject<number>>new BehaviorSubject(0)
 
 
   constructor(public api: ApiService,
@@ -91,7 +91,7 @@ export class ConnectionsService {
       name: connection.name
     }))
 
-    this.itemActivated$.emit(connection);
+    this.itemActivated$.next(connection);
 
     return connection;
   }
