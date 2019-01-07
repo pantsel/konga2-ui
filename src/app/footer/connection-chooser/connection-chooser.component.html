@@ -2,14 +2,14 @@
   <button
           mat-button
           [matMenuTriggerFor]="footerConnectionsMenu"
-          color="accent"
+          [color]="authUser?.connection ? 'accent' : 'warn'"
   >
     <mat-icon class="mr-2">cast_connected</mat-icon>
     <span *ngIf="authUser?.connection">
-                 Connected to <strong>{{authUser.connection?.name}}</strong>
+                 {{'konga.connected_to' | translate}} <strong>{{authUser.connection?.name}}</strong>
                </span>
     <span *ngIf="!authUser?.connection">
-                 Select a connection
+                 {{'konga.not_connected' | translate}}
                </span>
 
   </button>

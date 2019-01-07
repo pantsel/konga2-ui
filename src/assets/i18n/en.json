@@ -121,6 +121,8 @@
   "konga.connections.list.subtitle": "Create connections to Kong Nodes and activate the one you want use.",
   "konga.connection_type": "Type",
   "konga.create_connection": "Create Connection",
+  "konga.not_connected": "Not connected to Kong",
+  "konga.connected_to": "Connected to",
   "konga.no_connections_available": "There are no connections available",
   "konga.new_connection": "New Connection",
   "konga.new_connection.subtitle": "Create a new connection to Kong's Admin API",

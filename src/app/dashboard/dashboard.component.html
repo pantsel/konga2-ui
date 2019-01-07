@@ -1,23 +1,177 @@
-<div class="container mt-4 pb-4" *ngIf="data">
-    <div class="row">
+<div class="container mt-4 pt-4 pb-4" *ngIf="hasData()">
+    <div class="row mb-4">
         <div class="col-md-12">
             <mat-card>
                 <mat-card-header>
                     <mat-card-title>Connections</mat-card-title>
+                    <span class="card-header-end">
+                        Total Requests: {{convert2Unit(status?.server?.connections_active || 0)}}
+                    </span>
                 </mat-card-header>
-                <mat-card-content></mat-card-content>
+                <mat-divider></mat-divider>
+                <mat-card-content class="pt-4">
+                    <div class="row text-center">
+                        <div class="col-2">
+                            <h3>Active</h3>
+                            <h1>{{convert2Unit(status?.server?.connections_active || 0)}}</h1>
+                        </div>
+                        <div class="col-2">
+                            <h3>Reading</h3>
+                            <h1>{{convert2Unit(status?.server?.connections_reading || 0)}}</h1>
+                        </div>
+                        <div class="col-2">
+                            <h3>Writing</h3>
+                            <h1>{{convert2Unit(status?.server?.connections_writing || 0)}}</h1>
+                        </div>
+                        <div class="col-2">
+                            <h3>Waiting</h3>
+                            <h1>{{convert2Unit(status?.server?.connections_waiting || 0)}}</h1>
+                        </div>
+                        <div class="col-2">
+                            <h3>Accepted</h3>
+                            <h1>{{convert2Unit(status?.server?.connections_accepted || 0)}}</h1>
+                        </div>
+                        <div class="col-2">
+                            <h3>Handled</h3>
+                            <h1>{{convert2Unit(status?.server?.connections_handled || 0)}}</h1>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <!-- NODE INFO -->
+        <div class="col-md-4">
+            <mat-card>
+                <mat-card-header class="w-100">
+                    <mat-card-title>Node</mat-card-title>
+                </mat-card-header>
+                <mat-divider></mat-divider>
+                <table class="table table-borderless mb-0">
+                    <tr>
+                        <th>HostName</th>
+                        <td>{{info?.hostname}}</td>
+                    </tr>
+                    <tr>
+                        <th>Tag Line</th>
+                        <td>{{info?.tagline}}</td>
+                    </tr>
+                    <tr>
+                        <th>Version</th>
+                        <td>{{info?.version}}</td>
+                    </tr>
+                    <tr>
+                        <th>LUA Version</th>
+                        <td>{{info?.lua_version}}</td>
+                    </tr>
+                    <tr>
+                        <th>Admin Listen</th>
+                        <td>{{info?.hostname}}</td>
+                    </tr>
+                </table>
+            </mat-card>
+        </div>
+
+        <!-- TIMERS -->
+        <div class="col-md-4">
+            <mat-card>
+                <mat-card-header class="w-100">
+                    <mat-card-title>Timers</mat-card-title>
+                </mat-card-header>
+                <mat-divider></mat-divider>
+                <mat-card-content class="pt-4"></mat-card-content>
+            </mat-card>
+        </div>
+
+        <!-- DATASTORE -->
+        <div class="col-md-4" *ngIf="info && status">
+            <mat-card>
+                <mat-card-header class="w-100">
+                    <mat-card-title>Datastore</mat-card-title>
+                    <span class="card-header-end"
+                          [ngClass]="{'text-success' : status.database.reachable, 'text-danger' : !status.database.reachable}"
+                    >
+                        {{status?.database?.reachable ? 'Reachable' : 'Unreachable'}}
+                    </span>
+                </mat-card-header>
+                <mat-divider></mat-divider>
+                <table class="table table-borderless mb-0">
+                    <tr role="listitem">
+                        <th >DBMS</th>
+                        <td >{{info?.configuration?.database}}</td>
+                    </tr>
+                    <tr *ngIf="info.configuration.database == 'postgres'">
+                        <th >Host</th>
+                        <td >{{info.configuration.pg_host}}</td>
+                    </tr>
+                    <tr *ngIf="info.configuration.database == 'cassandra' && info.configuration.cassandra_contact_tdoints">
+                        <th >Contact points</th>
+                        <td >{{info.configuration.cassandra_contact_tdoints.join(", ")}}</td>
+                    </tr>
+                    <tr *ngIf="info.configuration.database == 'cassandra' && info.configuration.cassandra_keystdace">
+                        <th >Keyspace</th>
+                        <td >{{info.configuration.cassandra_keystdace}}</td>
+                    </tr>
+                    <tr *ngIf="info.configuration.database == 'cassandra' && info.configuration.cassandra_data_centers">
+                        <th >Data Centers</th>
+                        <td >{{info.configuration.cassandra_data_centers.join(", ")}}</td>
+                    </tr>
+                    <tr *ngIf="info.configuration.database == 'postgres'">
+                        <th >Database</th>
+                        <td >{{info.configuration.pg_database}}</td>
+                    </tr>
+                    <tr *ngIf="info.configuration.database == 'postgres'">
+                        <th >User</th>
+                        <td >{{info.configuration.pg_user}}</td>
+                    </tr>
+                    <tr *ngIf="info.configuration.database == 'cassandra'">
+                        <th >Username</th>
+                        <td >{{info.configuration.cassandra_username}}</td>
+                    </tr>
+                    <tr *ngIf="info.configuration.database == 'postgres'">
+                        <th >Port</th>
+                        <td >{{info.configuration.pg_port}}</td>
+                    </tr>
+                    <tr *ngIf="info.configuration.database == 'cassandra'">
+                        <th >Port</th>
+                        <td >{{info.configuration.cassandra_tdort}}</td>
+                    </tr>
+                </table>
+            </mat-card>
+        </div>
+    </div>
+
+    <!-- PLUGINS -->
+    <div class="row mb-4" *ngIf="info">
+        <div class="col-md-12">
+            <mat-card>
+                <mat-card-header class="w-100">
+                    <mat-card-title>Plugins</mat-card-title>
+                </mat-card-header>
+                <mat-divider></mat-divider>
+                <mat-card-content class="pt-4">
+                    <mat-chip-list>
+                        <mat-chip
+                                [ngClass]="{'bg-success text-white': isEnabled(key)}"
+                                *ngFor="let key of objectKeys(info.plugins.available_on_server)">
+                            {{key}}
+                        </mat-chip>
+                    </mat-chip-list>
+                </mat-card-content>
             </mat-card>
         </div>
     </div>
 </div>
 
-<div class="container mt-5" *ngIf="!data">
+<div class="container mt-5" *ngIf="!hasData()">
     <ng-container *ngIf="loading">
         <anms-page-loader></anms-page-loader>
     </ng-container>
-    <ng-container *ngIf="!hasConnections">
+    <ng-container *ngIf="!hasConnections && !loading">
         <div class="content text-center">
-            <div class="m-auto" style="max-width: 580px">
+            <div class="m-auto" style="max-widh3: 580px">
                 <img class="mb-4" src="assets/images/conn_sync-100.png">
                 <h1>Welcome!</h1>
                 <h3>First of all, let's setup a connection to Kong Admin</h3>
@@ -26,17 +180,14 @@
             </div>
         </div>
     </ng-container>
-    <ng-container *ngIf="hasConnections && !loading && !authUser?.connection">
-        <!--<div class="alert alert-warning m-5">-->
-        <!--{{'konga.connections.no_active_connection_message' | translate}}-->
-        <!--</div>-->
+    <ng-container *ngIf="hasConnections && !loading && !auh3User?.connection">
         <div class="content text-center">
-            <div class="m-auto" style="max-width: 580px">
+            <div class="m-auto" style="max-widh3: 580px">
                 <img class="mb-4" src="assets/images/conn_sync-100.png">
                 <h1 class="text-danger">No active Connection</h1>
                 <h3>{{'konga.connections.no_active_connection_message' | translate}}</h3>
                 <h4 class="text-secondary mb-4 mt-4">
-                    <a [routerLink]="['/connections']" class="text-success">Go on, activate a Connection from the Connections page</a>.
+                    <a [routerLink]="['/connections']" class="text-success">Go on, activate a Connection from h3e Connections page</a>.
                 </h4>
             </div>
         </div>

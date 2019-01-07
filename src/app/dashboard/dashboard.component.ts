@@ -11,7 +11,7 @@ import {KongApiService} from '@app/core/api/kong-api.service';
 @Component({
   selector: 'anms-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent extends BaseComponent implements OnInit {
 
@@ -20,6 +20,10 @@ export class DashboardComponent extends BaseComponent implements OnInit {
   errorMsg: string;
   info: any;
   status: any;
+
+  html: any;
+
+  objectKeys = Object.keys;
 
   constructor(public api: ApiService,
               public kong: KongApiService,
@@ -61,6 +65,10 @@ export class DashboardComponent extends BaseComponent implements OnInit {
 
   }
 
+  hasData() {
+    return this.info || this.status;
+  }
+
   async onConnectionCreated(connection) {
     this.connectionsService.itemAdded$.next(connection);
     this.loading = true;
@@ -82,22 +90,20 @@ export class DashboardComponent extends BaseComponent implements OnInit {
       this.loading = false;
       return false;
     }
+  }
 
-    // this.kong.get(``)
-    //   .subscribe(data => {
-    //     console.log('[DashboardComponent]: loadData', data);
-    //     this.connectionsService.setActiveNodeInfo(data);
-    //   }, error => {
-    //     this.loading = false;
-    //   })
-    //
-    // this.kong.get(`status`)
-    //   .subscribe(status => {
-    //     console.log('[DashboardComponent]: loadStatus', status);
-    //     this.status = status;
-    //   }, error => {
-    //     this.loading = false;
-    //   })
+  convert2Unit(number) {
+    if (number >= 1000000) {
+      return Math.trunc(number / 1000000) + 'M+';
+    }else if (number >= 1000){
+      return Math.trunc(number / 1000 ) + 'K+';
+    }else{
+      return number.toString();
+    }
+  }
+
+ isEnabled(name) {
+    return this.info.plugins.enabled_in_cluster.indexOf(name) > -1
   }
 
 }
