@@ -10,11 +10,8 @@ import {ListConfigService} from '@app/core/list-config/list-config.service';
 import {Router} from '@angular/router';
 import {DataTableComponent} from '@app/core/data-table/data-table.component';
 import {ConnectionsCreateComponent} from '@app/connections/connections-create/connections-create.component';
-import {KongApiService} from '@app/core/api/kong-api.service';
-import {AuthService} from '@app/core/auth/auth.service';
 import * as _ from 'lodash';
 import {ConnectionsService} from '@app/connections/connections.service';
-import {Observable} from 'rxjs';
 
 @Component({
   selector: 'anms-connections',
@@ -24,18 +21,16 @@ import {Observable} from 'rxjs';
 export class ConnectionsComponent extends DataTableComponent implements OnInit {
 
   constructor(public api: ApiService,
-              public kong: KongApiService,
               public fb: FormBuilder,
               public dialog: DialogService,
               public translate: TranslateService,
-              public authService: AuthService,
               public connectionsService: ConnectionsService,
               public store: Store<AppState>,
               public notificationsService: NotificationService,
               public matDialog: MatDialog,
               public listConfig: ListConfigService,
               public router: Router) {
-    super(api, kong, translate, dialog, notificationsService, store, listConfig, fb);
+    super(api, translate, dialog, notificationsService, store, listConfig, fb);
 
     this.model = `connection`;
   }

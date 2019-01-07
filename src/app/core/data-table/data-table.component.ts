@@ -7,9 +7,8 @@ import {debounceTime, switchMap, tap} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
 import {DialogService} from '@app/core/dialog/dialog.service';
 import {ListConfigService} from '@app/core/list-config/list-config.service';
-import {AppState, NotificationService, selectAuth} from '@app/core';
-import {Observable} from 'rxjs';
-import {select, Store} from '@ngrx/store';
+import {AppState, NotificationService} from '@app/core';
+import {Store} from '@ngrx/store';
 import {BaseComponent} from '@app/core/base/base.component';
 import {KongApiService} from '@app/core/api/kong-api.service';
 
@@ -36,10 +35,10 @@ export class DataTableComponent extends BaseComponent implements OnInit {
   @Output() searchTerm: EventEmitter<any> = new EventEmitter();
 
   isLoading: boolean;
+  isInitialLoad: boolean;
   searchableTitleItems = [];
 
   constructor(public api: ApiService,
-              public Kong: KongApiService,
               public translate: TranslateService,
               public dialog: DialogService,
               public notificationsService: NotificationService,
@@ -113,8 +112,11 @@ export class DataTableComponent extends BaseComponent implements OnInit {
         where: JSON.stringify(where),
         skip: skip
       }).toPromise();
+      this.isInitialLoad = !this.data ? true : false; // Initial load
       this.data = res;
       this.isLoading = false;
+
+
       console.log('[DataTableComponent]: loadData =>', this.data)
     } catch (e) {
       this.isLoading = false;

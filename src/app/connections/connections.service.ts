@@ -19,6 +19,7 @@ export class ConnectionsService {
   public itemAdded$: EventEmitter<any> =  new EventEmitter<any>();
   public itemDeleted$: EventEmitter<any> = new EventEmitter<any>();
   public itemUpdated$: EventEmitter<any> = new EventEmitter<any>();
+  public itemActivated$: EventEmitter<any> = new EventEmitter<any>();
 
 
   constructor(public api: ApiService,
@@ -88,6 +89,8 @@ export class ConnectionsService {
     this.notificationsService.success(this.translate.instant(`konga.connection_activated`, {
       name: connection.name
     }))
+
+    this.itemActivated$.emit(connection);
 
     return connection;
   }

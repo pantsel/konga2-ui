@@ -2,12 +2,9 @@ import { OnInit } from '@angular/core';
 import {ApiService} from '@app/core/api/api.service';
 import {
   AppState,
-  loginPage,
   NotificationService,
-  onboardingPage,
   selectAuth,
-  selectIsAuthenticated,
-  startingPage
+  selectIsAuthenticated
 } from '@app/core';
 import {TranslateService} from '@ngx-translate/core';
 import {select, Store} from '@ngrx/store';

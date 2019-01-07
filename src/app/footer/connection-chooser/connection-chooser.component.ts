@@ -38,6 +38,10 @@ export class ConnectionChooserComponent extends BaseComponent implements OnInit 
     this.connectionsService.itemUpdated$.subscribe(data => {
       if (data) this.updateConnection(data);
     })
+
+    this.connectionsService.itemActivated$.subscribe(data => {
+      if (data) this.updateConnection(data);
+    })
   }
 
   ngOnInit() {
