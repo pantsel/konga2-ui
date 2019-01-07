@@ -21,6 +21,7 @@ export class ConnectionFormComponent implements OnInit {
   form: FormGroup;
   errorMsg: string;
   submitting: boolean;
+  selectedIndex = 0;
 
   connectionTypes = ['no_auth', 'key_auth', 'jwt'];
   jwtAlgos = ['HS256', 'RS256']
@@ -41,6 +42,10 @@ export class ConnectionFormComponent implements OnInit {
       jwtKey: [_.get(this.existingConnection, 'jwtKey', '')],
       jwtSecret: [_.get(this.existingConnection, 'jwtSecret', '')]
     });
+
+    if (this.existingConnection){
+      this.selectedIndex = this.connectionTypes.indexOf(_.get(this.existingConnection, 'type', 0));
+    }
   }
 
   typeChange($index) {

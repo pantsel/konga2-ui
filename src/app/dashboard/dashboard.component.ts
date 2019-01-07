@@ -15,6 +15,8 @@ import {ConnectionsService} from '@app/connections/connections.service';
 export class DashboardComponent extends BaseComponent implements OnInit {
 
   hasConnections = true; // Start by assuming that we have created at least one connection
+  loading = true;
+  canActivate = true; // Start by assuming that the crate connection can be activated
 
   constructor(public api: ApiService,
               public notificationService: NotificationService,
@@ -32,6 +34,8 @@ export class DashboardComponent extends BaseComponent implements OnInit {
       this.hasConnections = count > 0 ? true : false;
       if (this.hasConnections) {
         this.loadData();
+      }else{
+        this.loading = false;
       }
     })
 
@@ -39,17 +43,23 @@ export class DashboardComponent extends BaseComponent implements OnInit {
 
   async onConnectionCreated(connection) {
     this.connectionsService.itemAdded$.next(connection);
+    this.loading = true;
     this.connectionsService.activateConnection(connection)
       .then(activated => {
         console.log('[DashboardComponent]: connection activated', activated);
         if (!activated) {
-
+          this.loading = false;
+          this.canActivate = false;
         }
       })
   }
 
   loadData() {
     console.log(`['DashboardComponent']: loading data`)
+    if (!this.authUser.connection) { // There is no connection activated
+      this.loading = false;
+      return false;
+    }
   }
 
 }

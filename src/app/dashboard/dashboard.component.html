@@ -1,3 +1,6 @@
+<ng-container *ngIf="loading">
+    <anms-page-loader></anms-page-loader>
+</ng-container>
 <ng-container *ngIf="!hasConnections">
     <div class="content text-center">
         <div class="m-auto pt-5" style="max-width: 580px">
@@ -8,4 +11,23 @@
             <anms-connection-form (connectionCreated)="onConnectionCreated($event)"></anms-connection-form>
         </div>
     </div>
+</ng-container>
+<ng-container *ngIf="hasConnections && !loading && !authUser?.connection">
+    <!--<div class="alert alert-warning m-5">-->
+        <!--{{'konga.connections.no_active_connection_message' | translate}}-->
+    <!--</div>-->
+    <div class="content text-center">
+        <div class="m-auto pt-5" style="max-width: 580px">
+            <img class="mb-4" src="assets/images/conn_sync-100.png">
+            <h1 class="text-danger">No active Connection</h1>
+            <h3>{{'konga.connections.no_active_connection_message' | translate}}</h3>
+            <h4 class="text-secondary mb-4 mt-4">
+                <a [routerLink]="['/connections']" class="text-success">Go on, activate a Connection from the Connections page</a>.
+            </h4>
+        </div>
+    </div>
+
+</ng-container>
+<ng-container *ngIf="!canActivate">
+
 </ng-container>

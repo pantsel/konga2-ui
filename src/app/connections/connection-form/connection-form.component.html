@@ -1,5 +1,6 @@
 <mat-tab-group mat-stretch-tabs
                [color]="'accent'"
+               [selectedIndex]="selectedIndex"
                dynamicHeight (selectedIndexChange)="typeChange($event)">
   <mat-tab label="NO AUTH">
     <div class="pt-4">
