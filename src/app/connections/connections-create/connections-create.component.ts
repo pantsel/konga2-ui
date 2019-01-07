@@ -4,6 +4,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TranslateService} from '@ngx-translate/core';
 import {ApiService} from '@app/core/api/api.service';
 import {NotificationService} from '@app/core';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'anms-connections-create',
@@ -13,11 +14,12 @@ import {NotificationService} from '@app/core';
 })
 export class ConnectionsCreateComponent implements OnInit {
 
+  existingConnection: any;
   form: FormGroup;
   errorMsg: string;
   submitting: boolean;
 
-  connectionTypes = ['default', 'key_auth', 'jwt'];
+  connectionTypes = ['no_auth', 'key_auth', 'jwt'];
   jwtAlgos = ['HS256', 'RS256']
 
   constructor(public dialogRef: MatDialogRef<ConnectionsCreateComponent>,
@@ -25,18 +27,22 @@ export class ConnectionsCreateComponent implements OnInit {
               public translate: TranslateService,
               public api: ApiService,
               private notificationService: NotificationService,
-              @Inject(MAT_DIALOG_DATA) public data: any) { }
+              @Inject(MAT_DIALOG_DATA) public data: any) {
+
+    this.existingConnection = this.data.connection;
+    console.log('[ConnectionsCreateComponent]: existingConnection =>', this.existingConnection);
+  }
 
   ngOnInit() {
 
     this.form = this.fb.group({
-      name: ['', Validators.compose([Validators.required])],
-      type: ['default'],
-      kongAdminUrl: ['', Validators.compose([Validators.required])],
-      kongApiKey: [''],
-      jwtAlgorithm: ['HS256'],
-      jwtKey: [''],
-      jwtSecret: ['']
+      name: [_.get(this.existingConnection, 'name', ''), Validators.compose([Validators.required])],
+      type: [_.get(this.existingConnection, 'type', this.connectionTypes[0])],
+      kongAdminUrl: [_.get(this.existingConnection, 'kongAdminUrl', ''), Validators.compose([Validators.required])],
+      kongApiKey: [_.get(this.existingConnection, 'kongApiKey', '')],
+      jwtAlgorithm: [_.get(this.existingConnection, 'jwtAlgorithm', 'HS256')],
+      jwtKey: [_.get(this.existingConnection, 'jwtKey', '')],
+      jwtSecret: [_.get(this.existingConnection, 'jwtSecret', '')]
     });
   }
 
@@ -72,17 +78,38 @@ export class ConnectionsCreateComponent implements OnInit {
     this.form.controls['jwtSecret'].updateValueAndValidity();
   }
 
-  submit(data) {
+  async submit(data) {
     this.submitting = true;
-    this.api.post(`connections`, data)
-      .subscribe(result => {
-        console.log(`Created Connection! => `, result)
-        this.notificationService.success(this.translate.instant(`konga.create_connection_success`))
-        this.dialogRef.close(result);
-      }, error => {
-        this.errorMsg = this.api.getErrorMessage(error);
-        this.submitting = false;
-      })
+    if (this.existingConnection) {
+      await this.update(data);
+    }else{
+      await this.create(data);
+    }
+    this.submitting = false;
+  }
+
+  async create(data) {
+    try {
+      const result = await this.api.post(`connections`, data).toPromise();
+      console.log(`Created Connection! => `, result)
+      this.notificationService.success(this.translate.instant(`konga.create_connection_success`))
+      this.dialogRef.close(result);
+    }catch (error) {
+      this.errorMsg = this.api.getErrorMessage(error);
+      this.submitting = false;
+    }
+  }
+
+  async update(data) {
+    try {
+      const result = await this.api.update(`connections/${this.existingConnection.id}`, data).toPromise();
+      console.log(`Created Connection! => `, result)
+      this.notificationService.success(this.translate.instant(`konga.update_connection_success`))
+      this.dialogRef.close(result);
+    }catch (error) {
+      this.errorMsg = this.api.getErrorMessage(error);
+      this.submitting = false;
+    }
   }
 
   onNoClick(): void {

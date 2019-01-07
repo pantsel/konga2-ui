@@ -50,13 +50,30 @@ export class ConnectionsComponent extends DataTableComponent implements OnInit {
       autoFocus: true,
       disableClose: true,
       data: {
-
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.connectionsService.itemAdded$.emit(result);
+        this.loadData();
+      }
+    });
+  }
+
+  editConnection(connection) {
+    const dialogRef = this.matDialog.open(ConnectionsCreateComponent, {
+      width: '600px',
+      autoFocus: true,
+      disableClose: true,
+      data: {
+        connection: connection
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.connectionsService.itemUpdated$.emit(result);
         this.loadData();
       }
     });

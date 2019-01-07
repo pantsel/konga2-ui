@@ -34,6 +34,10 @@ export class ConnectionChooserComponent extends BaseComponent implements OnInit 
     this.connectionsService.itemDeleted$.subscribe(data => {
       if (data) this.deleteConnection(data);
     })
+
+    this.connectionsService.itemUpdated$.subscribe(data => {
+      if (data) this.updateConnection(data);
+    })
   }
 
   ngOnInit() {
@@ -62,6 +66,13 @@ export class ConnectionChooserComponent extends BaseComponent implements OnInit 
   }
 
   addConnection(item) {
+    if (!this.connections) {
+      this.connections = {
+        totalCount: 0,
+        results: []
+      }
+    }
+
     this.connections.totalCount++;
     this.connections.results.push(item);
   }
@@ -71,6 +82,13 @@ export class ConnectionChooserComponent extends BaseComponent implements OnInit 
     if (index > -1) {
       this.connections.results.splice(index, 1);
       this.connections.totalCount--;
+    }
+  }
+
+  updateConnection(item) {
+    const index = _.findIndex(this.connections.results, _item => _item.id === item.id);
+    if (index > -1) {
+      this.connections.results[index] = item;
     }
   }
 

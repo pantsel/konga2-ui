@@ -128,6 +128,6 @@
                           *ngIf="submitting"
                           color="primary" diameter="36" class="float-left">
     </mat-progress-spinner>
-    {{'konga.create_connection' | translate}}
+    {{existingConnection ? ('konga.save_changes' | translate) : ('konga.create_connection' | translate)}}
   </button>
 </form>
