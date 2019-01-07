@@ -20,6 +20,7 @@ export class ConnectionsService {
   public itemDeleted$: EventEmitter<any> = new EventEmitter<any>();
   public itemUpdated$: EventEmitter<any> = new EventEmitter<any>();
   public itemActivated$: EventEmitter<any> = new EventEmitter<any>();
+  public totalCountChanged$: EventEmitter<any> = new EventEmitter<any>();
 
 
   constructor(public api: ApiService,

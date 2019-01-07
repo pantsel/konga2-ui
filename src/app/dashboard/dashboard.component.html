@@ -1,3 +1,11 @@
-<p>
-  dashboard works!
-</p>
+<ng-container *ngIf="!hasConnections">
+    <div class="content text-center">
+        <div class="m-auto pt-5" style="max-width: 580px">
+            <img class="mb-4" src="assets/images/conn_sync-100.png">
+            <h1>Welcome!</h1>
+            <h3>First of all, let's setup a connection to Kong Admin</h3>
+            <h4 class="text-secondary mb-4">Select a connection type</h4>
+            <anms-connection-form (connectionCreated)="onConnectionCreated($event)"></anms-connection-form>
+        </div>
+    </div>
+</ng-container>

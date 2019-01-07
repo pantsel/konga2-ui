@@ -9,7 +9,7 @@ import {Store} from '@ngrx/store';
 @Component({
   selector: 'anms-footer',
   templateUrl: './footer.component.html',
-  styleUrls: ['./footer.component.css']
+  styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent extends BaseComponent implements OnInit {
 
