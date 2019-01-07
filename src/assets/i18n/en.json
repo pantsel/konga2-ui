@@ -134,6 +134,8 @@
   "konga.create_connection_success": "A new connection to Kong Admin was created successfully!",
   "konga.update_connection_success": "The connection was updated successfully!",
 
+  "konga.dashboard.page_title": "Dashboard",
+
   "konga.name": "Name",
   "konga.created_at": "Created at",
   "konga.change_password": "Change password",

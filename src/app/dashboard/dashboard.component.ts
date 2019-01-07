@@ -6,6 +6,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {DialogService} from '@app/core/dialog/dialog.service';
 import {Store} from '@ngrx/store';
 import {ConnectionsService} from '@app/connections/connections.service';
+import {KongApiService} from '@app/core/api/kong-api.service';
 
 @Component({
   selector: 'anms-dashboard',
@@ -16,9 +17,12 @@ export class DashboardComponent extends BaseComponent implements OnInit {
 
   hasConnections = true; // Start by assuming that we have created at least one connection
   loading = true;
-  canActivate = true; // Start by assuming that the crate connection can be activated
+  errorMsg: string;
+  info: any;
+  status: any;
 
   constructor(public api: ApiService,
+              public kong: KongApiService,
               public notificationService: NotificationService,
               public translate: TranslateService,
               public dialog: DialogService,
@@ -38,6 +42,11 @@ export class DashboardComponent extends BaseComponent implements OnInit {
         this.loading = false;
       }
     })
+    this.connectionsService.activeNodeInfoChanged$.subscribe(info => {
+      console.log('[DashboardComponent]: connectionsService.activeNodeInfoChanged$ =>', info);
+      this.info = info;
+      this.loading = false;
+    })
 
   }
 
@@ -49,7 +58,9 @@ export class DashboardComponent extends BaseComponent implements OnInit {
         console.log('[DashboardComponent]: connection activated', activated);
         if (!activated) {
           this.loading = false;
-          this.canActivate = false;
+          this.errorMsg = this.translate.instant(`konga.error_establishing_connection`, {
+            kongAdminUrl: connection.kongAdminUrl
+          });
         }
       })
   }
@@ -60,6 +71,22 @@ export class DashboardComponent extends BaseComponent implements OnInit {
       this.loading = false;
       return false;
     }
+
+    this.kong.get(``)
+      .subscribe(data => {
+        console.log('[DashboardComponent]: loadData', data);
+        this.connectionsService.setActiveNodeInfo(data);
+      }, error => {
+        this.loading = false;
+      })
+
+    this.kong.get(`status`)
+      .subscribe(status => {
+        console.log('[DashboardComponent]: loadStatus', status);
+        this.status = status;
+      }, error => {
+        this.loading = false;
+      })
   }
 
 }

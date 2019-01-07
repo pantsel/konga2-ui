@@ -1,33 +1,45 @@
-<ng-container *ngIf="loading">
-    <anms-page-loader></anms-page-loader>
-</ng-container>
-<ng-container *ngIf="!hasConnections">
-    <div class="content text-center">
-        <div class="m-auto pt-5" style="max-width: 580px">
-            <img class="mb-4" src="assets/images/conn_sync-100.png">
-            <h1>Welcome!</h1>
-            <h3>First of all, let's setup a connection to Kong Admin</h3>
-            <h4 class="text-secondary mb-4">Select a connection type</h4>
-            <anms-connection-form (connectionCreated)="onConnectionCreated($event)"></anms-connection-form>
+<div class="container mt-4 pb-4" *ngIf="data">
+    <div class="row">
+        <div class="col-md-12">
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>Connections</mat-card-title>
+                </mat-card-header>
+                <mat-card-content></mat-card-content>
+            </mat-card>
         </div>
     </div>
-</ng-container>
-<ng-container *ngIf="hasConnections && !loading && !authUser?.connection">
-    <!--<div class="alert alert-warning m-5">-->
+</div>
+
+<div class="container mt-5" *ngIf="!data">
+    <ng-container *ngIf="loading">
+        <anms-page-loader></anms-page-loader>
+    </ng-container>
+    <ng-container *ngIf="!hasConnections">
+        <div class="content text-center">
+            <div class="m-auto" style="max-width: 580px">
+                <img class="mb-4" src="assets/images/conn_sync-100.png">
+                <h1>Welcome!</h1>
+                <h3>First of all, let's setup a connection to Kong Admin</h3>
+                <h4 class="text-secondary mb-4">Select a connection type</h4>
+                <anms-connection-form (connectionCreated)="onConnectionCreated($event)"></anms-connection-form>
+            </div>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="hasConnections && !loading && !authUser?.connection">
+        <!--<div class="alert alert-warning m-5">-->
         <!--{{'konga.connections.no_active_connection_message' | translate}}-->
-    <!--</div>-->
-    <div class="content text-center">
-        <div class="m-auto pt-5" style="max-width: 580px">
-            <img class="mb-4" src="assets/images/conn_sync-100.png">
-            <h1 class="text-danger">No active Connection</h1>
-            <h3>{{'konga.connections.no_active_connection_message' | translate}}</h3>
-            <h4 class="text-secondary mb-4 mt-4">
-                <a [routerLink]="['/connections']" class="text-success">Go on, activate a Connection from the Connections page</a>.
-            </h4>
+        <!--</div>-->
+        <div class="content text-center">
+            <div class="m-auto" style="max-width: 580px">
+                <img class="mb-4" src="assets/images/conn_sync-100.png">
+                <h1 class="text-danger">No active Connection</h1>
+                <h3>{{'konga.connections.no_active_connection_message' | translate}}</h3>
+                <h4 class="text-secondary mb-4 mt-4">
+                    <a [routerLink]="['/connections']" class="text-success">Go on, activate a Connection from the Connections page</a>.
+                </h4>
+            </div>
         </div>
-    </div>
 
-</ng-container>
-<ng-container *ngIf="!canActivate">
-
-</ng-container>
+    </ng-container>
+</div>

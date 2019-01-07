@@ -16,7 +16,16 @@ export class ConnectionsService {
   authUser: any;
   auth$: Observable<any>;
 
+  public kongInfo: any;
+
+  public activeNodeData = {
+    info: null,
+    status: null
+  }
+
   public itemAdded$:  BehaviorSubject<any> = <BehaviorSubject<any>>new BehaviorSubject(null)
+  public activeNodeInfoChanged$:  BehaviorSubject<any> = <BehaviorSubject<any>>new BehaviorSubject(null)
+  public activeNodeStatusChanged$:  BehaviorSubject<any> = <BehaviorSubject<any>>new BehaviorSubject(null)
   public itemDeleted$:  BehaviorSubject<any> = <BehaviorSubject<any>>new BehaviorSubject(null)
   public itemUpdated$:  BehaviorSubject<any> = <BehaviorSubject<any>>new BehaviorSubject(null)
   public itemActivated$:  BehaviorSubject<any> = <BehaviorSubject<any>>new BehaviorSubject(null)
@@ -35,6 +44,16 @@ export class ConnectionsService {
     this.auth$.subscribe(data => {
       this.authUser = data.user;
     })
+  }
+
+  setActiveNodeInfo(data) {
+    this.activeNodeData.info = data;
+    this.activeNodeInfoChanged$.next(data);
+  }
+
+  setActiveNodeStatus(data) {
+    this.activeNodeData.status = data;
+    this.activeNodeStatusChanged$.next(data);
   }
 
   async onToggleConnectionActive(connection) {
@@ -66,41 +85,47 @@ export class ConnectionsService {
   }
 
   async activateConnection(connection) {
-    // Activate connection
-    const kongInfo: any = await this.checkConnection(connection);
-    console.log('kongInfo =>', kongInfo);
-    if (!kongInfo) return false;
 
-    if (!connection.kongVersion || connection.kongVersion !== kongInfo.version ) {
-      // Update connection's kongVersion
-      connection = await this.api.update(`connections/${connection.id}`, {
-        kongVersion: kongInfo.version
-      }).toPromise();
-    }
+   try {
+     // Activate connection
+     const kongInfo: any = await this.checkConnection(connection);
+     console.log('kongInfo =>', kongInfo);
 
-    const updatedUser = await this.api.update(`users/${this.authUser.id}`, {
-      connection: connection.id
-    }).toPromise();
+     if (!connection.kongVersion || connection.kongVersion !== kongInfo.info.version ) {
+       // Update connection's kongVersion
+       connection = await this.api.update(`connections/${connection.id}`, {
+         kongVersion: kongInfo.info.version
+       }).toPromise();
+     }
 
-    console.log(`Updated User =>`, updatedUser);
+     const updatedUser = await this.api.update(`users/${this.authUser.id}`, {
+       connection: connection.id
+     }).toPromise();
 
-    // Update storage
-    this.authService.updateStoredUser(updatedUser);
+     console.log(`Updated User =>`, updatedUser);
 
-    this.notificationsService.success(this.translate.instant(`konga.connection_activated`, {
-      name: connection.name
-    }))
+     // Update storage
+     this.authService.updateStoredUser(updatedUser);
 
-    this.itemActivated$.next(connection);
+     this.notificationsService.success(this.translate.instant(`konga.connection_activated`, {
+       name: connection.name
+     }))
+     this.itemActivated$.next(connection);
 
-    return connection;
+     return connection;
+   }catch (e) {
+     return e;
+   }
   }
 
-  async checkConnection(connection) {
+  async checkConnection(connection?) {
     try {
-      return await this.kong.get(``, {
-        connection_id: connection.id
-      }).toPromise()
+      const info = await this.nodeInfo(connection);
+      const status = await this.nodeStatus(connection);
+      return {
+        info: info,
+        status: status
+      }
     }catch (e) {
       this.notificationsService.error(this.translate.instant(`konga.error_establishing_connection`, {
         kongAdminUrl: connection.kongAdminUrl
@@ -115,5 +140,21 @@ export class ConnectionsService {
 
   isActiveConnection(connection) {
     return connection.id === _.get(this.authUser, 'connection.id', this.authUser.connection);
+  }
+
+  async nodeInfo(connection?) {
+    const info = await this.kong.get(``, {
+      connection_id: connection ? connection.id : ''
+    }).toPromise()
+    this.setActiveNodeInfo(info);
+    return info;
+  }
+
+  async nodeStatus(connection?) {
+    const status = await this.kong.get(`status`, {
+      connection_id: connection ? connection.id : ''
+    }).toPromise();
+    this.setActiveNodeStatus(status);
+    return status;
   }
 }
