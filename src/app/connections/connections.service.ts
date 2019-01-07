@@ -43,6 +43,12 @@ export class ConnectionsService {
     this.auth$ = this.store.pipe(select(selectAuth));
     this.auth$.subscribe(data => {
       this.authUser = data.user;
+
+      // If a connection is assigned to the user,
+      // get the node details
+      if (this.authUser.connection) {
+        this.getActiveNodeDetails();
+      }
     })
   }
 
@@ -156,5 +162,10 @@ export class ConnectionsService {
     }).toPromise();
     this.setActiveNodeStatus(status);
     return status;
+  }
+
+  async getActiveNodeDetails() {
+    await this.nodeInfo();
+    await this.nodeStatus();
   }
 }

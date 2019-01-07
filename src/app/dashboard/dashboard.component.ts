@@ -42,10 +42,21 @@ export class DashboardComponent extends BaseComponent implements OnInit {
         this.loading = false;
       }
     })
+
     this.connectionsService.activeNodeInfoChanged$.subscribe(info => {
       console.log('[DashboardComponent]: connectionsService.activeNodeInfoChanged$ =>', info);
-      this.info = info;
-      this.loading = false;
+      if (info) {
+        this.info = info;
+        this.loading = false;
+      }
+    })
+
+    this.connectionsService.activeNodeStatusChanged$.subscribe(status => {
+      console.log('[DashboardComponent]: connectionsService.activeNodeStatusChanged$ =>', status);
+      if (status) {
+        this.status = status;
+        this.loading = false;
+      }
     })
 
   }
@@ -72,21 +83,21 @@ export class DashboardComponent extends BaseComponent implements OnInit {
       return false;
     }
 
-    this.kong.get(``)
-      .subscribe(data => {
-        console.log('[DashboardComponent]: loadData', data);
-        this.connectionsService.setActiveNodeInfo(data);
-      }, error => {
-        this.loading = false;
-      })
-
-    this.kong.get(`status`)
-      .subscribe(status => {
-        console.log('[DashboardComponent]: loadStatus', status);
-        this.status = status;
-      }, error => {
-        this.loading = false;
-      })
+    // this.kong.get(``)
+    //   .subscribe(data => {
+    //     console.log('[DashboardComponent]: loadData', data);
+    //     this.connectionsService.setActiveNodeInfo(data);
+    //   }, error => {
+    //     this.loading = false;
+    //   })
+    //
+    // this.kong.get(`status`)
+    //   .subscribe(status => {
+    //     console.log('[DashboardComponent]: loadStatus', status);
+    //     this.status = status;
+    //   }, error => {
+    //     this.loading = false;
+    //   })
   }
 
 }

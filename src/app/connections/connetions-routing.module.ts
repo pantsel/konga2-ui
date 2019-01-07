@@ -8,7 +8,7 @@ import {UserSecurityComponent} from '@app/user/user-security/user-security.compo
 import {UserPermissionsComponent} from '@app/user/user-permissions/user-permissions.component';
 import {UserCreateComponent} from '@app/user/user-create/user-create.component';
 import {NgxPermissionsGuard} from 'ngx-permissions';
-import {AppState, selectAuth} from '@app/core';
+import {AppState, AuthGuardService, selectAuth} from '@app/core';
 import {select, Store} from '@ngrx/store';
 import {Observable} from 'rxjs';
 import {ConnectionsComponent} from '@app/connections/connections.component';
@@ -18,7 +18,7 @@ const routes: Routes = [
   {
     path: '',
     component: ConnectionsComponent,
-    canActivate: [NgxPermissionsGuard],
+    canActivate: [AuthGuardService, NgxPermissionsGuard],
     data: {
       title: 'konga.menu.connections',
       permissions: {

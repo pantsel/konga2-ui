@@ -4,12 +4,22 @@ import { Routes, RouterModule } from '@angular/router';
 import { SettingsContainerComponent } from './settings';
 import {AuthGuardService} from '@app/core';
 import {NgxPermissionsGuard} from 'ngx-permissions';
+import {DashboardComponent} from '@app/dashboard/dashboard.component';
 
 const routes: Routes = [
   {
     path: '',
     redirectTo: 'dashboard',
+    canActivate: [AuthGuardService],
     pathMatch: 'full'
+  },
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    canActivate: [AuthGuardService],
+    data: {
+      title: 'konga.menu.dashboard'
+    }
   },
   {
     path: 'settings',

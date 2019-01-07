@@ -131,8 +131,8 @@ export class AppComponent implements OnInit {
       console.log('[DEBUG] [AppComponent] Authenticated state changed =>', data)
       if (!data) {
         setTimeout(() => {
-          const path = window['_needsOnboarding'] ? onboardingPage : loginPage;
-          this.router.navigate([path]);
+          // const path = window['_needsOnboarding'] ? onboardingPage : loginPage;
+          // this.router.navigate([path]);
         })
       }else{
         const paths = ['/login', '/sign-up'];
