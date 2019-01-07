@@ -14,6 +14,7 @@ import {KongApiService} from '@app/core/api/kong-api.service';
 import {AuthService} from '@app/core/auth/auth.service';
 import * as _ from 'lodash';
 import {ConnectionsService} from '@app/connections/connections.service';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'anms-connections',
@@ -87,8 +88,22 @@ export class ConnectionsComponent extends DataTableComponent implements OnInit {
      return this.dialog.warning(this.translate.instant('konga.connections.delete_active_connection_warn'))
     }
 
-    super.onDeleteItem(item);
+    const title = this.translate.instant('konga.delete_item_title');
+    const text = this.translate.instant('konga.delete_item_text');
+    this.dialog.confirm(title, text)
+      .then(confirm => {
+        if (confirm) {
+          this.deleteItem(item);
+        }
+      });
 
+  }
+
+  deleteItem(item) {
+    this.api.delete(`connections/${item.id}`).subscribe((deleted: any) => {
+      this.connectionsService.itemDeleted$.emit(deleted);
+      this.loadData();
+    });
   }
 
 

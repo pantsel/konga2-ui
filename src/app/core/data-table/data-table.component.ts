@@ -152,7 +152,7 @@ export class DataTableComponent extends BaseComponent implements OnInit {
       });
   }
 
- private deleteItem(item) {
+ deleteItem(item) {
     this.api.delete(`${this.endpoint}/${item.id}`)
       .subscribe(deleted => {
         console.log('Item deleted =>', deleted);
