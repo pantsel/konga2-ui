@@ -4,9 +4,10 @@ import { FooterComponent } from './footer.component';
 import {SharedModule} from '@app/shared';
 import {RouterModule} from '@angular/router';
 import {ConnectionsService} from '@app/connections/connections.service';
+import { ConnectionChooserComponent } from './connection-chooser/connection-chooser.component';
 
 @NgModule({
-  declarations: [FooterComponent],
+  declarations: [FooterComponent, ConnectionChooserComponent],
   imports: [
     CommonModule,
     SharedModule,

@@ -1,0 +1,53 @@
+<div *ngIf="connections?.results">
+  <button
+          mat-button
+          [matMenuTriggerFor]="footerConnectionsMenu"
+          color="accent"
+  >
+    <mat-icon class="mr-2">cast_connected</mat-icon>
+    <span *ngIf="authUser?.connection">
+                 Connected to <strong>{{authUser.connection?.name}}</strong>
+               </span>
+    <span *ngIf="!authUser?.connection">
+                 Select a connection
+               </span>
+
+  </button>
+  <mat-menu #footerConnectionsMenu="matMenu">
+    <mat-action-list>
+      <button mat-list-item class="text-left"
+              (click)="activateConnection($event, connection)"
+              *ngFor="let connection of connections.results">
+        <mat-progress-spinner mode="indeterminate"
+                              *ngIf="connection.busy"
+                              matSuffix
+                              class="ml-3"
+                              color="primary" diameter="30"></mat-progress-spinner>
+        <mat-icon
+                [ngClass]="{'text-success': isActiveConnection(connection), 'text-secondary': !isActiveConnection(connection)}"
+                matListIcon>{{isActiveConnection(connection) ? 'cast' : 'cast_connected'}}</mat-icon>
+        <h3 matLine [ngClass]="{'text-success': isActiveConnection(connection)}">
+          <strong>{{connection.name}}</strong>
+        </h3>
+        <p matLine
+           class="text-secondary"
+           [ngClass]="{'text-success': isActiveConnection(connection)}">{{connection.kongAdminUrl}}</p>
+        <p matLine
+           class="text-secondary"
+           [ngClass]="{'text-success': isActiveConnection(connection)}">
+          <small>{{connection.kongVersion ? 'v' +  connection.kongVersion : 'N/A'}}</small>
+        </p>
+      </button>
+      <button mat-list-item  [routerLink]="['connections']"
+              class="text-left"
+              *ngIf="connections.totalCount === 0">
+        <h3 matLine>{{'konga.no_connections_available' | translate}}</h3>
+        <p matLine>{{'konga.create_connection' | translate}}</p>
+      </button>
+      <button mat-list-item  [routerLink]="['connections']"
+              *ngIf="connections.totalCount > connections.results.length">
+        {{'konga.more' | translate}}...
+      </button>
+    </mat-action-list>
+  </mat-menu>
+</div>
