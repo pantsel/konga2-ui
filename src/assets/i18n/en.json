@@ -33,6 +33,7 @@
   "konga.header.github": "Project Github Repository",
   "konga.menu.about": "About",
   "konga.menu.examples": "Examples",
+  "konga.menu.info": "Info",
   "konga.menu.users": "Users",
   "konga.menu.features": "Features",
   "konga.menu.login": "Sign in",
@@ -96,6 +97,8 @@
   "konga.connection_deactivated": "Connection `{{name}}` is no longer your active connection to Kong.",
   "konga.connections.no_active_connection_message": "You need to have an active a connection in order to be able to manage the affiliated Kong cluster",
   "konga.connections.delete_active_connection_warn": "This is the active connection. You need to deactivate it before deleting.",
+
+  "konga.info.subtitle": "Extended information about the active Kong node",
 
   "konga.user.tab_details_label" : "User Details",
   "konga.user.tab_security_label" : "Security",

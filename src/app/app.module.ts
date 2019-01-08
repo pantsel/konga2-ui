@@ -16,6 +16,7 @@ import {DashboardModule} from '@app/dashboard/dashboard.module';
 import {NgxPermissionsModule} from 'ngx-permissions';
 import {FooterModule} from '@app/footer/footer.module';
 import {ConnectionsService} from '@app/connections/connections.service';
+import { InfoComponent } from './info/info.component';
 
 @NgModule({
   imports: [
@@ -39,7 +40,7 @@ import {ConnectionsService} from '@app/connections/connections.service';
     // Specify your library as an import
     NgxPermissionsModule.forRoot()
   ],
-  declarations: [AppComponent],
+  declarations: [AppComponent, InfoComponent],
   providers: [AuthService, ConnectionsService],
   bootstrap: [AppComponent]
 })

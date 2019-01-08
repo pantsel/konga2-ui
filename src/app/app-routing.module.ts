@@ -5,6 +5,7 @@ import { SettingsContainerComponent } from './settings';
 import {AuthGuardService} from '@app/core';
 import {NgxPermissionsGuard} from 'ngx-permissions';
 import {DashboardComponent} from '@app/dashboard/dashboard.component';
+import {InfoComponent} from '@app/info/info.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,17 @@ const routes: Routes = [
     canActivate: [AuthGuardService],
     data: {
       title: 'konga.menu.dashboard'
+    }
+  },
+  {
+    path: 'info',
+    component: InfoComponent,
+    canActivate: [AuthGuardService, NgxPermissionsGuard],
+    data: {
+      title: 'konga.menu.info',
+      permissions: {
+        only : ['superAdmin', 'infoRead']
+      }
     }
   },
   {
