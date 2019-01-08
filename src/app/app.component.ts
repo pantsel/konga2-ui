@@ -119,6 +119,9 @@ export class AppComponent implements OnInit {
       { link: 'dashboard',
         icon: 'dashboard',
         label: 'konga.menu.dashboard' },
+
+      { type: 'subheader',
+        label: 'Kong'},
       { link: 'info',
         icon: 'info_outline',
         show: () => {
@@ -126,6 +129,9 @@ export class AppComponent implements OnInit {
         },
         permissions: ['superAdmin', 'infoRead'],
         label: 'konga.menu.info' },
+
+      { type: 'divider',
+        label: ''},
       { link: 'users',
         icon: 'supervised_user_circle',
         permissions: ['superAdmin', 'usersList'],

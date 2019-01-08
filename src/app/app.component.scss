@@ -1,3 +1,5 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
 @import '../styles-variables';
 
 .theme-wrapper {
@@ -109,5 +111,9 @@ mat-sidenav {
 
   .mat-nav-list {
     padding-top: 0;
+
+    .matSubheader {
+      color: $gray-500;
+    }
   }
 }
