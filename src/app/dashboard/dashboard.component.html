@@ -1,3 +1,9 @@
+<ng-container *ngIf="loading || activating">
+    <anms-page-loader></anms-page-loader>
+    <h3 class="text-center" *ngIf="activating">Activating connection...</h3>
+</ng-container>
+
+
 <div class="container mt-4 pt-4 pb-4" *ngIf="authUser?.connection">
     <div class="row mb-4">
         <div class="col-md-12">
@@ -180,10 +186,8 @@
     </div>
 </div>
 
+
 <div class="container mt-5" *ngIf="!authUser?.connection">
-    <ng-container *ngIf="loading">
-        <anms-page-loader></anms-page-loader>
-    </ng-container>
     <ng-container *ngIf="!hasConnections && !loading">
         <div class="content text-center">
             <div class="m-auto" style="max-width: 580px">
@@ -197,7 +201,7 @@
             </div>
         </div>
     </ng-container>
-    <ng-container *ngIf="hasConnections && !loading && !authUser?.connection">
+    <ng-container *ngIf="hasConnections && !loading && !activating && !authUser?.connection">
         <div class="content text-center">
             <div class="m-auto" style="max-width: 580px">
                 <img class="mb-4" src="assets/images/conn_sync-100.png">

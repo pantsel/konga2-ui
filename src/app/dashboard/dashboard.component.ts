@@ -34,6 +34,7 @@ export class DashboardComponent extends BaseComponent implements OnInit {
   hasConnections = true; // Start by assuming that we have created at least one connection
   activeNode: any;
   loading = true;
+  activating: boolean;
   errorMsg: string;
   info: any;
   status: any;
@@ -104,17 +105,25 @@ export class DashboardComponent extends BaseComponent implements OnInit {
 
   async onConnectionCreated(connection) {
     this.connectionsService.itemAdded$.next(connection);
-    this.loading = true;
+    this.activating = true;
     this.connectionsService.activateConnection(connection)
       .then(activated => {
         console.log('[DashboardComponent]: connection activated', activated);
+        this.activating = false;
+        this.loading = false;
+
         if (!activated) {
-          this.loading = false;
           this.errorMsg = this.translate.instant(`konga.error_establishing_connection`, {
             kongAdminUrl: connection.kongAdminUrl
           });
         }
-      })
+      }).catch(err => {
+      this.activating = false;
+      this.loading = false;
+      this.errorMsg = this.translate.instant(`konga.error_establishing_connection`, {
+        kongAdminUrl: connection.kongAdminUrl
+      });
+    })
   }
 
   loadData() {
