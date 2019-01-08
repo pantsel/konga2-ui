@@ -120,8 +120,8 @@ export class AppComponent implements OnInit {
         icon: 'dashboard',
         label: 'konga.menu.dashboard' },
 
-      { type: 'subheader',
-        label: 'Kong'},
+      // { type: 'subheader',
+      //   label: 'Kong'},
       { link: 'info',
         icon: 'info_outline',
         show: () => {
