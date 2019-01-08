@@ -26,6 +26,7 @@ export class ConnectionsService {
   public itemAdded$:  BehaviorSubject<any> = <BehaviorSubject<any>>new BehaviorSubject(null)
   public activeNodeInfoChanged$:  BehaviorSubject<any> = <BehaviorSubject<any>>new BehaviorSubject(null)
   public activeNodeStatusChanged$:  BehaviorSubject<any> = <BehaviorSubject<any>>new BehaviorSubject(null)
+  public activeNodeChanged$:  BehaviorSubject<any> = <BehaviorSubject<any>>new BehaviorSubject(null)
   public itemDeleted$:  BehaviorSubject<any> = <BehaviorSubject<any>>new BehaviorSubject(null)
   public itemUpdated$:  BehaviorSubject<any> = <BehaviorSubject<any>>new BehaviorSubject(null)
   public itemActivated$:  BehaviorSubject<any> = <BehaviorSubject<any>>new BehaviorSubject(null)
@@ -85,6 +86,8 @@ export class ConnectionsService {
     // Update storage
     this.authService.updateStoredUser(updatedUser);
 
+    this.activeNodeChanged$.next(null);
+
     this.notificationsService.success(this.translate.instant(`konga.connection_deactivated`, {
       name: connection.name
     }))
@@ -116,7 +119,9 @@ export class ConnectionsService {
      this.notificationsService.success(this.translate.instant(`konga.connection_activated`, {
        name: connection.name
      }))
+
      this.itemActivated$.next(connection);
+     this.activeNodeChanged$.next(connection);
 
      return connection;
    }catch (e) {

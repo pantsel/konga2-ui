@@ -121,6 +121,7 @@
   "konga.users.list.title": "Users",
 
   "konga.connections.list.title": "Connections",
+  "konga.connections.select_type": "Select a connection type",
   "konga.connections.list.subtitle": "Create connections to Kong Nodes and activate the one you want use.",
   "konga.connection_type": "Type",
   "konga.create_connection": "Create Connection",
@@ -140,6 +141,11 @@
   "konga.update_connection_success": "The connection was updated successfully!",
 
   "konga.dashboard.page_title": "Dashboard",
+  "konga.dashboard.no_active_connection.header": "No active Connection",
+  "konga.dashboard.no_active_connection.linkText": "Go on, activate a Connection from the Connections page",
+  "konga.dashboard.no_connections.title": "Welcome",
+  "konga.dashboard.no_connections.subtitle": "First of all, let's setup a connection to Kong Admin",
+
 
   "konga.name": "Name",
   "konga.created_at": "Created at",

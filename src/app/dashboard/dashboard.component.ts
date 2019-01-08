@@ -32,6 +32,7 @@ export class DashboardComponent extends BaseComponent implements OnInit {
   }
 
   hasConnections = true; // Start by assuming that we have created at least one connection
+  activeNode: any;
   loading = true;
   errorMsg: string;
   info: any;
@@ -78,6 +79,12 @@ export class DashboardComponent extends BaseComponent implements OnInit {
         this.status = status;
         this.loading = false;
       }
+    })
+
+    this.connectionsService.activeNodeChanged$.subscribe(node => {
+      console.log('[DashboardComponent]: connectionsService.activeNodeChanged$ =>', node);
+      this.activeNode = node;
+      this.loading = false;
     })
 
   }

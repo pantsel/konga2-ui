@@ -44,29 +44,7 @@ export class AppComponent implements OnInit {
     // { link: 'features', label: 'konga.menu.features' },
     // { link: 'examples', label: 'konga.menu.examples' }
   ];
-  navigationSideMenu = [
-    ...this.navigation,
-    { link: 'dashboard',
-      icon: 'dashboard',
-      label: 'konga.menu.dashboard' },
-    { link: 'info',
-      icon: 'info_outline',
-      permissions: ['infoRead'],
-      label: 'konga.menu.info' },
-    { link: 'users',
-      icon: 'supervised_user_circle',
-      permissions: ['usersList'],
-      label: 'konga.menu.users' },
-    { link: 'connections',
-      icon: 'cast',
-      permissions: ['connectionsList'],
-      label: 'konga.menu.connections' },
-    { link: 'settings',
-      icon: 'settings',
-      permissions: ['settingsUpdate'],
-      label: 'konga.menu.settings' }
-
-  ];
+  navigationSideMenu = [];
 
   isAuthenticated$: Observable<boolean>;
   auth$: Observable<any>;
@@ -112,19 +90,7 @@ export class AppComponent implements OnInit {
     this.auth$.subscribe(data => {
       if (_.get(data, 'user.id')) {
         this.authUser = data.user;
-
-        if (!this.authUser.isSuperAdmin) {
-          // Filter navigation items based on permissions
-          this.navigationSideMenu = this.navigationSideMenu.filter(item => {
-            if (!item.permissions || !item.permissions.length) {
-              return true;
-            }
-
-            const permissions = this.permissionsService.getPermissions();
-            const permissionsNames = Object.keys(permissions);
-            return _.intersection(item.permissions, permissionsNames).length;
-          })
-        }
+        this.createNavigationSideMenu();
       }
 
 
@@ -144,6 +110,51 @@ export class AppComponent implements OnInit {
           this.router.navigate([startingPage]);
         }
       }
+    })
+  }
+
+  createNavigationSideMenu() {
+    this.navigationSideMenu = [
+      ...this.navigation,
+      { link: 'dashboard',
+        icon: 'dashboard',
+        label: 'konga.menu.dashboard' },
+      { link: 'info',
+        icon: 'info_outline',
+        show: () => {
+          return this.authUser.connection;
+        },
+        permissions: ['superAdmin', 'infoRead'],
+        label: 'konga.menu.info' },
+      { link: 'users',
+        icon: 'supervised_user_circle',
+        permissions: ['superAdmin', 'usersList'],
+        label: 'konga.menu.users' },
+      { link: 'connections',
+        icon: 'cast',
+        permissions: ['superAdmin', 'connectionsList'],
+        label: 'konga.menu.connections' },
+      { link: 'settings',
+        icon: 'settings',
+        permissions: ['superAdmin', 'settingsUpdate'],
+        label: 'konga.menu.settings' }
+
+    ];
+
+    // Filter navigation items based on permissions
+    this.navigationSideMenu = this.navigationSideMenu.filter(item => {
+
+      if (item.hasOwnProperty('show') &&  !item.show()) {
+        return false;
+      }
+
+      if (!item.permissions || !item.permissions.length) {
+        return true;
+      }
+
+      const permissions = this.permissionsService.getPermissions();
+      const permissionsNames = Object.keys(permissions);
+      return _.intersection(item.permissions, permissionsNames).length;
     })
   }
 

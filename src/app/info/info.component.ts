@@ -28,7 +28,9 @@ export class InfoComponent  extends BaseComponent implements OnInit {
               public store: Store<AppState>,
               public connectionsService: ConnectionsService) {
     super(api, notificationService, translate, dialog, store);
+  }
 
+  ngOnInit() {
     this.connectionsService.activeNodeInfoChanged$.subscribe(info => {
       console.log('[InfoComponent]: connectionsService.activeNodeInfoChanged$ =>', info);
       if (info) {
@@ -40,9 +42,6 @@ export class InfoComponent  extends BaseComponent implements OnInit {
         this.infoContainer.nativeElement.appendChild(this.infoTable);
       }
     })
-  }
-
-  ngOnInit() {
   }
 
 }

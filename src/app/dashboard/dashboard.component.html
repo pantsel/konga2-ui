@@ -1,4 +1,4 @@
-<div class="container mt-4 pt-4 pb-4" *ngIf="hasData()">
+<div class="container mt-4 pt-4 pb-4" *ngIf="authUser?.connection">
     <div class="row mb-4">
         <div class="col-md-12">
             <mat-card>
@@ -76,7 +76,7 @@
 
         <!-- TIMERS -->
         <div class="col-md-4">
-            <mat-card>
+            <mat-card *ngIf="timersData.length">
                 <mat-card-header class="w-100">
                     <mat-card-title>Timers</mat-card-title>
                 </mat-card-header>
@@ -180,29 +180,35 @@
     </div>
 </div>
 
-<div class="container mt-5" *ngIf="!hasData()">
+<div class="container mt-5" *ngIf="!authUser?.connection">
     <ng-container *ngIf="loading">
         <anms-page-loader></anms-page-loader>
     </ng-container>
     <ng-container *ngIf="!hasConnections && !loading">
         <div class="content text-center">
-            <div class="m-auto" style="max-widh3: 580px">
+            <div class="m-auto" style="max-width: 580px">
                 <img class="mb-4" src="assets/images/conn_sync-100.png">
-                <h1>Welcome!</h1>
-                <h3>First of all, let's setup a connection to Kong Admin</h3>
-                <h4 class="text-secondary mb-4">Select a connection type</h4>
+                <h1>{{'konga.dashboard.no_connections.title' | translate}}!</h1>
+                <h3>{{'konga.dashboard.no_connections.subtitle' | translate}}</h3>
+                <h4 class="text-secondary mb-4">
+                    {{'konga.connections.select_type' | translate}}
+                </h4>
                 <anms-connection-form (connectionCreated)="onConnectionCreated($event)"></anms-connection-form>
             </div>
         </div>
     </ng-container>
-    <ng-container *ngIf="hasConnections && !loading && !auh3User?.connection">
+    <ng-container *ngIf="hasConnections && !loading && !authUser?.connection">
         <div class="content text-center">
-            <div class="m-auto" style="max-widh3: 580px">
+            <div class="m-auto" style="max-width: 580px">
                 <img class="mb-4" src="assets/images/conn_sync-100.png">
-                <h1 class="text-danger">No active Connection</h1>
+                <h1 class="text-danger">
+                    {{'konga.dashboard.no_active_connection.header' | translate}}
+                </h1>
                 <h3>{{'konga.connections.no_active_connection_message' | translate}}</h3>
                 <h4 class="text-secondary mb-4 mt-4">
-                    <a [routerLink]="['/connections']" class="text-success">Go on, activate a Connection from h3e Connections page</a>.
+                    <a [routerLink]="['/connections']" class="text-success">
+                        {{'konga.dashboard.no_active_connection.linkText' | translate}}
+                    </a>.
                 </h4>
             </div>
         </div>
