@@ -140,3 +140,7 @@ input.mat-input-element {
 .main-sidenav {
   background: map_get($mat-konga, 900);
 }
+
+.ngx-charts-container {
+  min-height: 215px;
+}

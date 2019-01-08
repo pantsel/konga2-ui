@@ -81,7 +81,22 @@
                     <mat-card-title>Timers</mat-card-title>
                 </mat-card-header>
                 <mat-divider></mat-divider>
-                <mat-card-content class="pt-4"></mat-card-content>
+                <mat-card-content class="pt-4">
+                    <div class="ngx-charts-container" margin-top>
+                        <ngx-charts-bar-horizontal
+                                [scheme]="chartOptions.colorScheme"
+                                [results]="timersData"
+                                [gradient]="chartOptions.gradient"
+                                [xAxis]="chartOptions.showXAxis"
+                                [yAxis]="chartOptions.showYAxis"
+                                [legend]="chartOptions.showLegend"
+                                [showXAxisLabel]="chartOptions.showXAxisLabel"
+                                [showYAxisLabel]="chartOptions.showYAxisLabel"
+                                [xAxisLabel]="timersXAxisLabel"
+                                [yAxisLabel]="timersYAxisLabel">
+                        </ngx-charts-bar-horizontal>
+                    </div>
+                </mat-card-content>
             </mat-card>
         </div>
 

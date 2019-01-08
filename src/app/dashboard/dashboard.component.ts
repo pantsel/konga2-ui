@@ -15,6 +15,22 @@ import {KongApiService} from '@app/core/api/kong-api.service';
 })
 export class DashboardComponent extends BaseComponent implements OnInit {
 
+  timersData: any[] = [];
+  timersXAxisLabel = 'Quantity ordered';
+  timersYAxisLabel = 'Items';
+  chartOptions = {
+    showXAxis: true,
+    showYAxis: true,
+    gradient: false,
+    showLegend: false,
+    showXAxisLabel: false,
+    showYAxisLabel: false,
+    timeline: true,
+    colorScheme: {
+      domain: ['#2ecc71', '#3498db', '#9b59b6', '#e67e22', '#e74c3c']
+    },
+  }
+
   hasConnections = true; // Start by assuming that we have created at least one connection
   loading = true;
   errorMsg: string;
@@ -51,6 +67,7 @@ export class DashboardComponent extends BaseComponent implements OnInit {
       console.log('[DashboardComponent]: connectionsService.activeNodeInfoChanged$ =>', info);
       if (info) {
         this.info = info;
+        this.createTimersChartData(info.timers);
         this.loading = false;
       }
     })
@@ -63,6 +80,15 @@ export class DashboardComponent extends BaseComponent implements OnInit {
       }
     })
 
+  }
+
+  createTimersChartData(timers) {
+    Object.keys(timers).forEach(key => {
+      this.timersData.push({
+        name: key,
+        value: timers[key]
+      })
+    })
   }
 
   hasData() {

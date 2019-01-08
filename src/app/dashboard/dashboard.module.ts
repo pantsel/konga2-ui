@@ -4,6 +4,7 @@ import { DashboardComponent } from './dashboard.component';
 import {DashboardRoutingModule} from '@app/dashboard/dashboard-routing.module';
 import {SharedModule} from '@app/shared';
 import {ConnectionsModule} from '@app/connections/connections.module';
+import {NgxChartsModule} from '@swimlane/ngx-charts';
 
 @NgModule({
   declarations: [DashboardComponent],
@@ -11,7 +12,8 @@ import {ConnectionsModule} from '@app/connections/connections.module';
     CommonModule,
     SharedModule,
     DashboardRoutingModule,
-    ConnectionsModule
+    ConnectionsModule,
+    NgxChartsModule
   ]
 })
 export class DashboardModule { }
