@@ -34,6 +34,7 @@
   "konga.menu.about": "About",
   "konga.menu.examples": "Examples",
   "konga.menu.info": "Info",
+  "konga.menu.services": "Services",
   "konga.menu.users": "Users",
   "konga.menu.features": "Features",
   "konga.menu.login": "Sign in",
@@ -107,6 +108,13 @@
   "konga.user.permissions" : "Manage permissions",
 
   "konga.permissions.super_admin_text": "This user is not affected by permissions",
+
+
+  "konga.services.list.title": "Services",
+  "konga.services.list.subtitle": "Service entities, as the name implies, are abstractions of each of your own upstream services. Examples of Services would be a data transformation microservice, a billing API, etc.",
+  "konga.host": "Host",
+  "konga.tags": "Tags",
+  "konga.create_service": "Create Service",
 
   "errors.validation.required": "The field is required",
   "errors.validation.email": "Invalid email",

@@ -36,7 +36,6 @@ import {ActionAuthLogin, ActionAuthLogout} from '@app/core/auth/auth.actions';
 import {ListConfigService} from '@app/core/list-config/list-config.service';
 import {AppEventsService} from '@app/core/app-events/app-events.service';
 import {DialogModule} from '@app/core/dialog/dialog.module';
-import { BaseComponent } from './base/base.component';
 import {KongApiService} from '@app/core/api/kong-api.service';
 
 export const loadConfig = (bootProvider: BootService, store: Store<AppState>) => {

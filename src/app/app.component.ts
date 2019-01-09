@@ -129,6 +129,14 @@ export class AppComponent implements OnInit {
         },
         permissions: ['superAdmin', 'infoRead'],
         label: 'konga.menu.info' },
+      { link: 'services',
+        icon: 'cloud_queue',
+        show: () => {
+          return this.authUser.connection;
+        },
+        permissions: ['superAdmin', 'servicesRead'],
+        label: 'konga.menu.services' },
+
 
       { type: 'divider',
         label: ''},

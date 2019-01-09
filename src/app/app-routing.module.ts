@@ -49,6 +49,11 @@ const routes: Routes = [
     loadChildren: 'app/examples/examples.module#ExamplesModule'
   },
   {
+    path: 'services',
+    loadChildren: 'app/services/services.module#ServicesModule',
+    canActivate: [AuthGuardService]
+  },
+  {
     path: 'users',
     loadChildren: 'app/user/user.module#UserModule',
     canActivate: [AuthGuardService]

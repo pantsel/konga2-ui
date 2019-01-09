@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import {DomSanitizer} from '@angular/platform-browser';
 
 @Injectable({
   providedIn: 'root'
@@ -7,10 +6,38 @@ import {DomSanitizer} from '@angular/platform-browser';
 export class ListConfigService {
 
   public models: any;
-  public defaultLimit: 30;
 
   constructor() {
     this.models = {
+      service : {
+        endpoint: `services`,
+        titleItems: [
+          {
+            title: 'konga.name',
+            property: 'name',
+            width: 1,
+            searchable: true,
+            sortable: true
+          },
+          {
+            title: 'konga.host',
+            property: 'host',
+            searchable: true,
+            sortable: true
+          },
+          {
+            title: 'konga.tags',
+            property: 'tags',
+            searchable: true,
+            sortable: true
+          },
+          {
+            title: 'konga.created_at',
+            property: 'created_at',
+            sortable: true,
+          }
+        ]
+      },
       user : {
         endpoint: `users`,
         titleItems: [
@@ -47,7 +74,6 @@ export class ListConfigService {
           }
         ]
       },
-
       connection : {
         endpoint: `connections`,
         titleItems: [
