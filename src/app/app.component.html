@@ -58,6 +58,8 @@
 
           <button *ngIf="(isAuthenticated$ | async)"
                   mat-button
+                  class="mr-3"
+                  color="accent"
                   [matMenuTriggerFor]="toolbarUserMenu">
             <mat-icon class="mr-2">account_circle</mat-icon>
             Hello, {{authUser && authUser.fullName ? authUser.fullName.split(' ')[0] : ''}}
