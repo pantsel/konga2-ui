@@ -8,6 +8,8 @@ import {Store} from '@ngrx/store';
 import {ListConfigService} from '@app/core/list-config/list-config.service';
 import {FormBuilder} from '@angular/forms';
 import {ConnectionsService} from '@app/connections/connections.service';
+import {MatDialog} from '@angular/material';
+import {ServicesCreateComponent} from '@app/services/services-create/services-create.component';
 
 @Component({
   selector: 'anms-services',
@@ -23,7 +25,8 @@ export class ServicesComponent extends KongEntityDataTableComponent implements O
               public notificationsService: NotificationService,
               public store: Store<AppState>,
               public listConfig: ListConfigService,
-              public fb: FormBuilder) {
+              public fb: FormBuilder,
+              private matDialog: MatDialog) {
     super(kong, translate, dialog, notificationsService, store, connectionsService, listConfig, fb)
 
     this.model = `service`;
@@ -35,6 +38,16 @@ export class ServicesComponent extends KongEntityDataTableComponent implements O
 
 
   openCreateModal() {
+    const dialogRef = this.matDialog.open(ServicesCreateComponent, {
+      width: '480px',
+      data: {
+
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The create dialog was closed', result);
+    });
   }
 }
 

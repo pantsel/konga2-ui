@@ -116,6 +116,7 @@
   "konga.host": "Host",
   "konga.tags": "Tags",
   "konga.create_service": "Create Service",
+  "konga.services.new_service": "New Service",
 
   "errors.validation.required": "The field is required",
   "errors.validation.email": "Invalid email",

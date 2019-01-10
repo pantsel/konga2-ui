@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -9,8 +9,69 @@ export class ListConfigService {
 
   constructor() {
     this.models = {
-      service : {
+      service: {
         endpoint: `services`,
+        fields: [{
+          name: {
+            type: 'string',
+            description: 'The Service name.'
+          },
+        }, {
+          retries: {
+            type: 'integer',
+            default: 5,
+            description: 'The number of retries to execute upon failure to proxy. Defaults to 5.'
+          },
+        }, {
+          protocol: {
+            type: 'string',
+            one_of: ['http', 'https'],
+            default: 'http',
+            description: 'The protocol used to communicate with the upstream. It can be one of http or https. Defaults to "http".'
+          },
+        }, {
+          host: {
+            type: 'string',
+            required: true,
+            description: 'The host of the upstream server.'
+          },
+        }, {
+          port: {
+            type: 'integer',
+            required: true,
+            default: 80,
+            description: 'The upstream server port. Defaults to 80.'
+          },
+        }, {
+          url: {
+            type: 'string',
+            description: 'Shorthand attribute to set protocol, host, port and path at once. This attribute is write-only (the Admin API never “returns” the url).'
+          },
+        }, {
+          path: {
+            type: 'string',
+            required: true,
+            description: 'The path to be used in requests to the upstream server.'
+          },
+        }, {
+          connect_timeout: {
+            type: 'integer',
+            default: 60000,
+            description: 'The timeout in milliseconds for establishing a connection to the upstream server. Defaults to 60000.'
+          },
+        }, {
+          write_timeout: {
+            type: 'integer',
+            default: 60000,
+            description: 'The timeout in milliseconds between two successive write operations for transmitting a request to the upstream server. Defaults to 60000.'
+          },
+        }, {
+          read_timeout: {
+            type: 'integer',
+            default: 60000,
+            description: 'The timeout in milliseconds between two successive read operations for transmitting a request to the upstream server. Defaults to 60000.'
+          },
+        }],
         titleItems: [
           {
             title: 'konga.name',
@@ -38,7 +99,7 @@ export class ListConfigService {
           }
         ]
       },
-      user : {
+      user: {
         endpoint: `users`,
         titleItems: [
           {
@@ -74,7 +135,7 @@ export class ListConfigService {
           }
         ]
       },
-      connection : {
+      connection: {
         endpoint: `connections`,
         titleItems: [
           {
