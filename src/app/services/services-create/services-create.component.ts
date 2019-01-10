@@ -8,7 +8,8 @@ import {Store} from '@ngrx/store';
 import {MatDialogRef} from '@angular/material';
 import {ListConfigService} from '@app/core/list-config/list-config.service';
 import * as _ from 'lodash';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
+
 
 @Component({
   selector: 'anms-services-create',
@@ -22,6 +23,7 @@ export class ServicesCreateComponent extends KongBaseComponent implements OnInit
 
   form: FormGroup;
   errorMsg: string;
+  errorFields = {};
   submitting: boolean;
   fields: any;
   entity: string;
@@ -89,12 +91,26 @@ export class ServicesCreateComponent extends KongBaseComponent implements OnInit
 
   async submit(data) {
     this.submitting = true;
+    this.errorFields = {};
+    this.errorMsg = '';
+
     try {
       const response = await this.create(data);
       console.log('Created service', response);
+      this.notificationService.success(this.translate.instant('konga.service_created'));
       this.dialogRef.close(response);
     }catch (error) {
       console.error('Failed to create service', error);
+      this.errorFields = _.get(error, 'error.fields', {});
+
+      Object.keys(this.errorFields).forEach(field => {
+        if (this.form.controls[field]) {
+          const errorObj = {}
+          errorObj[field] = this.errorFields[field];
+          this.form.controls[field].setErrors(errorObj);
+        }
+      })
+      this.errorMsg = _.get(error, 'error.message', {});
     }
 
     this.submitting = false;

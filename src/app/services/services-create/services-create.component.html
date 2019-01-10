@@ -34,6 +34,9 @@
                     <mat-error *ngIf="form.controls[field.name].hasError('required')">
                         {{'errors.validation.required' | translate}}
                     </mat-error>
+                    <mat-error *ngIf="form.controls[field.name].hasError(field.name)">
+                        {{errorFields[field.name]}}
+                    </mat-error>
                 </mat-form-field>
 
             </ng-container>
@@ -49,6 +52,9 @@
                     <mat-hint *ngIf="field.description">{{field.description}}</mat-hint>
                     <mat-error *ngIf="form.controls[field.name].hasError('required')">
                         {{'errors.validation.required' | translate}}
+                    </mat-error>
+                    <mat-error *ngIf="form.controls[field.name].hasError(field.name)">
+                        {{errorFields[field.name]}}
                     </mat-error>
                 </mat-form-field>
             </ng-container>

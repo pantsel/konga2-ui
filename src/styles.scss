@@ -157,5 +157,8 @@ input.mat-input-element {
   margin: 0 !important;
   .mat-form-field-subscript-wrapper {
     position: relative !important;
+    .mat-form-field-hint-wrapper {
+      display: block !important;
+    }
   }
 }

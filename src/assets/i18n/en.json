@@ -117,6 +117,7 @@
   "konga.tags": "Tags",
   "konga.create_service": "Create Service",
   "konga.services.new_service": "New Service",
+  "konga.service_created": "A new service was created successfully",
 
   "errors.validation.required": "The field is required",
   "errors.validation.email": "Invalid email",
