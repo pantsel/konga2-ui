@@ -107,6 +107,7 @@ import { BigInputActionComponent } from './big-input/big-input-action.component'
 import { LayoutModule } from '@angular/cdk/layout';
 import {PageLoaderModule} from '@app/shared/page-loader/page-loader.module';
 import {NgxPermissionsModule} from 'ngx-permissions';
+import {InspectionDialog, RawViewComponent} from './raw-view/raw-view.component';
 
 @NgModule({
   imports: [
@@ -150,7 +151,8 @@ import {NgxPermissionsModule} from 'ngx-permissions';
     // Specify your library as an import
     NgxPermissionsModule
   ],
-  declarations: [BigInputComponent, BigInputActionComponent],
+  entryComponents: [InspectionDialog],
+  declarations: [BigInputComponent, BigInputActionComponent, RawViewComponent, InspectionDialog],
   exports: [
     CommonModule,
     FormsModule,
@@ -187,7 +189,8 @@ import {NgxPermissionsModule} from 'ngx-permissions';
     BigInputComponent,
     BigInputActionComponent,
     PageLoaderModule,
-    NgxPermissionsModule
+    NgxPermissionsModule,
+    RawViewComponent
   ]
 })
 export class SharedModule {}

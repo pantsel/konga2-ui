@@ -93,6 +93,7 @@
   "konga.no_results": "We found no results matching your query...",
   "konga.more": "More",
   "konga.inactive": "Inactive",
+  "konga.inspect": "Inspect",
   "konga.error_establishing_connection": "Cannot connect to {{kongAdminUrl}}. Check your connection settings.",
   "konga.connection_activated": "Connection `{{name}}` is now your active connection to Kong.",
   "konga.connection_deactivated": "Connection `{{name}}` is no longer your active connection to Kong.",
