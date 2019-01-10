@@ -1,4 +1,4 @@
-import {Component, OnInit, ChangeDetectionStrategy, Input} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy, Input, ChangeDetectorRef} from '@angular/core';
 import {KongBaseComponent} from '@app/core/kong-base/kong-base.component';
 import {KongApiService} from '@app/core/api/kong-api.service';
 import {AppState, NotificationService} from '@app/core';
@@ -28,15 +28,16 @@ export class ServicesCreateComponent extends KongBaseComponent implements OnInit
   baseEndpoint: string;
   objectKeys = Object.keys;
 
-  constructor(public api: KongApiService,
+  constructor(public kong: KongApiService,
               public notificationService: NotificationService,
               public translate: TranslateService,
               public dialog: DialogService,
               public store: Store<AppState>,
               private listConfigService: ListConfigService,
               private fb: FormBuilder,
+              private cd: ChangeDetectorRef,
               private dialogRef: MatDialogRef<ServicesCreateComponent>) {
-    super(api, notificationService, translate, dialog, store);
+    super(kong, notificationService, translate, dialog, store);
 
     this.entity = `service`
     this.fields = this.makeIterableFields(_.get(this.listConfigService, `models.${this.entity}.fields`, []));
@@ -86,12 +87,22 @@ export class ServicesCreateComponent extends KongBaseComponent implements OnInit
     this.dialogRef.close();
   }
 
-  submit() {
+  async submit(data) {
     this.submitting = true;
+    try {
+      const response = await this.create(data);
+      console.log('Created service', response);
+      this.dialogRef.close(response);
+    }catch (error) {
+      console.error('Failed to create service', error);
+    }
+
+    this.submitting = false;
+    this.cd.detectChanges();
   }
 
-  private create() {
-
+  private async create(data) {
+   return  this.kong.post(`${this.baseEndpoint}`, data).toPromise();
   }
 
   private update() {

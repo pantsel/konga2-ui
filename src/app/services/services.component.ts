@@ -47,6 +47,9 @@ export class ServicesComponent extends KongEntityDataTableComponent implements O
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The create dialog was closed', result);
+      if (result) {
+        this.loadData();
+      }
     });
   }
 }

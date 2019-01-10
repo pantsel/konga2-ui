@@ -16,13 +16,16 @@ export class ListConfigService {
             type: 'string',
             description: 'The Service name.'
           },
-        }, {
-          retries: {
-            type: 'integer',
-            default: 5,
-            description: 'The number of retries to execute upon failure to proxy. Defaults to 5.'
-          },
-        }, {
+        },
+
+        // {
+        //   url: {
+        //     type: 'string',
+        //     description: 'Shorthand attribute to set protocol, host, port and path at once. This attribute is write-only (the Admin API never “returns” the url).'
+        //   },
+        // },
+
+        {
           protocol: {
             type: 'string',
             one_of: ['http', 'https'],
@@ -43,15 +46,16 @@ export class ListConfigService {
             description: 'The upstream server port. Defaults to 80.'
           },
         }, {
-          url: {
-            type: 'string',
-            description: 'Shorthand attribute to set protocol, host, port and path at once. This attribute is write-only (the Admin API never “returns” the url).'
-          },
-        }, {
           path: {
             type: 'string',
             required: true,
             description: 'The path to be used in requests to the upstream server.'
+          },
+        }, {
+          retries: {
+            type: 'integer',
+            default: 5,
+            description: 'The number of retries to execute upon failure to proxy. Defaults to 5.'
           },
         }, {
           connect_timeout: {

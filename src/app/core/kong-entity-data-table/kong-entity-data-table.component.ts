@@ -102,7 +102,7 @@ export class KongEntityDataTableComponent extends KongBaseComponent implements O
 
     // await this.sleep(5000);
 
-    this.data = null;
+    // this.data = null;
 
     try {
 
