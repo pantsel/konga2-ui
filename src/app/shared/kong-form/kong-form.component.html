@@ -24,6 +24,22 @@
         <input type="number" matInput formControlName="{{field.name}}">
       </ng-container>
 
+      <!-- ARRAY -->
+      <ng-container *ngSwitchCase="'array'">
+        <mat-chip-list #chipList>
+          <mat-chip *ngFor="let item of form.get(field.name).controls; let i = index;" [selectable]="true"
+                    [removable]="true" (removed)="remove(i, field.name)">
+            {{item.value}}
+            <mat-icon matChipRemove>cancel</mat-icon>
+          </mat-chip>
+          <input placeholder="Add.."
+                 [matChipInputFor]="chipList"
+                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                 [matChipInputAddOnBlur]="true"
+                 (matChipInputTokenEnd)="add($event, field.name)">
+        </mat-chip-list>
+      </ng-container>
+
 
       <mat-hint *ngIf="field.description">{{field.description}}</mat-hint>
       <mat-error *ngIf="form.controls[field.name].hasError('required')">

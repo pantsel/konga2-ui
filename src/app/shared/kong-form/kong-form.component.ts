@@ -7,12 +7,14 @@ import {
   Output,
   EventEmitter
 } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {KongApiService} from '@app/core/api/kong-api.service';
 import {NotificationService} from '@app/core';
 import {TranslateService} from '@ngx-translate/core';
 import * as _ from 'lodash';
 import {Entities} from '@app/core/entities/entities';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import {MatChipInputEvent} from '@angular/material';
 
 @Component({
   selector: 'anms-kong-form',
@@ -32,6 +34,11 @@ export class KongFormComponent implements OnInit {
   submitting: boolean;
   fields: any;
   baseEndpoint: string;
+
+  arrays = {};
+
+  // Chips stuff
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
   constructor(public kong: KongApiService,
               public notificationService: NotificationService,
@@ -73,7 +80,18 @@ export class KongFormComponent implements OnInit {
       if (field.required) validators.push(Validators.required);
       if (field.match)  validators.push(Validators.pattern(field.match));
 
-      const control = [_.get(this.existingData, key, field.default), Validators.compose(validators)];
+      let control;
+
+      switch (field.type) {
+        case 'array':
+          this.arrays[field.name] = [];
+          field.default = []
+          control = this.fb.array(_.get(this.existingData, key, []));
+          break;
+        default:
+          control = [_.get(this.existingData, key, field.default), Validators.compose(validators)];
+
+      }
 
       controls[key] = control;
     });
@@ -81,7 +99,32 @@ export class KongFormComponent implements OnInit {
     this.form = this.fb.group(controls);
   }
 
+
+  add(event: MatChipInputEvent, field): void {
+    const input = event.input;
+    const value = event.value;
+
+    // Add our requirement
+    if ((value || '').trim()) {
+      const control = this.form.get(field) as FormArray;
+      control.push(this.fb.control(value.trim()));
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+  }
+
+  remove(index: number, field: string): void {
+    const control = this.form.get(field) as FormArray;
+    if (index >= 0) {
+      control.removeAt(index);
+    }
+  }
+
   async submit(data) {
+
     this.submitting = true;
     this.errorFields = {};
     this.errorMsg = '';
