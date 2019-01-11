@@ -17,6 +17,7 @@ import {NgxPermissionsModule} from 'ngx-permissions';
 import {FooterModule} from '@app/footer/footer.module';
 import {ConnectionsService} from '@app/connections/connections.service';
 import { InfoComponent } from './info/info.component';
+import {DialogModule} from '@app/core/dialog/dialog.module';
 
 @NgModule({
   imports: [
@@ -27,6 +28,8 @@ import { InfoComponent } from './info/info.component';
     // core & shared
     CoreModule,
     SharedModule,
+
+    DialogModule,
 
     // features
     SettingsModule,

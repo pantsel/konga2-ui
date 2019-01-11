@@ -35,7 +35,6 @@ import * as _ from 'lodash';
 import {ActionAuthLogin, ActionAuthLogout} from '@app/core/auth/auth.actions';
 import {ListConfigService} from '@app/core/list-config/list-config.service';
 import {AppEventsService} from '@app/core/app-events/app-events.service';
-import {DialogModule} from '@app/core/dialog/dialog.module';
 import {KongApiService} from '@app/core/api/kong-api.service';
 
 export const loadConfig = (bootProvider: BootService, store: Store<AppState>) => {
@@ -104,9 +103,7 @@ export const loadConfig = (bootProvider: BootService, store: Store<AppState>) =>
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       }
-    }),
-
-    DialogModule
+    })
   ],
   declarations: [],
   providers: [

@@ -1,0 +1,48 @@
+<!--<div class="alert alert-danger" *ngIf="errorMsg">-->
+<!--{{errorMsg}}-->
+<!--</div>-->
+<form (submit)="submit(form.value)" [formGroup]="form" *ngIf="form">
+  <div mat-dialog-content>
+    <mat-form-field appearance="outline" class="w-100" *ngFor="let field of fields" [ngSwitch]="field.type">
+      <mat-label>{{field.label}} <span *ngIf="field.required" class="text-danger">*</span></mat-label>
+
+      <!-- STRING -->
+      <ng-container *ngSwitchCase="'string'">
+        <!-- PLAIN STRING -->
+        <input *ngIf="!field.one_of" matInput formControlName="{{field.name}}">
+
+        <!-- SELECT -->
+        <mat-select *ngIf="field.one_of" formControlName="{{field.name}}">
+          <mat-option *ngFor="let item of field.one_of" [value]="item">
+            {{item}}
+          </mat-option>
+        </mat-select>
+      </ng-container>
+
+      <!-- INTEGER -->
+      <ng-container *ngSwitchCase="'integer'">
+        <input type="number" matInput formControlName="{{field.name}}">
+      </ng-container>
+
+
+      <mat-hint *ngIf="field.description">{{field.description}}</mat-hint>
+      <mat-error *ngIf="form.controls[field.name].hasError('required')">
+        {{'errors.validation.required' | translate}}
+      </mat-error>
+      <mat-error *ngIf="form.controls[field.name].hasError(field.name)">
+        {{errorFields[field.name]}}
+      </mat-error>
+    </mat-form-field>
+
+  </div>
+  <div mat-dialog-actions>
+    <button mat-flat-button color="accent"
+            class="btn-large w-100 mt-2 text-center" [disabled]="!form.valid || submitting">
+      <mat-progress-spinner mode="indeterminate"
+                            *ngIf="submitting"
+                            color="primary" diameter="36" class="float-left">
+      </mat-progress-spinner>
+      {{existingData ? ('konga.save_changes' | translate) : ('konga.create_service' | translate)}}
+    </button>
+  </div>
+</form>

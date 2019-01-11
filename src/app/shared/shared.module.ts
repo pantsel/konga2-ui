@@ -108,6 +108,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 import {PageLoaderModule} from '@app/shared/page-loader/page-loader.module';
 import {NgxPermissionsModule} from 'ngx-permissions';
 import {InspectionDialog, RawViewComponent} from './raw-view/raw-view.component';
+import {KongFormComponent} from '@app/shared/kong-form/kong-form.component';
 
 @NgModule({
   imports: [
@@ -152,7 +153,7 @@ import {InspectionDialog, RawViewComponent} from './raw-view/raw-view.component'
     NgxPermissionsModule
   ],
   entryComponents: [InspectionDialog],
-  declarations: [BigInputComponent, BigInputActionComponent, RawViewComponent, InspectionDialog],
+  declarations: [BigInputComponent, BigInputActionComponent, RawViewComponent, InspectionDialog, KongFormComponent],
   exports: [
     CommonModule,
     FormsModule,
@@ -190,7 +191,8 @@ import {InspectionDialog, RawViewComponent} from './raw-view/raw-view.component'
     BigInputActionComponent,
     PageLoaderModule,
     NgxPermissionsModule,
-    RawViewComponent
+    RawViewComponent,
+    KongFormComponent
   ]
 })
 export class SharedModule {}
