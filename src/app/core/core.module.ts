@@ -33,9 +33,9 @@ import { ApiService } from '@app/core/api/api.service';
 import { BootService } from '@app/core/boot/boot.service';
 import * as _ from 'lodash';
 import {ActionAuthLogin, ActionAuthLogout} from '@app/core/auth/auth.actions';
-import {ListConfigService} from '@app/core/list-config/list-config.service';
 import {AppEventsService} from '@app/core/app-events/app-events.service';
 import {KongApiService} from '@app/core/api/kong-api.service';
+import {KongEntities} from '@app/core/kong-entities/kong-entities';
 
 export const loadConfig = (bootProvider: BootService, store: Store<AppState>) => {
   return (): Promise<any> => {
@@ -115,7 +115,7 @@ export const loadConfig = (bootProvider: BootService, store: Store<AppState>) =>
     ApiService,
     KongApiService,
     TitleService,
-    ListConfigService,
+    KongEntities,
     AppEventsService,
     { provide: ErrorHandler, useClass: AppErrorHandler },
     { provide: RouterStateSerializer, useClass: CustomSerializer },

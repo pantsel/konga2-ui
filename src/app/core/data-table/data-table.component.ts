@@ -6,11 +6,10 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {debounceTime, switchMap, tap} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
 import {DialogService} from '@app/core/dialog/dialog.service';
-import {ListConfigService} from '@app/core/list-config/list-config.service';
 import {AppState, NotificationService} from '@app/core';
 import {Store} from '@ngrx/store';
 import {BaseComponent} from '@app/core/base/base.component';
-import {KongApiService} from '@app/core/api/kong-api.service';
+import {KongEntities} from '@app/core/kong-entities/kong-entities';
 
 @Component({
   selector: 'anms-data-table',
@@ -43,7 +42,7 @@ export class DataTableComponent extends BaseComponent implements OnInit {
               public dialog: DialogService,
               public notificationsService: NotificationService,
               public store: Store<AppState>,
-              public listConfig: ListConfigService,
+              public kongEntities: KongEntities,
               public fb: FormBuilder) {
 
     super(api, notificationsService, translate, dialog, store);
@@ -53,7 +52,7 @@ export class DataTableComponent extends BaseComponent implements OnInit {
 
     super.ngOnInit();
 
-    const config = _.get(this.listConfig, `models.${this.model}`);
+    const config = _.get(this.kongEntities, `models.${this.model}`);
     this.endpoint = config.endpoint;
     this.titleItems = config.titleItems;
 

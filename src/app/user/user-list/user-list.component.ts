@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {ApiService} from '@app/core/api/api.service';
-import {ListConfigService} from '@app/core/list-config/list-config.service';
 import {MatDialog} from '@angular/material';
 import {DataTableComponent} from '@app/core/data-table/data-table.component';
 import {FormBuilder} from '@angular/forms';
@@ -10,6 +9,7 @@ import {AppState, NotificationService} from '@app/core';
 import {Store} from '@ngrx/store';
 import {UserCreateComponent} from '@app/user/user-create/user-create.component';
 import {Router} from '@angular/router';
+import {KongEntities} from '@app/core/kong-entities/kong-entities';
 
 @Component({
   selector: 'anms-user-list',
@@ -25,10 +25,10 @@ export class UserListComponent extends DataTableComponent implements OnInit {
               public store: Store<AppState>,
               public notificationsService: NotificationService,
               public matDialog: MatDialog,
-              public listConfig: ListConfigService,
+              public kongEntities: KongEntities,
               public router: Router) {
 
-    super(api, translate, dialog, notificationsService, store, listConfig, fb);
+    super(api, translate, dialog, notificationsService, store, kongEntities, fb);
 
     this.model = `user`;
   }

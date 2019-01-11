@@ -4,7 +4,6 @@ import {TranslateService} from '@ngx-translate/core';
 import {DialogService} from '@app/core/dialog/dialog.service';
 import {AppState, NotificationService} from '@app/core';
 import {Store} from '@ngrx/store';
-import {ListConfigService} from '@app/core/list-config/list-config.service';
 import {KongApiService} from '@app/core/api/kong-api.service';
 import * as _ from 'lodash';
 import {debounceTime, switchMap, tap} from 'rxjs/operators';
@@ -12,6 +11,7 @@ import {PageEvent} from '@angular/material';
 import {KongBaseComponent} from '@app/core/kong-base/kong-base.component';
 import {Component} from '@angular/core';
 import {ConnectionsService} from '@app/connections/connections.service';
+import {KongEntities} from '@app/core/kong-entities/kong-entities';
 
 @Component({
   selector: 'anms-kong-entity-data-table',
@@ -45,7 +45,7 @@ export class KongEntityDataTableComponent extends KongBaseComponent implements O
               public notificationsService: NotificationService,
               public store: Store<AppState>,
               public connectionsService: ConnectionsService,
-              public listConfig: ListConfigService,
+              public kongEntities: KongEntities,
               public fb: FormBuilder) {
     super(api, notificationsService, translate, dialog, store)
 
@@ -55,7 +55,7 @@ export class KongEntityDataTableComponent extends KongBaseComponent implements O
 
     super.ngOnInit();
 
-    const config = _.get(this.listConfig, `models.${this.model}`);
+    const config = _.get(this.kongEntities, `models.${this.model}`);
     this.endpoint = config.endpoint;
     this.titleItems = config.titleItems;
     this.searchableTitleItems = _.filter(this.titleItems, item => item.searchable);

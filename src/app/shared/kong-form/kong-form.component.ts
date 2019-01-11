@@ -11,8 +11,8 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {KongApiService} from '@app/core/api/kong-api.service';
 import {NotificationService} from '@app/core';
 import {TranslateService} from '@ngx-translate/core';
-import {ListConfigService} from '@app/core/list-config/list-config.service';
 import * as _ from 'lodash';
+import {KongEntities} from '@app/core/kong-entities/kong-entities';
 
 @Component({
   selector: 'anms-kong-form',
@@ -36,15 +36,15 @@ export class KongFormComponent implements OnInit {
   constructor(public kong: KongApiService,
               public notificationService: NotificationService,
               public translate: TranslateService,
-              private listConfigService: ListConfigService,
+              private kongEntities: KongEntities,
               private fb: FormBuilder,
               private cd: ChangeDetectorRef) {
 
   }
 
   ngOnInit() {
-    this.fields = this.makeIterableFields(_.get(this.listConfigService, `models.${this.entity}.fields`, []));
-    this.baseEndpoint = _.get(this.listConfigService, `models.${this.entity}.endpoint`, '');
+    this.fields = this.makeIterableFields(_.get(this.kongEntities, `models.${this.entity}.fields`, []));
+    this.baseEndpoint = _.get(this.kongEntities, `models.${this.entity}.endpoint`, '');
     console.log('Fields =>', this.fields);
     this.createControls();
   }

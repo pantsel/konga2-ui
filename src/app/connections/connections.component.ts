@@ -6,12 +6,12 @@ import {TranslateService} from '@ngx-translate/core';
 import {Store} from '@ngrx/store';
 import {AppState, NotificationService} from '@app/core';
 import {MatDialog} from '@angular/material';
-import {ListConfigService} from '@app/core/list-config/list-config.service';
 import {Router} from '@angular/router';
 import {DataTableComponent} from '@app/core/data-table/data-table.component';
 import {ConnectionsCreateComponent} from '@app/connections/connections-create/connections-create.component';
 import * as _ from 'lodash';
 import {ConnectionsService} from '@app/connections/connections.service';
+import {KongEntities} from '@app/core/kong-entities/kong-entities';
 
 @Component({
   selector: 'anms-connections',
@@ -28,9 +28,9 @@ export class ConnectionsComponent extends DataTableComponent implements OnInit {
               public store: Store<AppState>,
               public notificationsService: NotificationService,
               public matDialog: MatDialog,
-              public listConfig: ListConfigService,
+              public kongEntities: KongEntities,
               public router: Router) {
-    super(api, translate, dialog, notificationsService, store, listConfig, fb);
+    super(api, translate, dialog, notificationsService, store, kongEntities, fb);
 
     this.model = `connection`;
   }

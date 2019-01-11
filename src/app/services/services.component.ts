@@ -5,11 +5,11 @@ import {TranslateService} from '@ngx-translate/core';
 import {DialogService} from '@app/core/dialog/dialog.service';
 import {AppState, NotificationService} from '@app/core';
 import {Store} from '@ngrx/store';
-import {ListConfigService} from '@app/core/list-config/list-config.service';
 import {FormBuilder} from '@angular/forms';
 import {ConnectionsService} from '@app/connections/connections.service';
 import {MatDialog} from '@angular/material';
 import {ServicesCreateComponent} from '@app/services/services-create/services-create.component';
+import {KongEntities} from '@app/core/kong-entities/kong-entities';
 
 @Component({
   selector: 'anms-services',
@@ -24,10 +24,10 @@ export class ServicesComponent extends KongEntityDataTableComponent implements O
               public connectionsService: ConnectionsService,
               public notificationsService: NotificationService,
               public store: Store<AppState>,
-              public listConfig: ListConfigService,
+              public kongEntities: KongEntities,
               public fb: FormBuilder,
               private matDialog: MatDialog) {
-    super(kong, translate, dialog, notificationsService, store, connectionsService, listConfig, fb)
+    super(kong, translate, dialog, notificationsService, store, connectionsService, kongEntities, fb)
 
     this.model = `service`;
   }
