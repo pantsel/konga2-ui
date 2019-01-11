@@ -9,7 +9,7 @@ import {AppState, NotificationService} from '@app/core';
 import {Store} from '@ngrx/store';
 import {UserCreateComponent} from '@app/user/user-create/user-create.component';
 import {Router} from '@angular/router';
-import {KongEntities} from '@app/core/kong-entities/kong-entities';
+import {Entities} from '@app/core/entities/entities';
 
 @Component({
   selector: 'anms-user-list',
@@ -25,10 +25,10 @@ export class UserListComponent extends DataTableComponent implements OnInit {
               public store: Store<AppState>,
               public notificationsService: NotificationService,
               public matDialog: MatDialog,
-              public kongEntities: KongEntities,
+              public entities: Entities,
               public router: Router) {
 
-    super(api, translate, dialog, notificationsService, store, kongEntities, fb);
+    super(api, translate, dialog, notificationsService, store, entities, fb);
 
     this.model = `user`;
   }

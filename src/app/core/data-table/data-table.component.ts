@@ -9,7 +9,7 @@ import {DialogService} from '@app/core/dialog/dialog.service';
 import {AppState, NotificationService} from '@app/core';
 import {Store} from '@ngrx/store';
 import {BaseComponent} from '@app/core/base/base.component';
-import {KongEntities} from '@app/core/kong-entities/kong-entities';
+import {Entities} from '@app/core/entities/entities';
 
 @Component({
   selector: 'anms-data-table',
@@ -42,7 +42,7 @@ export class DataTableComponent extends BaseComponent implements OnInit {
               public dialog: DialogService,
               public notificationsService: NotificationService,
               public store: Store<AppState>,
-              public kongEntities: KongEntities,
+              public entities: Entities,
               public fb: FormBuilder) {
 
     super(api, notificationsService, translate, dialog, store);
@@ -52,7 +52,7 @@ export class DataTableComponent extends BaseComponent implements OnInit {
 
     super.ngOnInit();
 
-    const config = _.get(this.kongEntities, `models.${this.model}`);
+    const config = _.get(this.entities, `models.${this.model}`);
     this.endpoint = config.endpoint;
     this.titleItems = config.titleItems;
 
