@@ -99,6 +99,9 @@
   "konga.connection_deactivated": "Connection `{{name}}` is no longer your active connection to Kong.",
   "konga.connections.no_active_connection_message": "You need to have an active a connection in order to be able to manage the affiliated Kong cluster",
   "konga.connections.delete_active_connection_warn": "This is the active connection. You need to deactivate it before deleting.",
+  "konga.data_submitted_success": "Data submitted successfully!",
+  "konga.changes_saved_success": "Changes saved successfully!",
+  "konga.service": "Service",
 
   "konga.info.subtitle": "Extended information about the active Kong node",
 
@@ -118,6 +121,10 @@
   "konga.create_service": "Create Service",
   "konga.services.new_service": "New Service",
   "konga.service_created": "A new service was created successfully",
+  "konga.service.tab_details_label": "Details",
+  "konga.service.tab_routes_label": "Routes",
+  "konga.service.tab_plugins_label": "Plugins",
+  "konga.service.tab_consumers_label": "Eligible consumers",
 
   "errors.validation.required": "The field is required",
   "errors.validation.email": "Invalid email",

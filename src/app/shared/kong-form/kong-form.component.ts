@@ -127,10 +127,18 @@ export class KongFormComponent implements OnInit {
     this.errorFields = {};
     this.errorMsg = '';
 
+    let response;
+
     try {
-      const response = await this.create(data);
-      console.log('Created service', response);
-      this.notificationService.success(this.translate.instant('konga.service_created'));
+      if (this.existingData) {
+        response = await this.update(data);
+        console.log('Updated service', response);
+        this.notificationService.success(this.translate.instant('konga.changes_saved_success'));
+      }else{
+        response = await this.create(data);
+        console.log('Created service', response);
+        this.notificationService.success(this.translate.instant('konga.data_submitted_success'));
+      }
       this.submitted.emit(response);
     }catch (error) {
       console.error('Failed to create service', error);
@@ -154,8 +162,8 @@ export class KongFormComponent implements OnInit {
     return  this.kong.post(`${this.baseEndpoint}`, data).toPromise();
   }
 
-  private update() {
-
+  private update(data) {
+    return  this.kong.patch(`${this.baseEndpoint}/${this.existingData.id}`, data).toPromise();
   }
 
 }

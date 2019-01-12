@@ -1,81 +1,46 @@
-<div class="container mt-4 pb-4">
+<anms-page-loader *ngIf="!service"></anms-page-loader>
+<div class="container pb-4" *ngIf="service">
+  <h1 class="mb-4 pt-4">
+    {{'konga.service' | translate}} {{service.name}}&nbsp;
+  </h1>
 
-  <div class="row mb-4 align-items-center">
-    <div class="col-md-8">
-      <h1 class="m-0 p-0">{{'konga.services.list.title' | translate}}</h1>
-      <p class="help-block">{{'konga.services.list.subtitle' | translate}}</p>
+  <div class="row">
+    <div class="col-md-3">
+
+      <mat-nav-list>
+        <a mat-list-item
+           routerLinkActive="active"
+           [routerLink]="[{ outlets: { service: ['details'] } }]">
+          <mat-icon class="mr-3 text-secondary">info_outline</mat-icon>
+          {{'konga.service.tab_details_label' | translate}}
+        </a>
+
+        <a mat-list-item
+           routerLinkActive="active"
+           [routerLink]="[{ outlets: { service: ['routes'] } }]">
+          <mat-icon class="mr-3 text-secondary">repeat</mat-icon>
+          {{'konga.service.tab_routes_label' | translate}}
+        </a>
+
+        <a mat-list-item
+           routerLinkActive="active"
+           [routerLink]="[{ outlets: { service: ['plugins'] } }]">
+          <mat-icon class="mr-3 text-secondary">extension</mat-icon>
+          {{'konga.service.tab_plugins_label' | translate}}
+        </a>
+
+        <a mat-list-item
+           routerLinkActive="active"
+           [routerLink]="[{ outlets: { service: ['consumers'] } }]">
+          <mat-icon class="mr-3 text-secondary">supervised_user_circle</mat-icon>
+          {{'konga.service.tab_consumers_label' | translate}}
+        </a>
+
+
+      </mat-nav-list>
     </div>
-    <div class="col-md-4">
-      <form [formGroup]="form" *ngIf="form" class="sign-up-form mt-4">
-        <mat-form-field appearance="outline" class="w-100">
-          <input matInput
-                 formControlName="term"
-                 placeholder="{{'konga.search_by' | translate}} {{getSearchableTitleItemsTitles().join(', ')}}...">
-          <mat-icon matPrefix>search</mat-icon>
-          <mat-progress-spinner mode="indeterminate"
-                                *ngIf="isLoading"
-                                matSuffix
-                                color="primary" diameter="30"></mat-progress-spinner>
-        </mat-form-field>
-      </form>
-
+    <div class="col-md-8 pt-2">
+      <router-outlet name='service'></router-outlet>
     </div>
   </div>
-
-  <anms-page-loader *ngIf="!data"></anms-page-loader>
-
-  <mat-card class="mb-4 p-0" *ngIf="data">
-    <div class="table-responsive">
-      <table class="table mb-0">
-        <tr>
-          <th></th>
-          <th *ngFor="let item of titleItems">
-            <div class="d-flex align-items-center">
-              <a href="javascript:void(0)" (click)="sort(item.property)"
-                 [ngClass]="{'text-success': sortAttr === item.property}"
-                 class="float-left mr-2">
-                {{item.title | translate}}
-              </a>
-              <span *ngIf="sortAttr === item.property" class="d-inline-flex" [ngClass]="{'text-success': sortAttr === item.property}">
-                <mat-icon style="font-size: 0.9rem; height: 0.9rem">{{sortDir === 'desc' ? 'arrow_downward' : 'arrow_upward' }}</mat-icon>
-              </span>
-            </div>
-          </th>
-          <th></th>
-        </tr>
-        <tr *ngFor="let item of data">
-          <td width="1">
-            <anms-raw-view [data]="item"></anms-raw-view>
-          </td>
-          <td>
-            <a [routerLink]="['/services', item.id]">
-              <strong>{{item.name}}</strong>
-            </a>
-            <!--<p *ngIf="item.description" class="help-block">{{item.description}}</p>-->
-          </td>
-          <td>{{item.host}}</td>
-          <td>{{item.tags}}</td>
-          <td>{{item.created_at * 1000 | date}}</td>
-          <td width="1">
-            <button mat-button color="warn" (click)="onDeleteItem(item)">
-              <mat-icon matPrefix>delete</mat-icon>
-              {{'konga.delete' | translate}}
-            </button>
-          </td>
-        </tr>
-      </table>
-    </div>
-    <mat-divider></mat-divider>
-    <mat-paginator [length]="originalData?.length"
-                   [pageSize]="limit"
-                   (page)="pageEvent = onPageChange($event)"
-                   [pageSizeOptions]="pageSizeOptions">
-    </mat-paginator>
-  </mat-card>
 </div>
-
-<button mat-fab class="fab bottom right"
-        *ngxPermissionsOnly="['superAdmin', 'servicesCreate']"
-        (click)="openCreateModal()">
-  <mat-icon matTooltip="{{'konga.create_service' | translate}}">add</mat-icon>
-</button>
