@@ -6,7 +6,7 @@ import {AppState, NotificationService} from '@app/core';
 import {Store} from '@ngrx/store';
 import {KongApiService} from '@app/core/api/kong-api.service';
 import * as _ from 'lodash';
-import {debounceTime, switchMap, tap} from 'rxjs/operators';
+import {debounceTime, tap} from 'rxjs/operators';
 import {PageEvent} from '@angular/material';
 import {KongBaseComponent} from '@app/core/kong-base/kong-base.component';
 import {Component} from '@angular/core';
@@ -31,7 +31,7 @@ export class KongEntityDataTableComponent extends KongBaseComponent implements O
   @Input() sortDir = 'desc';
   @Input() pageSizeOptions = [5, 10, 25, 100]
   @Input() endpoint: string;
-  @Input() model: string;
+  @Input() entity: any;
 
   @Output() searchTerm: EventEmitter<any> = new EventEmitter();
 
@@ -45,7 +45,6 @@ export class KongEntityDataTableComponent extends KongBaseComponent implements O
               public notificationsService: NotificationService,
               public store: Store<AppState>,
               public connectionsService: ConnectionsService,
-              public entities: Entities,
               public fb: FormBuilder) {
     super(api, notificationsService, translate, dialog, store)
 
@@ -55,9 +54,8 @@ export class KongEntityDataTableComponent extends KongBaseComponent implements O
 
     super.ngOnInit();
 
-    const config = _.get(this.entities, `models.${this.model}`);
-    this.endpoint = config.endpoint;
-    this.titleItems = config.titleItems;
+    this.endpoint = this.entity.endpoint;
+    this.titleItems = this.entity.titleItems;
     this.searchableTitleItems = _.filter(this.titleItems, item => item.searchable);
 
     this.connectionsService.activeNodeChanged$.subscribe(data => {

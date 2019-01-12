@@ -12,7 +12,6 @@ import {KongApiService} from '@app/core/api/kong-api.service';
 import {NotificationService} from '@app/core';
 import {TranslateService} from '@ngx-translate/core';
 import * as _ from 'lodash';
-import {Entities} from '@app/core/entities/entities';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material';
 
@@ -25,7 +24,7 @@ import {MatChipInputEvent} from '@angular/material';
 export class KongFormComponent implements OnInit {
 
   @Input() existingData: any;
-  @Input() entity: string;
+  @Input() entity: any;
   @Output() submitted: EventEmitter<any> = new EventEmitter();
 
   form: FormGroup;
@@ -43,15 +42,14 @@ export class KongFormComponent implements OnInit {
   constructor(public kong: KongApiService,
               public notificationService: NotificationService,
               public translate: TranslateService,
-              private entities: Entities,
               private fb: FormBuilder,
               private cd: ChangeDetectorRef) {
 
   }
 
   ngOnInit() {
-    this.fields = this.makeIterableFields(_.get(this.entities, `models.${this.entity}.fields`, []));
-    this.baseEndpoint = _.get(this.entities, `models.${this.entity}.endpoint`, '');
+    this.fields = this.makeIterableFields(this.entity.fields || []);
+    this.baseEndpoint = this.entity.endpoint;
     console.log('Fields =>', this.fields);
     this.createControls();
   }

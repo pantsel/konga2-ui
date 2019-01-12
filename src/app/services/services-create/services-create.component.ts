@@ -1,5 +1,6 @@
 import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {MatDialogRef} from '@angular/material';
+import {Service} from '@app/core/entities/Service';
 
 
 @Component({
@@ -10,6 +11,7 @@ import {MatDialogRef} from '@angular/material';
 })
 export class ServicesCreateComponent implements OnInit {
 
+  entity = Service;
 
   constructor(private dialogRef: MatDialogRef<ServicesCreateComponent>) {
 

@@ -11,7 +11,7 @@ import {DataTableComponent} from '@app/core/data-table/data-table.component';
 import {ConnectionsCreateComponent} from '@app/connections/connections-create/connections-create.component';
 import * as _ from 'lodash';
 import {ConnectionsService} from '@app/connections/connections.service';
-import {Entities} from '@app/core/entities/entities';
+import {KongConnection} from '@app/core/entities/kong-connection';
 
 @Component({
   selector: 'anms-connections',
@@ -28,11 +28,10 @@ export class ConnectionsComponent extends DataTableComponent implements OnInit {
               public store: Store<AppState>,
               public notificationsService: NotificationService,
               public matDialog: MatDialog,
-              public entities: Entities,
               public router: Router) {
-    super(api, translate, dialog, notificationsService, store, entities, fb);
+    super(api, translate, dialog, notificationsService, store, fb);
 
-    this.model = `connection`;
+    this.entity = KongConnection
   }
 
   ngOnInit() {

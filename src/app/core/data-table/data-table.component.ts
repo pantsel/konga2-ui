@@ -2,14 +2,13 @@ import {Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter}
 import * as _ from 'lodash';
 import {ApiService} from '@app/core/api/api.service';
 import {PageEvent} from '@angular/material';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {debounceTime, switchMap, tap} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
 import {DialogService} from '@app/core/dialog/dialog.service';
 import {AppState, NotificationService} from '@app/core';
 import {Store} from '@ngrx/store';
 import {BaseComponent} from '@app/core/base/base.component';
-import {Entities} from '@app/core/entities/entities';
 
 @Component({
   selector: 'anms-data-table',
@@ -21,6 +20,7 @@ export class DataTableComponent extends BaseComponent implements OnInit {
 
   form: FormGroup;
 
+  @Input() entity: any;
   @Input() data: any;
   @Input() titleItems = [];
   @Input() limit = 30;
@@ -29,7 +29,6 @@ export class DataTableComponent extends BaseComponent implements OnInit {
   @Input() sortDir = 'DESC';
   @Input() pageSizeOptions = [5, 10, 25, 100]
   @Input() endpoint: string;
-  @Input() model: string;
 
   @Output() searchTerm: EventEmitter<any> = new EventEmitter();
 
@@ -42,7 +41,6 @@ export class DataTableComponent extends BaseComponent implements OnInit {
               public dialog: DialogService,
               public notificationsService: NotificationService,
               public store: Store<AppState>,
-              public entities: Entities,
               public fb: FormBuilder) {
 
     super(api, notificationsService, translate, dialog, store);
@@ -52,9 +50,8 @@ export class DataTableComponent extends BaseComponent implements OnInit {
 
     super.ngOnInit();
 
-    const config = _.get(this.entities, `models.${this.model}`);
-    this.endpoint = config.endpoint;
-    this.titleItems = config.titleItems;
+    this.endpoint = this.entity.endpoint;
+    this.titleItems = this.entity.titleItems;
 
     this.form = this.fb.group({
       term: ['']
