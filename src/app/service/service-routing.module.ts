@@ -3,14 +3,14 @@ import {Routes, RouterModule} from '@angular/router';
 import {UserUpdateComponent} from '@app/user/user-update/user-update.component';
 import {NgxPermissionsGuard} from 'ngx-permissions';
 import {AuthGuardService} from '@app/core';
-import {ServicesComponent} from '@app/services/services.component';
-import {ServicesViewComponent} from '@app/services/services-view/services-view.component';
+import {ServiceListComponent} from '@app/service/service-list/service-list.component';
+import {ServiceComponent} from '@app/service/service.component';
 
 
 const routes: Routes = [
   {
     path: '',
-    component: ServicesComponent,
+    component: ServiceListComponent,
     canActivate: [AuthGuardService, NgxPermissionsGuard],
     data: {
       title: 'konga.menu.services',
@@ -21,7 +21,7 @@ const routes: Routes = [
   },
   {
     path: ':id',
-    component: ServicesViewComponent,
+    component: ServiceComponent,
     canActivate: [AuthGuardService],
     data: {
       title: 'konga.menu.services_view',
@@ -36,6 +36,6 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ServicesRoutingModule {
+export class ServiceRoutingModule {
 
 }

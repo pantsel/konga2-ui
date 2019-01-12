@@ -50,7 +50,7 @@ const routes: Routes = [
   },
   {
     path: 'services',
-    loadChildren: 'app/services/services.module#ServicesModule',
+    loadChildren: 'app/service/service.module#ServiceModule',
     canActivate: [AuthGuardService]
   },
   {
