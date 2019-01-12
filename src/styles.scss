@@ -177,3 +177,16 @@ input.mat-input-element {
     max-width: 1280px;
   }
 }
+
+.mat-form-field.decor {
+  .mat-form-field-wrapper {
+
+    .mat-form-field-infix {
+      border-top: 0em solid transparent !important;
+    }
+
+    .mat-form-field-underline {
+      display: none !important;
+    }
+  }
+}

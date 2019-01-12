@@ -102,6 +102,8 @@
   "konga.data_submitted_success": "Data submitted successfully!",
   "konga.changes_saved_success": "Changes saved successfully!",
   "konga.service": "Service",
+  "konga.route": "Route",
+  "konga.routes": "Routes",
 
   "konga.info.subtitle": "Extended information about the active Kong node",
 

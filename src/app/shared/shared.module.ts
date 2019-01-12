@@ -109,6 +109,7 @@ import {PageLoaderModule} from '@app/shared/page-loader/page-loader.module';
 import {NgxPermissionsModule} from 'ngx-permissions';
 import {InspectionDialog, RawViewComponent} from './raw-view/raw-view.component';
 import {KongFormComponent} from '@app/shared/kong-form/kong-form.component';
+import { KongEntityModalComponent } from './kong-entity-modal/kong-entity-modal.component';
 
 @NgModule({
   imports: [
@@ -125,6 +126,7 @@ import {KongFormComponent} from '@app/shared/kong-form/kong-form.component';
     MatCheckboxModule,
     MatMenuModule,
     MatIconModule,
+    MatSlideToggleModule,
     MatToolbarModule,
     MatDatepickerModule,
     MatNativeDateModule,
@@ -152,8 +154,8 @@ import {KongFormComponent} from '@app/shared/kong-form/kong-form.component';
     // Specify your library as an import
     NgxPermissionsModule
   ],
-  entryComponents: [InspectionDialog],
-  declarations: [BigInputComponent, BigInputActionComponent, RawViewComponent, InspectionDialog, KongFormComponent],
+  entryComponents: [InspectionDialog, KongEntityModalComponent],
+  declarations: [BigInputComponent, BigInputActionComponent, RawViewComponent, InspectionDialog, KongFormComponent, KongEntityModalComponent],
   exports: [
     CommonModule,
     FormsModule,
@@ -192,7 +194,8 @@ import {KongFormComponent} from '@app/shared/kong-form/kong-form.component';
     PageLoaderModule,
     NgxPermissionsModule,
     RawViewComponent,
-    KongFormComponent
+    KongFormComponent,
+    KongEntityModalComponent
   ]
 })
 export class SharedModule {}

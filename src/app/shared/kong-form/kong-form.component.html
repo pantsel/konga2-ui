@@ -3,8 +3,11 @@
 </div>
 <form (submit)="submit(form.value)" [formGroup]="form" *ngIf="form">
   <div mat-dialog-content>
-    <mat-form-field appearance="outline" class="w-100" *ngFor="let field of fields" [ngSwitch]="field.type">
-      <mat-label>{{field.label}} <span *ngIf="field.required" class="text-danger">*</span></mat-label>
+
+    <mat-form-field [appearance]="field.type === 'boolean' ? 'fill' : 'outline'" class="w-100"
+                    [ngClass]="{'decor': field.type === 'boolean'}"
+                    *ngFor="let field of fields" [ngSwitch]="field.type">
+      <mat-label *ngIf="field.type !== 'boolean'">{{field.label}} <span *ngIf="field.required" class="text-danger">*</span></mat-label>
 
       <!-- STRING -->
       <ng-container *ngSwitchCase="'string'">
@@ -22,6 +25,16 @@
       <!-- INTEGER -->
       <ng-container *ngSwitchCase="'integer'">
         <input type="number" matInput formControlName="{{field.name}}">
+      </ng-container>
+
+
+      <!-- BOOLEAN -->
+      <ng-container *ngSwitchCase="'boolean'">
+        <input matInput placeholder="Input" style="display: none" >
+        <mat-slide-toggle
+                formControlName="{{field.name}}">
+        {{field.label}}
+        </mat-slide-toggle>
       </ng-container>
 
       <!-- ARRAY -->

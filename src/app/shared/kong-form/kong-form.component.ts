@@ -18,7 +18,7 @@ import {MatChipInputEvent} from '@angular/material';
 @Component({
   selector: 'anms-kong-form',
   templateUrl: './kong-form.component.html',
-  styleUrls: ['./kong-form.component.css'],
+  styleUrls: ['./kong-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class KongFormComponent implements OnInit {
@@ -33,8 +33,6 @@ export class KongFormComponent implements OnInit {
   submitting: boolean;
   fields: any;
   baseEndpoint: string;
-
-  arrays = {};
 
   // Chips stuff
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
@@ -82,9 +80,8 @@ export class KongFormComponent implements OnInit {
 
       switch (field.type) {
         case 'array':
-          this.arrays[field.name] = [];
-          field.default = []
-          control = this.fb.array(_.get(this.existingData, key, []));
+          field.default = field.default || [];
+          control = this.fb.array(_.get(this.existingData, key, field.default));
           break;
         default:
           control = [_.get(this.existingData, key, field.default), Validators.compose(validators)];

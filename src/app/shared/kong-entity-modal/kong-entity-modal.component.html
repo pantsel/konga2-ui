@@ -1,0 +1,7 @@
+<h1 mat-dialog-title>
+  <strong>{{'konga.create' | translate}} {{entity.singularName | translate}}</strong>
+  <button mat-icon-button (click)="close()" class="float-right" style="margin-top: -5px;">
+    <mat-icon>close</mat-icon>
+  </button>
+</h1>
+<anms-kong-form [entity]="entity" [existingData]="existingData"></anms-kong-form>

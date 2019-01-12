@@ -9,9 +9,10 @@ import { ServiceDetailsComponent } from './service-details/service-details.compo
 import { ServiceRoutesComponent } from './service-routes/service-routes.component';
 import { ServicePluginsComponent } from './service-plugins/service-plugins.component';
 import { ServiceConsumersComponent } from './service-consumers/service-consumers.component';
+import {KongFormComponent} from '@app/shared/kong-form/kong-form.component';
 
 @NgModule({
-  entryComponents: [ServiceCreateComponent],
+  entryComponents: [ServiceCreateComponent, KongFormComponent],
   declarations: [ServiceComponent, ServiceCreateComponent, ServiceListComponent, ServiceDetailsComponent, ServiceRoutesComponent, ServicePluginsComponent, ServiceConsumersComponent],
   imports: [
     CommonModule,

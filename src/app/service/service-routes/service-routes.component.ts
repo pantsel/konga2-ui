@@ -11,6 +11,9 @@ import {MatDialog} from '@angular/material';
 import {KongService} from '@app/core/entities/kong-service';
 import {SharedServiceService} from '@app/service/service.component';
 import {KongRoute} from '@app/core/entities/kong-route';
+import {ServiceCreateComponent} from '@app/service/service-create/service-create.component';
+import {KongFormComponent} from '@app/shared/kong-form/kong-form.component';
+import {KongEntityModalComponent} from '@app/shared/kong-entity-modal/kong-entity-modal.component';
 
 @Component({
   selector: 'anms-service-routes',
@@ -18,6 +21,8 @@ import {KongRoute} from '@app/core/entities/kong-route';
   styleUrls: ['./service-routes.component.css']
 })
 export class ServiceRoutesComponent extends KongEntityDataTableComponent implements OnInit {
+
+  service: any;
 
   constructor(public kong: KongApiService,
               public shared: SharedServiceService,
@@ -33,6 +38,7 @@ export class ServiceRoutesComponent extends KongEntityDataTableComponent impleme
 
     this.shared.data.subscribe(data => {
       if (data) {
+        this.service = data;
         this.entity = KongRoute;
         this.endpoint = `${KongService.endpoint}/${data.id}/${this.entity.endpoint}`
       }
@@ -42,6 +48,26 @@ export class ServiceRoutesComponent extends KongEntityDataTableComponent impleme
 
   ngOnInit() {
     super.ngOnInit();
+  }
+
+
+  openCreateModal() {
+    const dialogRef = this.matDialog.open(KongEntityModalComponent, {
+      width: '480px',
+      data: {
+        service : {
+          id: this.service.id
+        },
+        entity: KongRoute
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The create dialog was closed', result);
+      if (result) {
+        this.loadData();
+      }
+    });
   }
 
 }
