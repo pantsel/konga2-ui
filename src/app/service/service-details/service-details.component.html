@@ -1,4 +1,6 @@
-<div class="section-header">
-  <h2 class="m-0 p-0">Service Details</h2>
+<div class="row mb-4 align-items-center">
+  <div class="col-md-12">
+    <h1 class="m-0 p-0">{{'konga.service.details.title' | translate}}</h1>
+  </div>
 </div>
 <anms-kong-form [entity]="entity" [existingData]="service" (submitted)="updated($event)"></anms-kong-form>

@@ -171,3 +171,9 @@ input.mat-input-element {
   //padding-bottom: 15px;
   margin-bottom: 40px;
 }
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1280px;
+  }
+}

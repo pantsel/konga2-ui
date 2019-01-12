@@ -54,7 +54,7 @@ export class KongEntityDataTableComponent extends KongBaseComponent implements O
 
     super.ngOnInit();
 
-    this.endpoint = this.entity.endpoint;
+    this.endpoint = this.endpoint || this.entity.endpoint;
     this.titleItems = this.entity.titleItems;
     this.searchableTitleItems = _.filter(this.titleItems, item => item.searchable);
 
@@ -75,7 +75,8 @@ export class KongEntityDataTableComponent extends KongBaseComponent implements O
       .subscribe((q: string) => {
         this.data = _.filter(this.originalData, item => {
           return this.getSearchableTitleItemsProps().some(prop => {
-            return item[prop] && item[prop].toLowerCase().indexOf(q.toLowerCase().trim()) > -1
+            const value = _.isArray(item[prop]) ? item[prop].join(', ') : item[prop];
+            return value && value.toLowerCase().indexOf(q.toLowerCase().trim()) > -1
           })
         })
 
@@ -155,7 +156,7 @@ export class KongEntityDataTableComponent extends KongBaseComponent implements O
   }
 
   deleteItem(item) {
-    this.api.delete(`${this.endpoint}/${item.id}`)
+    this.api.delete(`${this.entity.endpoint}/${item.id}`)
       .subscribe(deleted => {
         console.log('Item deleted =>', deleted);
         this.notificationsService.success(this.translate.instant('konga.delete_item_success'))

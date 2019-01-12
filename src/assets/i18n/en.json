@@ -125,6 +125,11 @@
   "konga.service.tab_routes_label": "Routes",
   "konga.service.tab_plugins_label": "Plugins",
   "konga.service.tab_consumers_label": "Eligible consumers",
+  "konga.service.routes.title": "Service Routes",
+  "konga.service.routes.subtitle": "List of routes associated with this service",
+  "konga.service.details.title": "Service details",
+  "konga.hosts": "Hosts",
+  "konga.paths": "Paths",
 
   "errors.validation.required": "The field is required",
   "errors.validation.email": "Invalid email",
