@@ -7,6 +7,7 @@ import {AppState, NotificationService} from '@app/core';
 import {TranslateService} from '@ngx-translate/core';
 import {DialogService} from '@app/core/dialog/dialog.service';
 import {Store} from '@ngrx/store';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'anms-connection-chooser',
@@ -18,6 +19,7 @@ export class ConnectionChooserComponent extends BaseComponent implements OnInit 
   connections: any;
 
   constructor(
+    public router: Router,
     public api: ApiService,
     public notificationService: NotificationService,
     public translate: TranslateService,
@@ -65,9 +67,11 @@ export class ConnectionChooserComponent extends BaseComponent implements OnInit 
 
   async activateConnection($event, connection) {
     $event.stopPropagation();
+    if (this.isActiveConnection(connection)) return false;
     connection.busy = true;
     await this.connectionsService.activateConnection(connection);
     connection.busy = false;
+    this.router.navigate(['dashboard']);
   }
 
   addConnection(item) {

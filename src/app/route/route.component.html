@@ -1,0 +1,51 @@
+<anms-page-loader *ngIf="!item"></anms-page-loader>
+<div class="container pb-4" *ngIf="item">
+  <div class="row mb-4 pt-4 align-items-center">
+    <div class="col-md-8">
+      <h1>
+        {{'konga.route' | translate}} {{item.name}}&nbsp;
+      </h1>
+    </div>
+    <div class="col-md-4 text-right">
+      <button mat-stroked-button
+              class="btn-large"
+              color="accent"
+              *ngIf="service" [routerLink]="['/services', service.id]">
+        {{'konga.service' | translate}}: {{service.name}}
+      </button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+
+      <mat-nav-list>
+        <a mat-list-item
+           routerLinkActive="active"
+           [routerLink]="[{ outlets: { route: ['details'] } }]">
+          <mat-icon class="mr-3 text-secondary">info_outline</mat-icon>
+          {{'konga.route.tab_details_label' | translate}}
+        </a>
+
+        <a mat-list-item
+           routerLinkActive="active"
+           [routerLink]="[{ outlets: { route: ['plugins'] } }]">
+          <mat-icon class="mr-3 text-secondary">extension</mat-icon>
+          {{'konga.route.tab_plugins_label' | translate}}
+        </a>
+
+        <a mat-list-item
+           routerLinkActive="active"
+           [routerLink]="[{ outlets: { route: ['consumers'] } }]">
+          <mat-icon class="mr-3 text-secondary">supervised_user_circle</mat-icon>
+          {{'konga.route.tab_consumers_label' | translate}}
+        </a>
+
+
+      </mat-nav-list>
+    </div>
+    <div class="col-md-8 pt-2">
+      <router-outlet name='route'></router-outlet>
+    </div>
+  </div>
+</div>

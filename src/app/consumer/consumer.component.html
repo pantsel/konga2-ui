@@ -1,0 +1,50 @@
+<anms-page-loader *ngIf="!item"></anms-page-loader>
+<div class="container pb-4" *ngIf="item">
+  <div class="row mb-4 pt-4 align-items-center">
+    <div class="col-md-12">
+      <h1>
+        {{'konga.consumer' | translate}} {{item.username || item.custom_id || item.id}}&nbsp;
+      </h1>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+
+      <mat-nav-list>
+        <a mat-list-item
+           routerLinkActive="active"
+           [routerLink]="[{ outlets: { consumer: ['details'] } }]">
+          <mat-icon class="mr-3 text-secondary">info_outline</mat-icon>
+          {{'konga.consumer.tab_details_label' | translate}}
+        </a>
+
+        <a mat-list-item
+           routerLinkActive="active"
+           [routerLink]="[{ outlets: { consumer: ['groups'] } }]">
+          <mat-icon class="mr-3 text-secondary">group_work</mat-icon>
+          {{'konga.consumer.tab_groups_label' | translate}}
+        </a>
+
+        <a mat-list-item
+           routerLinkActive="active"
+           [routerLink]="[{ outlets: { consumer: ['credentials'] } }]">
+          <mat-icon class="mr-3 text-secondary">security</mat-icon>
+          {{'konga.consumer.tab_credentials_label' | translate}}
+        </a>
+
+        <a mat-list-item
+           routerLinkActive="active"
+           [routerLink]="[{ outlets: { consumer: ['plugins'] } }]">
+          <mat-icon class="mr-3 text-secondary">extension</mat-icon>
+          {{'konga.consumer.tab_plugins_label' | translate}}
+        </a>
+
+
+      </mat-nav-list>
+    </div>
+    <div class="col-md-8 pt-2">
+      <router-outlet name='consumer'></router-outlet>
+    </div>
+  </div>
+</div>

@@ -116,42 +116,65 @@ export class AppComponent implements OnInit {
   createNavigationSideMenu() {
     this.navigationSideMenu = [
       ...this.navigation,
-      { link: 'dashboard',
+      {
+        link: 'dashboard',
         icon: 'dashboard',
-        label: 'konga.menu.dashboard' },
+        label: 'konga.menu.dashboard'
+      },
 
       // { type: 'subheader',
       //   label: 'Kong'},
-      { link: 'info',
+      {
+        link: 'info',
         icon: 'info_outline',
         show: () => {
           return this.authUser.connection;
         },
         permissions: ['superAdmin', 'infoRead'],
-        label: 'konga.menu.info' },
-      { link: 'services',
+        label: 'konga.menu.info'
+      },
+      {
+        link: 'consumers',
+        icon: 'apps',
+        show: () => {
+          return this.authUser.connection;
+        },
+        permissions: ['superAdmin', 'consumersRead'],
+        label: 'konga.menu.consumers'
+      },
+      {
+        link: 'services',
         icon: 'cloud_queue',
         show: () => {
           return this.authUser.connection;
         },
         permissions: ['superAdmin', 'servicesRead'],
-        label: 'konga.menu.services' },
+        label: 'konga.menu.services'
+      },
 
 
-      { type: 'divider',
-        label: ''},
-      { link: 'users',
+      {
+        type: 'divider',
+        label: ''
+      },
+      {
+        link: 'users',
         icon: 'supervised_user_circle',
         permissions: ['superAdmin', 'usersList'],
-        label: 'konga.menu.users' },
-      { link: 'connections',
+        label: 'konga.menu.users'
+      },
+      {
+        link: 'connections',
         icon: 'cast',
         permissions: ['superAdmin', 'connectionsList'],
-        label: 'konga.menu.connections' },
-      { link: 'settings',
+        label: 'konga.menu.connections'
+      },
+      {
+        link: 'settings',
         icon: 'settings',
         permissions: ['superAdmin', 'settingsUpdate'],
-        label: 'konga.menu.settings' }
+        label: 'konga.menu.settings'
+      }
 
     ];
 

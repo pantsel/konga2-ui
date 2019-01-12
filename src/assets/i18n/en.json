@@ -166,12 +166,28 @@
   "konga.create_connection_success": "A new connection to Kong Admin was created successfully!",
   "konga.update_connection_success": "The connection was updated successfully!",
 
+  "konga.route.tab_details_label": "Details",
+  "konga.route.tab_plugins_label": "Plugins",
+  "konga.route.tab_consumers_label": "Consumers",
+  "konga.route.details.title": "Route Details",
+
   "konga.dashboard.page_title": "Dashboard",
   "konga.dashboard.no_active_connection.header": "No active Connection",
   "konga.dashboard.no_active_connection.linkText": "Go on, activate a Connection from the Connections page",
   "konga.dashboard.no_connections.title": "Welcome",
   "konga.dashboard.no_connections.subtitle": "First of all, let's setup a connection to Kong Admin",
 
+
+  "konga.menu.consumers": "Consumers",
+  "konga.consumer": "Consumer",
+  "konga.consumers": "Consumers",
+  "konga.consumer.list.title": "Consumers",
+  "konga.consumer.list.subtitle": "The Consumer object represents a consumer - or a user - of a Service. You can either rely on Kong as the primary datastore, or you can map the consumer list with your database to keep consistency between Kong and your existing primary datastore.",
+  "konga.consumer.tab_details_label": "Details",
+  "konga.consumer.tab_groups_label": "Groups",
+  "konga.consumer.tab_credentials_label": "Credentials",
+  "konga.consumer.tab_plugins_label": "Plugins",
+  "konga.consumer.details.title": "Consumer details",
 
   "konga.name": "Name",
   "konga.created_at": "Created",

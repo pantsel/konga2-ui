@@ -116,8 +116,7 @@
 
 
   <button mat-flat-button color="accent"
-          style="width: 100%"
-          class="btn-large mt-2 text-center" [disabled]="!form.valid || submitting">
+          class="w-100 btn-large mt-2 text-center" [disabled]="!form.valid || submitting">
     <mat-progress-spinner mode="indeterminate"
                           *ngIf="submitting"
                           color="primary" diameter="36" class="float-left">

@@ -38,6 +38,10 @@
 .default-theme {
   @include angular-material-theme($anms-theme);
   @include custom-components-theme($anms-theme);
+
+  //a {
+  //  color: mat-color($mat-konga-teal, 500)
+  //}
 }
 
 .light-theme {
@@ -54,6 +58,7 @@
   @include angular-material-theme($anms-nature-theme);
   @include custom-components-theme($anms-nature-theme);
 }
+
 
 
 .btn-large {
@@ -124,6 +129,7 @@ mat-tab-group[vertical] {
 }
 
 .table {
+
   tr {
 
     th, td {

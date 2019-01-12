@@ -71,7 +71,7 @@
     ],
     "radix": true,
     "triple-equals": [
-      true,
+      false,
       "allow-null-check"
     ],
     "unified-signatures": true,

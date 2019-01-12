@@ -54,6 +54,16 @@ const routes: Routes = [
     canActivate: [AuthGuardService]
   },
   {
+    path: 'routes',
+    loadChildren: 'app/route/route.module#RouteModule',
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'consumers',
+    loadChildren: 'app/consumer/consumer.module#ConsumerModule',
+    canActivate: [AuthGuardService]
+  },
+  {
     path: 'users',
     loadChildren: 'app/user/user.module#UserModule',
     canActivate: [AuthGuardService]
