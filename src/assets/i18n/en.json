@@ -104,6 +104,7 @@
   "konga.service": "Service",
   "konga.route": "Route",
   "konga.routes": "Routes",
+  "konga.submit": "Submit",
 
   "konga.info.subtitle": "Extended information about the active Kong node",
 
@@ -173,7 +174,7 @@
 
 
   "konga.name": "Name",
-  "konga.created_at": "Created at",
+  "konga.created_at": "Created",
   "konga.change_password": "Change password",
 
   "konga.errors.user_not_active": "The user is not active",

@@ -4,4 +4,9 @@
     <mat-icon>close</mat-icon>
   </button>
 </h1>
-<anms-kong-form [entity]="entity" [existingData]="existingData"></anms-kong-form>
+<anms-kong-form [entity]="entity"
+                [extras]="extras"
+                [isModal]="isModal"
+                [existingData]="existingData"
+                (submitted)="close($event)"
+></anms-kong-form>

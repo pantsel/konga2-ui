@@ -55,8 +55,11 @@ export class ServiceRoutesComponent extends KongEntityDataTableComponent impleme
     const dialogRef = this.matDialog.open(KongEntityModalComponent, {
       width: '480px',
       data: {
-        service : {
-          id: this.service.id
+        isModal: true,
+        extras: {
+          service : {
+            id: this.service.id
+          }
         },
         entity: KongRoute
       }

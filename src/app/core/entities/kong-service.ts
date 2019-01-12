@@ -36,7 +36,6 @@ export const KongService = {
   }, {
     path: {
       type: 'string',
-      required: true,
       description: 'The path to be used in requests to the upstream server.'
     },
   }, {

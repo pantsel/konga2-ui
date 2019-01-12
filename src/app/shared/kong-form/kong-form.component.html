@@ -2,7 +2,7 @@
 {{errorMsg}}
 </div>
 <form (submit)="submit(form.value)" [formGroup]="form" *ngIf="form">
-  <div mat-dialog-content>
+  <div mat-dialog-content [style.max-height]="isModal ? '65vh' : 'inherit'">
 
     <mat-form-field [appearance]="field.type === 'boolean' ? 'fill' : 'outline'" class="w-100"
                     [ngClass]="{'decor': field.type === 'boolean'}"
@@ -71,7 +71,7 @@
                             *ngIf="submitting"
                             color="primary" diameter="36" class="float-left">
       </mat-progress-spinner>
-      {{existingData ? ('konga.save_changes' | translate) : ('konga.create_service' | translate)}}
+      {{existingData ? ('konga.save_changes' | translate) : ('konga.submit' | translate)}}
     </button>
   </div>
 </form>

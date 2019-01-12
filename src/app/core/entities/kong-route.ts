@@ -56,24 +56,24 @@ export const KongRoute = {
         type: 'boolean'
       }
     },
-    {
-      snis: {
-        description: 'A list of SNIs that match this Route when using stream routing. When using tcp or tls protocols, at least one of snis, sources, or destinations must be set.',
-        type: 'array'
-      }
-    },
-    {
-      sources: {
-        description: 'A list of IP sources of incoming connections that match this Route when using stream routing. Each entry is an object with fields “ip” (optionally in CIDR range notation) and/or “port”. When using tcp or tls protocols, at least one of snis, sources, or destinations must be set',
-        type: 'array'
-      }
-    },
-    {
-      destinations: {
-        description: 'A list of IP destinations of incoming connections that match this Route when using stream routing. Each entry is an object with fields “ip” (optionally in CIDR range notation) and/or “port”. When using tcp or tls protocols, at least one of snis, sources, or destinations must be set.',
-        type: 'array'
-      }
-    }
+    // {
+    //   snis: {
+    //     description: 'A list of SNIs that match this Route when using stream routing. When using tcp or tls protocols, at least one of snis, sources, or destinations must be set.',
+    //     type: 'array'
+    //   }
+    // },
+    // {
+    //   sources: {
+    //     description: 'A list of IP sources of incoming connections that match this Route when using stream routing. Each entry is an object with fields “ip” (optionally in CIDR range notation) and/or “port”. When using tcp or tls protocols, at least one of snis, sources, or destinations must be set',
+    //     type: 'array'
+    //   }
+    // },
+    // {
+    //   destinations: {
+    //     description: 'A list of IP destinations of incoming connections that match this Route when using stream routing. Each entry is an object with fields “ip” (optionally in CIDR range notation) and/or “port”. When using tcp or tls protocols, at least one of snis, sources, or destinations must be set.',
+    //     type: 'array'
+    //   }
+    // }
   ],
   titleItems: [
     {

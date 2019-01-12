@@ -25,6 +25,8 @@ export class KongFormComponent implements OnInit {
 
   @Input() existingData: any;
   @Input() entity: any;
+  @Input() extras: any;
+  @Input() isModal: boolean;
   @Output() submitted: EventEmitter<any> = new EventEmitter();
 
   form: FormGroup;
@@ -128,11 +130,11 @@ export class KongFormComponent implements OnInit {
 
     try {
       if (this.existingData) {
-        response = await this.update(data);
+        response = await this.update(_.merge(data, this.extras || {}));
         console.log('Updated service', response);
         this.notificationService.success(this.translate.instant('konga.changes_saved_success'));
       }else{
-        response = await this.create(data);
+        response = await this.create(_.merge(data, this.extras || {}));
         console.log('Created service', response);
         this.notificationService.success(this.translate.instant('konga.data_submitted_success'));
       }
