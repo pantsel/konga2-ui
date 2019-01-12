@@ -1,6 +1,6 @@
-<!--<div class="alert alert-danger" *ngIf="errorMsg">-->
-<!--{{errorMsg}}-->
-<!--</div>-->
+<div class="alert alert-danger" *ngIf="errorMsg">
+{{errorMsg}}
+</div>
 <form (submit)="submit(form.value)" [formGroup]="form" *ngIf="form">
   <div mat-dialog-content>
     <mat-form-field appearance="outline" class="w-100" *ngFor="let field of fields" [ngSwitch]="field.type">
