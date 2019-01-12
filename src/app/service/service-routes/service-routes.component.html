@@ -47,7 +47,7 @@
         </td>
         <td>
           <a [routerLink]="['/routes', item.id]">
-            <strong>{{item.name}}</strong>
+            <strong>{{item.name || item.id}}</strong>
           </a>
           <!--<p *ngIf="item.description" class="help-block">{{item.description}}</p>-->
         </td>
