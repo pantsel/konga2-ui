@@ -8,9 +8,14 @@ import { ConsumerDetailsComponent } from './consumer-details/consumer-details.co
 import { ConsumerGroupsComponent } from './consumer-groups/consumer-groups.component';
 import { ConsumerCredentialsComponent } from './consumer-credentials/consumer-credentials.component';
 import { ConsumerPluginsComponent } from './consumer-plugins/consumer-plugins.component';
+import { ConsumerBasicAuthComponent } from './consumer-basic-auth/consumer-basic-auth.component';
+import { ConsumerKeyAuthComponent } from './consumer-key-auth/consumer-key-auth.component';
+import { ConsumerHmacAuthComponent } from './consumer-hmac-auth/consumer-hmac-auth.component';
+import { ConsumerOauth2Component } from './consumer-oauth2/consumer-oauth2.component';
+import { ConsumerJwtComponent } from './consumer-jwt/consumer-jwt.component';
 
 @NgModule({
-  declarations: [ConsumerComponent, ConsumerListComponent, ConsumerDetailsComponent, ConsumerGroupsComponent, ConsumerCredentialsComponent, ConsumerPluginsComponent],
+  declarations: [ConsumerComponent, ConsumerListComponent, ConsumerDetailsComponent, ConsumerGroupsComponent, ConsumerCredentialsComponent, ConsumerPluginsComponent, ConsumerBasicAuthComponent, ConsumerKeyAuthComponent, ConsumerHmacAuthComponent, ConsumerOauth2Component, ConsumerJwtComponent],
   imports: [
     CommonModule,
     SharedModule,

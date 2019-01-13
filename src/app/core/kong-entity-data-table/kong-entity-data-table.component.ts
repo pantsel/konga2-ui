@@ -13,7 +13,6 @@ import {Component} from '@angular/core';
 import {ConnectionsService} from '@app/connections/connections.service';
 import {Entities} from '@app/core/entities/entities';
 import {KongEntityModalComponent} from '@app/shared/kong-entity-modal/kong-entity-modal.component';
-import {KongConsumer} from '@app/core/entities/kong-consumer';
 
 @Component({
   selector: 'anms-kong-entity-data-table',
@@ -25,15 +24,15 @@ export class KongEntityDataTableComponent extends KongBaseComponent implements O
   form: FormGroup;
   originalData: any;
 
-  @Input() data: any;
-  @Input() titleItems = [];
-  @Input() limit = 25;
-  @Input() page = 0;
-  @Input() sortAttr = 'created_at';
-  @Input() sortDir = 'desc';
-  @Input() pageSizeOptions = [5, 10, 25, 100]
-  @Input() endpoint: string;
-  @Input() entity: any;
+  data: any;
+  titleItems = [];
+  limit = 25;
+  page = 0;
+  sortAttr = 'created_at';
+  sortDir = 'desc';
+  pageSizeOptions = [5, 10, 25, 100]
+  endpoint: string;
+  entity: any;
 
   @Output() searchTerm: EventEmitter<any> = new EventEmitter();
 

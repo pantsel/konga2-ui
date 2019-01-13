@@ -1,4 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {SharedConsumerService} from '@app/consumer/consumer.component';
 
 @Component({
   selector: 'anms-consumer-credentials',
@@ -8,9 +9,49 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 })
 export class ConsumerCredentialsComponent implements OnInit {
 
-  constructor() { }
+  consumer: any;
+  navLinks: Array<any>;
+
+  constructor(shared: SharedConsumerService) {
+    shared.data.subscribe(data => {
+      this.consumer = data;
+    })
+  }
 
   ngOnInit() {
+    this.createNavLinks();
+  }
+
+
+  createNavLinks() {
+    if (!this.consumer) return false;
+    this.navLinks = [
+      {
+        label: 'Basic Auth',
+        icon: 'supervised_user_circle',
+        path: [{ outlets: { credentials: ['basic-auth'] } }]
+      },
+      {
+        label: 'Key Auth',
+        icon: 'vpn_key',
+        path: [{ outlets: { credentials: ['key-auth'] } }]
+      },
+      {
+        label: 'HMAC Auth',
+        icon: 'code',
+        path: [{ outlets: { credentials: ['hmac-auth'] } }]
+      },
+      {
+        label: 'Oauth2',
+        icon: 'security',
+        path: [{ outlets: { credentials: ['oauth2'] } }]
+      },
+      {
+        label: 'JWT',
+        icon: 'fingerprint',
+        path: [{ outlets: { credentials: ['jwt'] } }]
+      }
+    ]
   }
 
 }
