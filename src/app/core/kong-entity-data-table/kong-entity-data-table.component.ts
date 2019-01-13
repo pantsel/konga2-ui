@@ -59,9 +59,7 @@ export class KongEntityDataTableComponent extends KongBaseComponent implements O
     this.titleItems = this.entity.titleItems;
     this.searchableTitleItems = _.filter(this.titleItems, item => item.searchable);
 
-    this.connectionsService.activeNodeChanged$.subscribe(data => {
-      this.loadData();
-    })
+    this.loadData();
 
     this.form = this.fb.group({
       term: ['']

@@ -88,7 +88,7 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(routes, {
       useHash: false,
-      scrollPositionRestoration: 'enabled'
+      scrollPositionRestoration: 'enabled',
     })
   ],
   exports: [RouterModule]
