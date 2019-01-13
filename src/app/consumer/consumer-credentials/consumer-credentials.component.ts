@@ -11,6 +11,7 @@ export class ConsumerCredentialsComponent implements OnInit {
 
   consumer: any;
   navLinks: Array<any>;
+  selectedIndex = 0;
 
   constructor(shared: SharedConsumerService) {
     shared.data.subscribe(data => {

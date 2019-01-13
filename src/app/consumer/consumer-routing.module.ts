@@ -50,14 +50,14 @@ const routes: Routes = [
       {path: 'groups', component: ConsumerGroupsComponent, outlet: 'consumer'},
       {
         path: 'credentials', component: ConsumerCredentialsComponent, outlet: 'consumer',
-        children: [
-          {path: '', redirectTo: 'basic-auth', outlet: 'credentials'},
-          {path: 'basic-auth', component: ConsumerBasicAuthComponent, outlet: 'credentials'},
-          {path: 'key-auth', component: ConsumerKeyAuthComponent, outlet: 'credentials'},
-          {path: 'hmac-auth', component: ConsumerHmacAuthComponent, outlet: 'credentials'},
-          {path: 'oauth2', component: ConsumerOauth2Component, outlet: 'credentials'},
-          {path: 'jwt', component: ConsumerJwtComponent, outlet: 'credentials'},
-        ]
+        // children: [
+        //   {path: '', redirectTo: 'basic-auth', outlet: 'credentials'},
+        //   {path: 'basic-auth', component: ConsumerBasicAuthComponent, outlet: 'credentials'},
+        //   {path: 'key-auth', component: ConsumerKeyAuthComponent, outlet: 'credentials'},
+        //   {path: 'hmac-auth', component: ConsumerHmacAuthComponent, outlet: 'credentials'},
+        //   {path: 'oauth2', component: ConsumerOauth2Component, outlet: 'credentials'},
+        //   {path: 'jwt', component: ConsumerJwtComponent, outlet: 'credentials'},
+        // ]
       },
       {path: 'plugins', component: ConsumerPluginsComponent, outlet: 'consumer'},
     ]
