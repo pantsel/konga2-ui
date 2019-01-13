@@ -188,7 +188,7 @@
   "konga.consumer.tab_credentials_label": "Credentials",
   "konga.consumer.tab_plugins_label": "Plugins",
   "konga.consumer.details.title": "Consumer details",
-  "konga.consumer.acls.subtitle": "The groups who's ACL protected resources this consumer can access",
+  "konga.consumer.acls.subtitle": "The groups who's access controlled resources this consumer can access",
 
   "konga.name": "Name",
   "konga.created_at": "Created",
