@@ -12,6 +12,8 @@ import {KongBaseComponent} from '@app/core/kong-base/kong-base.component';
 import {Component} from '@angular/core';
 import {ConnectionsService} from '@app/connections/connections.service';
 import {Entities} from '@app/core/entities/entities';
+import {KongEntityModalComponent} from '@app/shared/kong-entity-modal/kong-entity-modal.component';
+import {KongConsumer} from '@app/core/entities/kong-consumer';
 
 @Component({
   selector: 'anms-kong-entity-data-table',

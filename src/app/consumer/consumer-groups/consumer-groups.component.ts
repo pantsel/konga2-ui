@@ -1,16 +1,63 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import {SharedConsumerService} from '@app/consumer/consumer.component';
+import {KongApiService} from '@app/core/api/kong-api.service';
+import {KongEntityDataTableComponent} from '@app/core/kong-entity-data-table/kong-entity-data-table.component';
+import {TranslateService} from '@ngx-translate/core';
+import {DialogService} from '@app/core/dialog/dialog.service';
+import {ConnectionsService} from '@app/connections/connections.service';
+import {AppState, NotificationService} from '@app/core';
+import {Store} from '@ngrx/store';
+import {FormBuilder} from '@angular/forms';
+import {KongEntityModalComponent} from '@app/shared/kong-entity-modal/kong-entity-modal.component';
+import {MatDialog} from '@angular/material';
+import {KongConsumerAcl} from '@app/core/entities/kong-consumer-acl';
 
 @Component({
   selector: 'anms-consumer-groups',
   templateUrl: './consumer-groups.component.html',
-  styleUrls: ['./consumer-groups.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./consumer-groups.component.css']
 })
-export class ConsumerGroupsComponent implements OnInit {
+export class ConsumerGroupsComponent extends KongEntityDataTableComponent implements OnInit {
 
-  constructor() { }
+  consumer: any;
+  acls: any;
+
+  constructor(public kong: KongApiService,
+              public matDialog: MatDialog,
+              public translate: TranslateService,
+              public dialog: DialogService,
+              public connectionsService: ConnectionsService,
+              public notificationsService: NotificationService,
+              public store: Store<AppState>,
+              public fb: FormBuilder,
+              private shared: SharedConsumerService) {
+    super(kong, translate, dialog, notificationsService, store, connectionsService, fb);
+
+    shared.data.subscribe(data => {
+      this.consumer = data;
+      this.entity = new KongConsumerAcl(this.consumer.id);
+    })
+  }
 
   ngOnInit() {
+    super.ngOnInit();
+  }
+
+  openCreateModal() {
+    const dialogRef = this.matDialog.open(KongEntityModalComponent, {
+      width: '480px',
+      data: {
+        isModal: true,
+        entity: this.entity
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The create dialog was closed', result);
+      if (result) {
+        this.loadData();
+      }
+    });
   }
 
 }
