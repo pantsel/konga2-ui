@@ -9,7 +9,6 @@ import {Store} from '@ngrx/store';
 import {FormBuilder} from '@angular/forms';
 import {MatDialog} from '@angular/material';
 import {KongConsumer} from '@app/core/entities/kong-consumer';
-import {KongEntityModalComponent} from '@app/shared/kong-entity-modal/kong-entity-modal.component';
 
 @Component({
   selector: 'anms-consumer-list',
@@ -25,8 +24,8 @@ export class ConsumerListComponent  extends KongEntityDataTableComponent impleme
               public notificationsService: NotificationService,
               public store: Store<AppState>,
               public fb: FormBuilder,
-              private matDialog: MatDialog) {
-    super(kong, translate, dialog, notificationsService, store, connectionsService, fb);
+              public matDialog: MatDialog) {
+    super(kong, translate, dialog, notificationsService, store, connectionsService, fb, matDialog);
 
     this.entity = KongConsumer;
 
@@ -37,21 +36,5 @@ export class ConsumerListComponent  extends KongEntityDataTableComponent impleme
   }
 
 
-  openCreateModal() {
-    const dialogRef = this.matDialog.open(KongEntityModalComponent, {
-      width: '480px',
-      data: {
-        isModal: true,
-        entity: KongConsumer
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The create dialog was closed', result);
-      if (result) {
-        this.loadData();
-      }
-    });
-  }
 
 }

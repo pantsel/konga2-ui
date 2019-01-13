@@ -31,7 +31,7 @@ export class ConsumerGroupsComponent extends KongEntityDataTableComponent implem
               public store: Store<AppState>,
               public fb: FormBuilder,
               private shared: SharedConsumerService) {
-    super(kong, translate, dialog, notificationsService, store, connectionsService, fb);
+    super(kong, translate, dialog, notificationsService, store, connectionsService, fb, matDialog);
 
     shared.data.subscribe(data => {
       this.consumer = data;
@@ -41,23 +41,6 @@ export class ConsumerGroupsComponent extends KongEntityDataTableComponent implem
 
   ngOnInit() {
     super.ngOnInit();
-  }
-
-  openCreateModal() {
-    const dialogRef = this.matDialog.open(KongEntityModalComponent, {
-      width: '480px',
-      data: {
-        isModal: true,
-        entity: this.entity
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The create dialog was closed', result);
-      if (result) {
-        this.loadData();
-      }
-    });
   }
 
 }

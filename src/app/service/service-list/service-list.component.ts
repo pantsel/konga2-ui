@@ -25,31 +25,14 @@ export class ServiceListComponent extends KongEntityDataTableComponent implement
               public notificationsService: NotificationService,
               public store: Store<AppState>,
               public fb: FormBuilder,
-              private matDialog: MatDialog) {
-    super(kong, translate, dialog, notificationsService, store, connectionsService, fb)
+              public matDialog: MatDialog) {
+    super(kong, translate, dialog, notificationsService, store, connectionsService, fb, matDialog)
 
     this.entity = KongService;
   }
 
   ngOnInit() {
     super.ngOnInit();
-  }
-
-
-  openCreateModal() {
-    const dialogRef = this.matDialog.open(ServiceCreateComponent, {
-      width: '480px',
-      data: {
-
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The create dialog was closed', result);
-      if (result) {
-        this.loadData();
-      }
-    });
   }
 
 }

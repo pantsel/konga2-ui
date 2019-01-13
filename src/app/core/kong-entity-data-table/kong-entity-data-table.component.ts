@@ -7,7 +7,7 @@ import {Store} from '@ngrx/store';
 import {KongApiService} from '@app/core/api/kong-api.service';
 import * as _ from 'lodash';
 import {debounceTime, tap} from 'rxjs/operators';
-import {PageEvent} from '@angular/material';
+import {MatDialog, PageEvent} from '@angular/material';
 import {KongBaseComponent} from '@app/core/kong-base/kong-base.component';
 import {Component} from '@angular/core';
 import {ConnectionsService} from '@app/connections/connections.service';
@@ -47,7 +47,7 @@ export class KongEntityDataTableComponent extends KongBaseComponent implements O
               public notificationsService: NotificationService,
               public store: Store<AppState>,
               public connectionsService: ConnectionsService,
-              public fb: FormBuilder) {
+              public fb: FormBuilder, public matDialog: MatDialog) {
     super(api, notificationsService, translate, dialog, store)
 
   }
@@ -164,6 +164,24 @@ export class KongEntityDataTableComponent extends KongBaseComponent implements O
         this.notificationsService.success(this.translate.instant('konga.delete_item_success'))
         this.loadData();
       })
+  }
+
+  openCreateModal(extras?) {
+    const dialogRef = this.matDialog.open(KongEntityModalComponent, {
+      width: '480px',
+      data: {
+        isModal: true,
+        entity: this.entity,
+        extras: extras
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The create dialog was closed', result);
+      if (result) {
+        this.loadData();
+      }
+    });
   }
 
 }

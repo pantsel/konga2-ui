@@ -11,8 +11,6 @@ import {MatDialog} from '@angular/material';
 import {KongService} from '@app/core/entities/kong-service';
 import {SharedServiceService} from '@app/service/service.component';
 import {KongRoute} from '@app/core/entities/kong-route';
-import {ServiceCreateComponent} from '@app/service/service-create/service-create.component';
-import {KongFormComponent} from '@app/shared/kong-form/kong-form.component';
 import {KongEntityModalComponent} from '@app/shared/kong-entity-modal/kong-entity-modal.component';
 
 @Component({
@@ -32,9 +30,9 @@ export class ServiceRoutesComponent extends KongEntityDataTableComponent impleme
               public notificationsService: NotificationService,
               public store: Store<AppState>,
               public fb: FormBuilder,
-              private matDialog: MatDialog) {
+              public matDialog: MatDialog) {
 
-    super(kong, translate, dialog, notificationsService, store, connectionsService, fb)
+    super(kong, translate, dialog, notificationsService, store, connectionsService, fb, matDialog)
 
     this.shared.data.subscribe(data => {
       if (data) {
@@ -52,25 +50,9 @@ export class ServiceRoutesComponent extends KongEntityDataTableComponent impleme
 
 
   openCreateModal() {
-    const dialogRef = this.matDialog.open(KongEntityModalComponent, {
-      width: '480px',
-      data: {
-        isModal: true,
-        extras: {
-          service : {
-            id: this.service.id
-          }
-        },
-        entity: KongRoute
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The create dialog was closed', result);
-      if (result) {
-        this.loadData();
-      }
-    });
+    super.openCreateModal({service : {
+        id: this.service.id
+      }});
   }
 
 }
