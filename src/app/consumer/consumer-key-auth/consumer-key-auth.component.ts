@@ -32,8 +32,10 @@ export class ConsumerKeyAuthComponent extends KongEntityDataTableComponent imple
     super(kong, translate, dialog, notificationsService, store, connectionsService, fb, matDialog);
 
     shared.data.subscribe(data => {
-      this.consumer = data;
-      this.entity = new KongConsumerKeyAuth(this.consumer.id);
+      if (data) {
+        this.consumer = data;
+        this.entity = new KongConsumerKeyAuth(this.consumer.id);
+      }
     })
   }
 

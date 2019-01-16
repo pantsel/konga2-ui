@@ -32,8 +32,10 @@ export class ConsumerOauth2Component extends KongEntityDataTableComponent implem
     super(kong, translate, dialog, notificationsService, store, connectionsService, fb, matDialog);
 
     shared.data.subscribe(data => {
-      this.consumer = data;
-      this.entity = new KongConsumerOauth2(this.consumer.id);
+      if (data) {
+        this.consumer = data;
+        this.entity = new KongConsumerOauth2(this.consumer.id);
+      }
     })
   }
 

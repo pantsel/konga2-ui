@@ -32,8 +32,10 @@ export class ConsumerBasicAuthComponent extends KongEntityDataTableComponent imp
     super(kong, translate, dialog, notificationsService, store, connectionsService, fb, matDialog);
 
     shared.data.subscribe(data => {
-      this.consumer = data;
-      this.entity = new KongConsumerBasicAuth(this.consumer.id);
+      if (data) {
+        this.consumer = data;
+        this.entity = new KongConsumerBasicAuth(this.consumer.id);
+      }
     })
   }
 

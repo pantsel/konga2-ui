@@ -32,8 +32,10 @@ export class ConsumerJwtComponent extends KongEntityDataTableComponent implement
     super(kong, translate, dialog, notificationsService, store, connectionsService, fb, matDialog);
 
     shared.data.subscribe(data => {
-      this.consumer = data;
-      this.entity = new KongConsumerJwt(this.consumer.id);
+      if (data) {
+        this.consumer = data;
+        this.entity = new KongConsumerJwt(this.consumer.id);
+      }
     })
   }
 

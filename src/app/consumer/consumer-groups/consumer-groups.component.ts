@@ -32,8 +32,10 @@ export class ConsumerGroupsComponent extends KongEntityDataTableComponent implem
     super(kong, translate, dialog, notificationsService, store, connectionsService, fb, matDialog);
 
     shared.data.subscribe(data => {
-      this.consumer = data;
-      this.entity = new KongConsumerAcl(this.consumer.id);
+      if (data) {
+        this.consumer = data;
+        this.entity = new KongConsumerAcl(this.consumer.id);
+      }
     })
   }
 

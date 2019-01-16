@@ -32,8 +32,10 @@ export class ConsumerHmacAuthComponent extends KongEntityDataTableComponent impl
     super(kong, translate, dialog, notificationsService, store, connectionsService, fb, matDialog);
 
     shared.data.subscribe(data => {
-      this.consumer = data;
-      this.entity = new KongConsumerHmacAuth(this.consumer.id);
+      if (data) {
+        this.consumer = data;
+        this.entity = new KongConsumerHmacAuth(this.consumer.id);
+      }
     })
   }
 
