@@ -53,6 +53,22 @@
         </mat-chip-list>
       </ng-container>
 
+      <!-- DEFAULT -->
+      <ng-container *ngSwitchCase="'text'">
+        <textarea matInput
+                  cdkTextareaAutosize
+                  #autosize="cdkTextareaAutosize"
+                  formControlName="{{field.name}}"
+                  cdkAutosizeMinRows="2"
+                  cdkAutosizeMaxRows="5"></textarea>
+      </ng-container>
+
+      <!-- DEFAULT -->
+      <ng-container *ngSwitchDefault>
+        <input matInput formControlName="{{field.name}}">
+      </ng-container>
+
+
 
       <mat-hint *ngIf="field.description" [innerHTML]="field.description"></mat-hint>
       <mat-error *ngIf="form.controls[field.name].hasError('required')">
