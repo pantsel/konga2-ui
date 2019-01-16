@@ -1,11 +1,10 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {SharedConsumerService} from '@app/consumer/consumer.component';
 
 @Component({
   selector: 'anms-consumer-credentials',
   templateUrl: './consumer-credentials.component.html',
-  styleUrls: ['./consumer-credentials.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./consumer-credentials.component.scss']
 })
 export class ConsumerCredentialsComponent implements OnInit {
 

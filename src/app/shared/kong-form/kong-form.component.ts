@@ -158,6 +158,14 @@ export class KongFormComponent implements OnInit {
   }
 
   private async create(data) {
+
+    // Remove null values on create
+    for (const key in data) {
+      if (data[key] === null) {
+        delete data[key];
+      }
+    }
+
     return  this.kong.post(`${this.baseEndpoint}`, data).toPromise();
   }
 

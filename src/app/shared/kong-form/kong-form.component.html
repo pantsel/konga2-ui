@@ -54,7 +54,7 @@
       </ng-container>
 
 
-      <mat-hint *ngIf="field.description">{{field.description}}</mat-hint>
+      <mat-hint *ngIf="field.description" [innerHTML]="field.description"></mat-hint>
       <mat-error *ngIf="form.controls[field.name].hasError('required')">
         {{'errors.validation.required' | translate}}
       </mat-error>
