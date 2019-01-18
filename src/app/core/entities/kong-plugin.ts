@@ -38,7 +38,17 @@ export class KongPlugin {
     }
   ]
 
-  constructor(schema?) {
-    this.fields = schema ? schema.fields : [];
+  constructor(name?, schema?) {
+    if (name) this.singularName = name;
+    if (schema) {
+      const enabledField = {
+        enabled: {
+          type: 'boolean'
+        }
+      }
+
+      this.fields = schema.fields && Object.keys(schema.fields).length ? schema.fields.concat(enabledField) : [enabledField];
+    }
+
   }
 }

@@ -45,7 +45,8 @@ export class PluginListComponent extends KongEntityDataTableComponent implements
           width: '480px',
           data: {
             isModal: true,
-            entity: new KongPlugin(schema)
+            entity: new KongPlugin(plugin.name, schema),
+            existingData: plugin
           }
         });
 
