@@ -82,6 +82,7 @@ export class KongFormComponent implements OnInit {
 
       switch (field.type) {
         case 'array':
+
           field.default = field.default || [];
 
           // Monkey patch in case the default value comes as an empty object {}
