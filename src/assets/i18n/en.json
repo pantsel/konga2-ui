@@ -192,6 +192,8 @@
   "konga.consumer.credentials.title": "Credentials",
   "konga.consumer.credentials.subtitle": "Assign Authentication credentials to the consumer",
 
+  "konga.menu.plugins": "Plugins",
+
   "konga.name": "Name",
   "konga.created_at": "Created",
   "konga.change_password": "Change password",

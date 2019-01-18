@@ -64,6 +64,11 @@ const routes: Routes = [
     canActivate: [AuthGuardService]
   },
   {
+    path: 'plugins',
+    loadChildren: 'app/plugin/plugin.module#PluginModule',
+    canActivate: [AuthGuardService]
+  },
+  {
     path: 'users',
     loadChildren: 'app/user/user.module#UserModule',
     canActivate: [AuthGuardService]

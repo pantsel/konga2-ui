@@ -139,7 +139,7 @@ export class AppComponent implements OnInit {
         show: () => {
           return this.authUser.connection;
         },
-        permissions: ['superAdmin', 'consumersRead'],
+        permissions: ['superAdmin', 'consumersList'],
         label: 'konga.menu.consumers'
       },
       {
@@ -148,9 +148,19 @@ export class AppComponent implements OnInit {
         show: () => {
           return this.authUser.connection;
         },
-        permissions: ['superAdmin', 'servicesRead'],
+        permissions: ['superAdmin', 'servicesList'],
         label: 'konga.menu.services'
       },
+      {
+        link: 'plugins',
+        icon: 'extension',
+        show: () => {
+          return this.authUser.connection;
+        },
+        permissions: ['superAdmin', 'pluginsList'],
+        label: 'konga.menu.plugins'
+      },
+
 
 
       {
