@@ -6,6 +6,7 @@ export class KongPlugin {
 
   endpoint = `plugins`;
 
+  fields = [];
 
   titleItems = [
     {
@@ -37,5 +38,7 @@ export class KongPlugin {
     }
   ]
 
-  constructor() {}
+  constructor(schema?) {
+    this.fields = schema ? schema.fields : [];
+  }
 }

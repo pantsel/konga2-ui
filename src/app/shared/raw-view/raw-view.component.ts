@@ -51,7 +51,7 @@ export class RawViewComponent implements OnInit {
 
   openInspectModal() {
     const dialogRef = this.dialog.open(InspectionDialog, {
-      width: '480px',
+      width: '560px',
       data: this.data
     });
 

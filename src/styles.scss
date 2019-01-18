@@ -132,6 +132,14 @@ mat-tab-group[vertical] {
 
   tr {
 
+    &.disabled {
+      opacity: .5;
+      //th, td {
+      //  background: #f4f4f4;
+      //}
+      text-decoration: line-through;
+    }
+
     th, td {
       vertical-align: middle !important;
     }

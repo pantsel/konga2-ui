@@ -44,7 +44,7 @@
           </th>
           <th></th>
         </tr>
-        <tr *ngFor="let item of data">
+        <tr *ngFor="let item of data" [ngClass]="{'disabled': !item.enabled}">
           <td width="1">
             <anms-raw-view [data]="item"></anms-raw-view>
           </td>
@@ -57,10 +57,10 @@
           <td width="1">
             <mat-icon
                     matTooltip="{{item.enabled ? ('konga.enabled' | translate) : ('konga.disabled' | translate)}}"
-                    [ngClass]="{'text-success':item.enabled, 'text-muted': !item.enabled}">{{item.enabled ? 'radio_button_checked' : 'radio_button'}}</mat-icon>
+                    [ngClass]="{'text-success':item.enabled, 'text-muted': !item.enabled}">radio_button_checked</mat-icon>
           </td>
           <td>
-            <a [routerLink]="['/plugins', item.id]">
+            <a href="javascript:void(0)" (click)="editPlugin(item)">
               <strong>{{item.name || 'N/A'}}</strong>
               <br>
               <small class="text-secondary">{{item.id}}</small>

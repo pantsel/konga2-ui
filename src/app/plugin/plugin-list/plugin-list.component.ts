@@ -9,6 +9,7 @@ import {Store} from '@ngrx/store';
 import {FormBuilder} from '@angular/forms';
 import {MatDialog} from '@angular/material';
 import {KongPlugin} from '@app/core/entities/kong-plugin';
+import {KongEntityModalComponent} from '@app/shared/kong-entity-modal/kong-entity-modal.component';
 
 @Component({
   selector: 'anms-plugin-list',
@@ -34,6 +35,29 @@ export class PluginListComponent extends KongEntityDataTableComponent implements
     super.ngOnInit()
   }
 
+
+  editPlugin(plugin) {
+    this.kong.get(`plugins/schema/${plugin.name}`)
+      .subscribe(schema => {
+        console.log(`Got ${plugin.name} schema`, schema);
+
+        const dialogRef = this.matDialog.open(KongEntityModalComponent, {
+          width: '480px',
+          data: {
+            isModal: true,
+            entity: new KongPlugin(schema)
+          }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+          console.log('The create dialog was closed', result);
+          if (result) {
+            this.loadData();
+          }
+        });
+
+      })
+  }
 
   addPlugin() {
 
