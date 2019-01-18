@@ -1,3 +1,106 @@
-<p>
-  plugin-list works!
-</p>
+<div class="container mt-4 pb-4">
+
+  <div class="row mb-4 align-items-center">
+    <div class="col-md-8">
+      <h1 class="m-0 p-0">{{'konga.plugins.list.title' | translate}}</h1>
+      <p class="help-block">{{'konga.plugins.list.subtitle' | translate}}</p>
+    </div>
+    <div class="col-md-4">
+      <form [formGroup]="form" *ngIf="form" class="sign-up-form mt-4">
+        <mat-form-field appearance="outline" class="w-100">
+          <input matInput
+                 formControlName="term"
+                 placeholder="{{'konga.search_by' | translate}} {{getSearchableTitleItemsTitles().join(', ')}}...">
+          <mat-icon matPrefix>search</mat-icon>
+          <mat-progress-spinner mode="indeterminate"
+                                *ngIf="isLoading"
+                                matSuffix
+                                color="primary" diameter="30"></mat-progress-spinner>
+        </mat-form-field>
+      </form>
+
+    </div>
+  </div>
+
+  <anms-page-loader *ngIf="!data"></anms-page-loader>
+
+  <mat-card class="mb-4 p-0" *ngIf="data">
+    <div class="table-responsive">
+      <table class="table mb-0">
+        <tr>
+          <th></th>
+          <th width="1"></th>
+          <th *ngFor="let item of titleItems">
+            <div class="d-flex align-items-center">
+              <a href="javascript:void(0)" (click)="sort(item.property)"
+                 [ngClass]="{'text-success': sortAttr === item.property}"
+                 class="float-left mr-2">
+                {{item.title | translate}}
+              </a>
+              <span *ngIf="sortAttr === item.property" class="d-inline-flex" [ngClass]="{'text-success': sortAttr === item.property}">
+                <mat-icon style="font-size: 0.9rem; height: 0.9rem">{{sortDir === 'desc' ? 'arrow_downward' : 'arrow_upward' }}</mat-icon>
+              </span>
+            </div>
+          </th>
+          <th></th>
+        </tr>
+        <tr *ngFor="let item of data">
+          <td width="1">
+            <anms-raw-view [data]="item"></anms-raw-view>
+          </td>
+          <td>
+            <!-- PLUGIN IMAGE -->
+            <img src="assets/images/kong/plugins/{{item.name}}.png"
+                 style="height: 42px"
+                 onerror="this.src='images/kong/plugins/kong.svg'">
+          </td>
+          <td width="1">
+            <mat-icon
+                    matTooltip="{{item.enabled ? ('konga.enabled' | translate) : ('konga.disabled' | translate)}}"
+                    [ngClass]="{'text-success':item.enabled, 'text-muted': !item.enabled}">{{item.enabled ? 'radio_button_checked' : 'radio_button'}}</mat-icon>
+          </td>
+          <td>
+            <a [routerLink]="['/plugins', item.id]">
+              <strong>{{item.name || 'N/A'}}</strong>
+              <br>
+              <small class="text-secondary">{{item.id}}</small>
+            </a>
+          </td>
+          <td>
+            <span *ngIf="item.service?.id">{{'konga.menu.services' | translate}}</span>
+            <span *ngIf="item.route?.id">{{'konga.routes' | translate}}</span>
+            <span *ngIf="!item.route && !item.service">{{'konga.global' | translate}}</span>
+          </td>
+          <td>
+            <span *ngIf="!item.route && !item.service">{{'konga.all_entrypoints' | translate}}</span>
+          </td>
+          <td>
+            <a [routerLink]="['/consumers', item.consumer.id]" *ngIf="item.consumer?.id">
+              <small>{{item.consumer.id}}</small>
+            </a>
+            <span *ngIf="!item.consumer">{{'konga.all_consumers' | translate}}</span>
+          </td>
+          <td>{{item.created_at * 1000 | date}}</td>
+          <td width="1">
+            <button mat-button color="warn" (click)="onDeleteItem(item)">
+              <mat-icon matPrefix>delete</mat-icon>
+              {{'konga.delete' | translate}}
+            </button>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <mat-divider></mat-divider>
+    <mat-paginator [length]="originalData?.length"
+                   [pageSize]="limit"
+                   (page)="pageEvent = onPageChange($event)"
+                   [pageSizeOptions]="pageSizeOptions">
+    </mat-paginator>
+  </mat-card>
+</div>
+
+<button mat-fab class="fab bottom right"
+        *ngxPermissionsOnly="['superAdmin', 'servicesCreate']"
+        (click)="addPlugin()">
+  <mat-icon>add</mat-icon>
+</button>
