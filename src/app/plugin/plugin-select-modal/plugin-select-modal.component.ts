@@ -14,14 +14,27 @@ import {KongApiService} from '@app/core/api/kong-api.service';
 export class PluginSelectModalComponent implements OnInit {
 
   pluginGroups = PluginGroups;
+  selectedGroup: any;
+  selectedGroupPlugins: any;
   objectKeys = Object.keys;
+
+  test: any;
 
   constructor(private dialogRef: MatDialogRef<PluginSelectModalComponent>,
               public matDialog: MatDialog,
               public kong: KongApiService,
-              @Inject(MAT_DIALOG_DATA) public data: any) { }
+              @Inject(MAT_DIALOG_DATA) public data: any) {
+    this.selectedGroup = this.pluginGroups[0];
+    this.selectedGroupPlugins = this.groupedToRow(this.selectedGroup.plugins, 3)
+  }
 
   ngOnInit() {
+  }
+
+
+  onSelectedIndexChange(index) {
+    this.selectedGroup = this.pluginGroups[index];
+    this.selectedGroupPlugins = this.groupedToRow(this.selectedGroup.plugins, 3)
   }
 
 

@@ -4,38 +4,39 @@
     <mat-icon>close</mat-icon>
   </button>
 </h1>
-<div mat-dialog-content>
-  <mat-tab-group dynamicHeight>
-    <mat-tab *ngFor="let group of pluginGroups">
-      <ng-template mat-tab-label>
-        <strong>{{group.name}}</strong>
-      </ng-template>
-      <br>
-      <div class="row mb-4" *ngFor="let row of groupedToRow(group.plugins, 3)">
-        <div class="col-md-4" *ngFor="let item of row.items">
+<mat-tab-group dynamicHeight (selectedIndexChange)="onSelectedIndexChange($event)" color="accent">
+  <mat-tab *ngFor="let group of pluginGroups">
+    <ng-template mat-tab-label>
+      <strong>{{group.name}}</strong>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>
+<div mat-dialog-content class="pt-4 bg-light">
 
-          <!-- CARD -->
-          <mat-card class="h-100 d-flex flex-column">
-            <mat-card-content class="flex-fill">
-              <img src="assets/images/kong/plugins/{{item.id}}.png"
-                   class="mb-3"
-                   style="height: 78px"
-                   onerror="this.src='assets/images/kong/plugins/kong.svg'">
-              <h2 class="mat-h2 mat-title mb-2">{{item.name}}</h2>
-              <p class="text-muted mb-1">
-                {{item.description}}
-              </p>
-            </mat-card-content>
-            <mat-card-actions>
-              <button mat-flat-button class="w-100"
-                      (click)="onAddPlugin(item)"
-                      color="accent">{{'konga.add_plugin' | translate}}</button>
-            </mat-card-actions>
-          </mat-card>
-          <!--  /END CARD -->
+  <div class="row mb-4" *ngFor="let row of selectedGroupPlugins">
 
-        </div>
-      </div>
-    </mat-tab>
-  </mat-tab-group>
+    <div class="col-md-4" *ngFor="let item of row.items">
+
+      <!-- CARD -->
+      <mat-card class="h-100 d-flex flex-column">
+        <mat-card-content class="flex-fill">
+          <img src="assets/images/kong/plugins/{{item.id}}.png"
+               class="mb-3"
+               style="height: 78px"
+               onerror="this.src='assets/images/kong/plugins/kong.svg'">
+          <h2 class="mat-h2 mat-title mb-2">{{item.name}}</h2>
+          <p class="text-muted mb-1">
+            {{item.description}}
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-flat-button class="w-100"
+                  (click)="onAddPlugin(item)"
+                  color="accent">{{'konga.add_plugin' | translate}}</button>
+        </mat-card-actions>
+      </mat-card>
+      <!--  /END CARD -->
+
+    </div>
+  </div>
 </div>
