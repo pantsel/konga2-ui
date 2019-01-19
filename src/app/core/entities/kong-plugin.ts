@@ -47,7 +47,7 @@ export class KongPlugin {
         }
       }
 
-      this.fields = schema.fields && Object.keys(schema.fields).length ? schema.fields.concat(enabledField) : [enabledField];
+      this.fields = schema.fields && Object.keys(schema.fields).length ? [enabledField].concat(schema.fields) : [enabledField];
     }
 
   }

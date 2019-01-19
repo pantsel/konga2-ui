@@ -32,7 +32,13 @@
         <mat-card-actions>
           <button mat-flat-button class="w-100"
                   (click)="onAddPlugin(item)"
-                  color="accent">{{'konga.add_plugin' | translate}}</button>
+                  [disabled]="item.loading"
+                  color="accent">
+            <mat-progress-spinner mode="indeterminate"
+                                  *ngIf="item.loading"
+                                  color="primary" diameter="20" class="float-left mt-2"></mat-progress-spinner>
+            {{'konga.add_plugin' | translate}}
+          </button>
         </mat-card-actions>
       </mat-card>
       <!--  /END CARD -->

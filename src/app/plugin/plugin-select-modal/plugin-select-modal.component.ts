@@ -15,7 +15,6 @@ import {ConnectionsService} from '@app/connections/connections.service';
 export class PluginSelectModalComponent implements OnInit {
 
   pluginGroups = PluginGroups;
-  selectedGroup: any;
   selectedGroupPlugins: any;
   availablePlugins: any;
 
@@ -67,14 +66,12 @@ export class PluginSelectModalComponent implements OnInit {
     }catch (e){}
 
     // Initialize selections
-    this.selectedGroup = this.pluginGroups[0];
-    this.selectedGroupPlugins = this.groupedToRow(this.selectedGroup.plugins, 3)
+    this.selectedGroupPlugins = this.groupedToRow(this.pluginGroups[0].plugins, 3)
   }
 
 
   onSelectedIndexChange(index) {
-    this.selectedGroup = PluginGroups[index];
-    this.selectedGroupPlugins = this.groupedToRow(this.selectedGroup.plugins, 3)
+    this.selectedGroupPlugins = this.groupedToRow(this.pluginGroups[index].plugins, 3)
   }
 
 
@@ -95,15 +92,17 @@ export class PluginSelectModalComponent implements OnInit {
   }
 
   onAddPlugin(plugin) {
+    plugin.loading = true;
     this.kong.get(`plugins/schema/${plugin.id}`)
       .subscribe(schema => {
         console.log(`Got ${plugin.id} schema`, schema);
 
+        plugin.loading = false;
         const dialogRef = this.matDialog.open(KongEntityModalComponent, {
           width: '480px',
           data: {
             isModal: true,
-            entity: new KongPlugin(plugin.id, schema)
+            entity: new KongPlugin(plugin.name, schema)
           }
         });
 
@@ -111,6 +110,8 @@ export class PluginSelectModalComponent implements OnInit {
           console.log('The create dialog was closed', result);
         });
 
+      }, error => {
+        plugin.loading = false;
       })
   }
 
