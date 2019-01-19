@@ -2,7 +2,7 @@
 {{errorMsg}}
 </div>
 <form (submit)="submit(form.value)" [formGroup]="form" *ngIf="form">
-  <div mat-dialog-content [style.max-height]="isModal ? '65vh' : 'inherit'">
+  <div mat-dialog-content [style.max-height]="isModal ? '65vh' : 'inherit'" class="pt-1">
 
     <mat-form-field [appearance]="field.type === 'boolean' ? 'fill' : 'outline'" class="w-100"
                     [ngClass]="{'decor': field.type === 'boolean'}"
@@ -24,6 +24,11 @@
 
       <!-- INTEGER -->
       <ng-container *ngSwitchCase="'integer'">
+        <input type="number" matInput formControlName="{{field.name}}">
+      </ng-container>
+
+      <!-- NUMBER -->
+      <ng-container *ngSwitchCase="'number'">
         <input type="number" matInput formControlName="{{field.name}}">
       </ng-container>
 
