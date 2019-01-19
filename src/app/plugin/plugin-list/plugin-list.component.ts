@@ -10,6 +10,7 @@ import {FormBuilder} from '@angular/forms';
 import {MatDialog} from '@angular/material';
 import {KongPlugin} from '@app/core/entities/kong-plugin';
 import {KongEntityModalComponent} from '@app/shared/kong-entity-modal/kong-entity-modal.component';
+import {PluginSelectModalComponent} from '@app/plugin/plugin-select-modal/plugin-select-modal.component';
 
 @Component({
   selector: 'anms-plugin-list',
@@ -61,6 +62,15 @@ export class PluginListComponent extends KongEntityDataTableComponent implements
   }
 
   addPlugin() {
+    const dialogRef = this.matDialog.open(PluginSelectModalComponent, {
+      width: '860px',
+      data: {
 
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The addPlugin dialog was closed', result);
+    });
   }
 }

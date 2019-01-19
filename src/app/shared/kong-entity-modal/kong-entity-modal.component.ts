@@ -1,11 +1,10 @@
-import {Component, OnInit, ChangeDetectionStrategy, Inject} from '@angular/core';
+import {Component, OnInit, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 
 @Component({
   selector: 'anms-kong-entity-modal',
   templateUrl: './kong-entity-modal.component.html',
-  styleUrls: ['./kong-entity-modal.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./kong-entity-modal.component.css']
 })
 export class KongEntityModalComponent implements OnInit {
 

@@ -206,6 +206,9 @@
   "konga.global": "Global",
   "konga.all_consumers": "All Consumers",
   "konga.change_password": "Change password",
+  "konga.add_plugin": "Add Plugin",
+  "konga.select_plugin": "Select Plugin",
+  "konga.add_plugin": "Add Plugin",
 
   "konga.errors.user_not_active": "The user is not active",
   "konga.errors.delete_self": "You can't delete yourself!",

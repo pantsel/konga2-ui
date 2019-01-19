@@ -149,6 +149,7 @@ import {FilterPipe} from '@app/shared/pipes/filter.pipe';
     MatTabsModule,
     MatStepperModule,
     MatPaginatorModule,
+    MatGridListModule,
 
     FontAwesomeModule,
     PageLoaderModule,
@@ -156,7 +157,7 @@ import {FilterPipe} from '@app/shared/pipes/filter.pipe';
     NgxPermissionsModule
   ],
   entryComponents: [InspectionDialog, KongEntityModalComponent],
-  declarations: [FilterPipe,BigInputComponent, BigInputActionComponent, RawViewComponent, InspectionDialog, KongFormComponent, KongEntityModalComponent],
+  declarations: [FilterPipe, BigInputComponent, BigInputActionComponent, RawViewComponent, InspectionDialog, KongFormComponent, KongEntityModalComponent],
   exports: [
     CommonModule,
     FormsModule,
@@ -187,6 +188,8 @@ import {FilterPipe} from '@app/shared/pipes/filter.pipe';
     MatNativeDateModule,
     MatTableModule,
     MatPaginatorModule,
+
+    MatGridListModule,
 
     FontAwesomeModule,
 
