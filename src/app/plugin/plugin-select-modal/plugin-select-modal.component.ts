@@ -5,6 +5,7 @@ import * as _ from 'lodash';
 import {KongEntityModalComponent} from '@app/shared/kong-entity-modal/kong-entity-modal.component';
 import {KongPlugin} from '@app/core/entities/kong-plugin';
 import {KongApiService} from '@app/core/api/kong-api.service';
+import {ConnectionsService} from '@app/connections/connections.service';
 
 @Component({
   selector: 'anms-plugin-select-modal',
@@ -17,18 +18,26 @@ export class PluginSelectModalComponent implements OnInit {
   selectedGroup: any;
   selectedGroupPlugins: any;
   objectKeys = Object.keys;
+  availablePlugins: any;
 
   test: any;
 
   constructor(private dialogRef: MatDialogRef<PluginSelectModalComponent>,
-              public matDialog: MatDialog,
-              public kong: KongApiService,
+              private matDialog: MatDialog,
+              private connectionsService: ConnectionsService,
+              private kong: KongApiService,
               @Inject(MAT_DIALOG_DATA) public data: any) {
     this.selectedGroup = this.pluginGroups[0];
     this.selectedGroupPlugins = this.groupedToRow(this.selectedGroup.plugins, 3)
   }
 
   ngOnInit() {
+    this.connectionsService.activeNodeInfoChanged$.subscribe(info => {
+      console.log('[PluginSelectModalComponent]: connectionsService.activeNodeInfoChanged$ =>', info);
+      if (info) {
+        this.availablePlugins = info.plugins.available_on_server;
+      }
+    })
   }
 
 
@@ -55,7 +64,6 @@ export class PluginSelectModalComponent implements OnInit {
   }
 
   onAddPlugin(plugin) {
-    console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", plugin)
     this.kong.get(`plugins/schema/${plugin.id}`)
       .subscribe(schema => {
         console.log(`Got ${plugin.id} schema`, schema);
