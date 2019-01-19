@@ -102,7 +102,10 @@ export class PluginSelectModalComponent implements OnInit {
           width: '480px',
           data: {
             isModal: true,
-            entity: new KongPlugin(plugin.name, schema)
+            entity: new KongPlugin(plugin.id, plugin.name, schema),
+            extras: {
+              name: plugin.id
+            }
           }
         });
 

@@ -38,12 +38,13 @@ export class KongPlugin {
     }
   ]
 
-  constructor(name?, schema?) {
-    if (name) this.singularName = name;
+  constructor(name?, singularName?, schema?) {
+    if (singularName) this.singularName = singularName;
     if (schema) {
       const enabledField = {
         enabled: {
-          type: 'boolean'
+          type: 'boolean',
+          default: true
         }
       }
 

@@ -11,6 +11,8 @@ import {MatDialog} from '@angular/material';
 import {KongPlugin} from '@app/core/entities/kong-plugin';
 import {KongEntityModalComponent} from '@app/shared/kong-entity-modal/kong-entity-modal.component';
 import {PluginSelectModalComponent} from '@app/plugin/plugin-select-modal/plugin-select-modal.component';
+import {KnownPlugins} from '@app/plugin/fixtures/plugin.groups';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'anms-plugin-list',
@@ -18,6 +20,8 @@ import {PluginSelectModalComponent} from '@app/plugin/plugin-select-modal/plugin
   styleUrls: ['./plugin-list.component.css']
 })
 export class PluginListComponent extends KongEntityDataTableComponent implements OnInit {
+
+  knownPlugins = KnownPlugins;
 
   constructor(public kong: KongApiService,
               public translate: TranslateService,
@@ -46,7 +50,7 @@ export class PluginListComponent extends KongEntityDataTableComponent implements
           width: '480px',
           data: {
             isModal: true,
-            entity: new KongPlugin(plugin.name, schema),
+            entity: new KongPlugin(plugin.name, _.get(this.knownPlugins, `${plugin.name}.name`,  plugin.name), schema),
             existingData: plugin
           }
         });

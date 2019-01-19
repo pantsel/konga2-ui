@@ -14,6 +14,7 @@ import {TranslateService} from '@ngx-translate/core';
 import * as _ from 'lodash';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material';
+import {KongPlugin} from '@app/core/entities/kong-plugin';
 
 @Component({
   selector: 'anms-kong-form',
@@ -138,11 +139,11 @@ export class KongFormComponent implements OnInit {
     try {
       if (this.existingData) {
         response = await this.update(_.merge(data, this.extras || {}));
-        console.log('Updated service', response);
+        console.log('Updated entity', response);
         this.notificationService.success(this.translate.instant('konga.changes_saved_success'));
       }else{
         response = await this.create(_.merge(data, this.extras || {}));
-        console.log('Created service', response);
+        console.log('Created entity', response);
         this.notificationService.success(this.translate.instant('konga.data_submitted_success'));
       }
       this.submitted.emit(response);
@@ -173,11 +174,31 @@ export class KongFormComponent implements OnInit {
       }
     }
 
-    return  this.kong.post(`${this.baseEndpoint}`, data).toPromise();
+    const finalData = this.requestData(data);
+    console.log('Create entity', this.baseEndpoint, finalData);
+    return  this.kong.post(`${this.baseEndpoint}`, finalData).toPromise();
   }
 
   private update(data) {
-    return  this.kong.patch(`${this.baseEndpoint}/${this.existingData.id}`, data).toPromise();
+    const finalData = this.requestData(data);
+    console.log('Update entity', `${this.baseEndpoint}/${this.existingData.id}`, finalData);
+    return  this.kong.patch(`${this.baseEndpoint}/${this.existingData.id}`, finalData).toPromise();
+  }
+
+  private requestData(data) {
+    let finalData;
+
+    if (this.entity instanceof KongPlugin) {
+      finalData = {
+        name: data.name,
+        enabled: data.enabled,
+        config: _.pickBy(data, (value, key) => key !== 'name' && key !== 'enabled')
+      }
+    }else{
+      finalData = data;
+    }
+
+    return finalData;
   }
 
 }
