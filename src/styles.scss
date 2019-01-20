@@ -204,3 +204,7 @@ input.mat-input-element {
     }
   }
 }
+
+mat-card.selected {
+  border: 2px solid $success;
+}

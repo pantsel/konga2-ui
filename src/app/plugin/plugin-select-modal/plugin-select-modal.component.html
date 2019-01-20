@@ -1,9 +1,19 @@
-<h1 mat-dialog-title>
-  <strong>{{'konga.add_plugin' | translate}}</strong>
-  <button mat-icon-button (click)="close()" class="float-right" style="margin-top: -5px;">
-    <mat-icon>close</mat-icon>
-  </button>
-</h1>
+<div mat-dialog-title>
+  <div class="row">
+    <div class="col-md-10">
+      <h3 class="mb-0"><strong>{{'konga.add_plugins' | translate}}</strong></h3>
+      <p class="text-muted mat-body mb-0">
+        Add Global plugins
+      </p>
+    </div>
+    <div class="col-md-2 text-right">
+      <button mat-icon-button (click)="close()" class="float-right" style="margin-top: -5px;">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+
+</div>
 <mat-tab-group dynamicHeight (selectedIndexChange)="onSelectedIndexChange($event)" color="accent">
   <mat-tab *ngFor="let group of pluginGroups">
     <ng-template mat-tab-label>
@@ -13,12 +23,21 @@
 </mat-tab-group>
 <div mat-dialog-content class="pt-4 bg-light">
 
+  <div class="alert alert-info mat-body" *ngIf="showGlobalPluginsInfoAlert">
+    <button mat-icon-button (click)="showGlobalPluginsInfoAlert = false" class="float-right" style="margin-top: -5px;margin-right: -15px">
+      <mat-icon>close</mat-icon>
+    </button>
+    <strong>Plugins added in this section will be applied Globally.</strong><br>
+    - If you need to add plugins to a specific Service or Route, you can do it in the respective section.<br>
+    - If you need to add plugins to a specific Consumer, you can do it in the respective Consumer's page.
+  </div>
+
   <div class="row mb-4" *ngFor="let row of selectedGroupPlugins">
 
     <div class="col-md-4" *ngFor="let item of row.items">
 
       <!-- CARD -->
-      <mat-card class="h-100 d-flex flex-column">
+      <mat-card class="h-100 d-flex flex-column" [ngClass]="{'selected': isAdded(item.id)}">
         <mat-card-content class="flex-fill">
           <img src="assets/images/kong/plugins/{{item.id}}.png"
                class="mb-3"
@@ -32,7 +51,7 @@
         <mat-card-actions>
           <button mat-flat-button class="w-100"
                   (click)="onAddPlugin(item)"
-                  [disabled]="item.loading"
+                  [disabled]="item.loading || isAdded(item.id)"
                   color="accent">
             <mat-progress-spinner mode="indeterminate"
                                   *ngIf="item.loading"

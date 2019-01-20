@@ -13,6 +13,7 @@ import {KongEntityModalComponent} from '@app/shared/kong-entity-modal/kong-entit
 import {PluginSelectModalComponent} from '@app/plugin/plugin-select-modal/plugin-select-modal.component';
 import {KnownPlugins} from '@app/plugin/fixtures/plugin.groups';
 import * as _ from 'lodash';
+import {PluginService} from '@app/plugin/plugin.service';
 
 @Component({
   selector: 'anms-plugin-list',
@@ -24,6 +25,7 @@ export class PluginListComponent extends KongEntityDataTableComponent implements
   knownPlugins = KnownPlugins;
 
   constructor(public kong: KongApiService,
+              public pluginService: PluginService,
               public translate: TranslateService,
               public dialog: DialogService,
               public connectionsService: ConnectionsService,
@@ -34,6 +36,8 @@ export class PluginListComponent extends KongEntityDataTableComponent implements
     super(kong, translate, dialog, notificationsService, store, connectionsService, fb, matDialog);
 
     this.entity = new KongPlugin();
+
+    pluginService.itemAdded$.subscribe(item => this.loadData());
   }
 
   ngOnInit() {

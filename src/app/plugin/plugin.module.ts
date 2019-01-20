@@ -5,6 +5,7 @@ import { PluginListComponent } from './plugin-list/plugin-list.component';
 import {SharedModule} from '@app/shared';
 import {PluginRoutingModule} from '@app/plugin/plugin-routing.module';
 import { PluginSelectModalComponent } from './plugin-select-modal/plugin-select-modal.component';
+import {PluginService} from '@app/plugin/plugin.service';
 
 @NgModule({
   entryComponents: [PluginSelectModalComponent],
@@ -13,6 +14,7 @@ import { PluginSelectModalComponent } from './plugin-select-modal/plugin-select-
     CommonModule,
     SharedModule,
     PluginRoutingModule
-  ]
+  ],
+  providers: [PluginService]
 })
 export class PluginModule { }
