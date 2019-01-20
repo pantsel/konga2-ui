@@ -38,8 +38,6 @@ export class ServicePluginsComponent extends KongEntityDataTableComponent implem
               private shared: SharedServiceService) {
     super(kong, translate, dialog, notificationsService, store, connectionsService, fb, matDialog);
 
-
-
     pluginService.itemAdded$.subscribe(item => this.loadData());
 
     shared.data.subscribe(data => {

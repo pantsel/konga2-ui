@@ -6,13 +6,15 @@ import {RouteComponent} from '@app/route/route.component';
 import { RouteDetailsComponent } from './route-details/route-details.component';
 import { RoutePluginsComponent } from './route-plugins/route-plugins.component';
 import { RouteConsumersComponent } from './route-consumers/route-consumers.component';
+import {PluginModule} from '@app/plugin/plugin.module';
 
 @NgModule({
   declarations: [RouteComponent, RouteDetailsComponent, RoutePluginsComponent, RouteConsumersComponent],
   imports: [
     CommonModule,
     SharedModule,
-    RouteRoutingModule
+    RouteRoutingModule,
+    PluginModule
   ]
 })
 export class RouteModule { }
