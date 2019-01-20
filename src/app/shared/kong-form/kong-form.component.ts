@@ -49,6 +49,12 @@ export class KongFormComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    if (this.existingData && this.entity instanceof KongPlugin) {
+      this.existingData = _.merge(this.existingData, this.existingData.config);
+      delete this.existingData.config;
+    }
+
     this.fields = this.makeIterableFields(this.entity.fields || []);
     this.baseEndpoint = this.entity.endpoint;
     console.log('Fields =>', this.fields);
