@@ -23,7 +23,9 @@ export class PluginSelectModalComponent implements OnInit {
   showGlobalPluginsInfoAlert: boolean;
 
   allPlugins: any;
-  globalPluginsNames = [];
+  addedPluginsNames = [];
+
+  context: string;
 
   constructor(private dialogRef: MatDialogRef<PluginSelectModalComponent>,
               private pluginService: PluginService,
@@ -31,14 +33,12 @@ export class PluginSelectModalComponent implements OnInit {
               private connectionsService: ConnectionsService,
               private kong: KongApiService,
               @Inject(MAT_DIALOG_DATA) public data: any) {
+
   }
 
   ngOnInit() {
-
-    this.showGlobalPluginsInfoAlert = true;
-
+    this.determineContext();
     this.fetchAllPlugins();
-
     this.connectionsService.activeNodeInfoChanged$.subscribe(info => {
       console.log('[PluginSelectModalComponent]: connectionsService.activeNodeInfoChanged$ =>', info);
       this.initPluginsData(info);
@@ -115,19 +115,16 @@ export class PluginSelectModalComponent implements OnInit {
           data: {
             isModal: true,
             entity: new KongPlugin(plugin.id, plugin.name, schema),
-            extras: {
+            extras: _.merge(this.data.extras || {}, {
               name: plugin.id
-            }
+            })
           }
         });
 
         dialogRef.afterClosed().subscribe(result => {
           console.log('The create dialog was closed', result);
           if (result) {
-            if (this.isGlobal(result)) {
-              this.globalPluginsNames.push(result.name);
-            }
-
+            this.addedPluginsNames.push(result.name);
             this.pluginService.add(result); // Emit the event
           }
         });
@@ -143,23 +140,53 @@ export class PluginSelectModalComponent implements OnInit {
       .subscribe(plugins => {
         console.log('fetchAllPlugins =>', plugins);
 
-        // Gather all global plugins in an array
-        const globalPlugins = _.filter(plugins, plugin => {
-          return this.isGlobal(plugin);
-        });
-        this.globalPluginsNames = _.map(globalPlugins, plugin => plugin.name);
+
+        // Gather all service plugins in an array
+        if (_.get(this.data, 'extras.service.id')) {
+          const servicePlugins = _.filter(plugins, plugin => {
+            return _.get(this.data, 'extras.service.id') === _.get(plugin, 'service.id');
+          });
+          this.addedPluginsNames = _.map(servicePlugins, plugin => plugin.name);
+        }else if (_.get(this.data, 'extras.route.id')) {  // Gather all route plugins in an array
+          const routePlugins = _.filter(plugins, plugin => {
+            return _.get(this.data, 'extras.route.id') === _.get(plugin, 'route.id');
+          });
+          this.addedPluginsNames = _.map(routePlugins, plugin => plugin.name);
+        } else {
+          // Gather all global plugins in an array
+          const globalPlugins = _.filter(plugins, plugin => {
+            return this.isGlobal(plugin);
+          });
+          this.addedPluginsNames = _.map(globalPlugins, plugin => plugin.name);
+        }
 
         this.allPlugins = plugins;
       });
   }
 
+  determineContext() {
+    if (_.get(this.data, 'extras.service.id')) {
+      this.context = 'service'
+    }else if (_.get(this.data, 'extras.route.id')) {  // Gather all route plugins in an array
+      this.context = 'route'
+    }else if (_.get(this.data, 'extras.api.id')) {
+      this.context = 'api'
+    }else {
+      this.showGlobalPluginsInfoAlert = true;
+      this.context = 'global'
+    }
+  }
+
+  isContextGlobal() {
+    return !_.get(this.data, 'extras.service.id') && !_.get(this.data, 'extras.route.id') && _.get(this.data, 'extras.consumer.id');
+  }
 
   isGlobal(plugin) {
     return !plugin.consumer && !plugin.service && !plugin.route && !plugin.api && plugin.enabled;
   }
 
   isAdded(plugin) {
-    return this.globalPluginsNames.indexOf(plugin) > -1;
+    return this.addedPluginsNames.indexOf(plugin) > -1;
   }
 
 

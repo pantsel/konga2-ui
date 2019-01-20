@@ -131,6 +131,7 @@
   "konga.service.routes.title": "Service Routes",
   "konga.service.routes.subtitle": "List of routes associated with this service",
   "konga.service.details.title": "Service details",
+  "konga.service.plugins.list.title": "Service Plugins",
   "konga.hosts": "Hosts",
   "konga.paths": "Paths",
 
