@@ -193,7 +193,7 @@
   "konga.consumer.credentials.subtitle": "Assign Authentication credentials to the consumer",
 
   "konga.menu.plugins": "Plugins",
-  "konga.plugins.list.title": "Plugins",
+  "konga.plugins.list.title": "Global Plugins",
   "konga.plugins.list.subtitle": "A Plugin entity represents a plugin configuration that will be executed during the HTTP request/response lifecycle. It is how you can add functionalities to Services that run behind Kong, like Authentication or Rate Limiting for example.",
 
   "konga.name": "Name",

@@ -84,4 +84,30 @@ export class PluginListComponent extends KongEntityDataTableComponent implements
       }
     });
   }
+
+  async loadData() {
+
+    // await this.sleep(5000);
+
+    // this.data = null;
+
+    try {
+
+      const res: any = await this.api.get(this.endpoint).toPromise();
+      this.isInitialLoad = !this.data ? true : false; // Initial load
+      this.originalData = _.filter(res, plugin => this.isGlobal(plugin)); // Only show global plugins
+      this.data = this.paginate(_.orderBy(this.originalData, [this.sortAttr], [this.sortDir]), this.limit, this.page);
+      this.isLoading = false;
+
+
+      console.log('[KongEntityDataTableComponent]: loadData =>', this.data)
+    } catch (e) {
+      this.isLoading = false;
+      throw e;
+    }
+  }
+
+  isGlobal(plugin) {
+    return !plugin.consumer && !plugin.service && !plugin.route && !plugin.api && plugin.enabled;
+  }
 }

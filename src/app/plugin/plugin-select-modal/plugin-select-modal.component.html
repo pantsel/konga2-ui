@@ -22,46 +22,49 @@
   </mat-tab>
 </mat-tab-group>
 <div mat-dialog-content class="pt-4 bg-light">
-
-  <div class="alert alert-info mat-body" *ngIf="showGlobalPluginsInfoAlert">
-    <button mat-icon-button (click)="showGlobalPluginsInfoAlert = false" class="float-right" style="margin-top: -5px;margin-right: -15px">
-      <mat-icon>close</mat-icon>
-    </button>
-    <strong>Plugins added in this section will be applied Globally.</strong><br>
-    - If you need to add plugins to a specific Service or Route, you can do it in the respective section.<br>
-    - If you need to add plugins to a specific Consumer, you can do it in the respective Consumer's page.
-  </div>
-
-  <div class="row mb-4" *ngFor="let row of selectedGroupPlugins">
-
-    <div class="col-md-4" *ngFor="let item of row.items">
-
-      <!-- CARD -->
-      <mat-card class="h-100 d-flex flex-column" [ngClass]="{'selected': isAdded(item.id)}">
-        <mat-card-content class="flex-fill">
-          <img src="assets/images/kong/plugins/{{item.id}}.png"
-               class="mb-3"
-               style="height: 78px"
-               onerror="this.src='assets/images/kong/plugins/kong.svg'">
-          <h2 class="mat-h2 mat-title mb-2">{{item.name}}</h2>
-          <p class="text-muted mb-1">
-            {{item.description}}
-          </p>
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-flat-button class="w-100"
-                  (click)="onAddPlugin(item)"
-                  [disabled]="item.loading || isAdded(item.id)"
-                  color="accent">
-            <mat-progress-spinner mode="indeterminate"
-                                  *ngIf="item.loading"
-                                  color="primary" diameter="20" class="float-left mt-2"></mat-progress-spinner>
-            {{'konga.add_plugin' | translate}}
-          </button>
-        </mat-card-actions>
-      </mat-card>
-      <!--  /END CARD -->
-
+  <anms-page-loader *ngIf="!allPlugins"></anms-page-loader>
+  <ng-container *ngIf="allPlugins">
+    <div class="alert alert-info mat-body" *ngIf="showGlobalPluginsInfoAlert">
+      <button mat-icon-button (click)="showGlobalPluginsInfoAlert = false" class="float-right" style="margin-top: -5px;margin-right: -15px">
+        <mat-icon>close</mat-icon>
+      </button>
+      <strong>Plugins added in this section will be applied Globally.</strong><br>
+      - If you need to add plugins to a specific Service or Route, you can do it in the respective section.<br>
+      - If you need to add plugins to a specific Consumer, you can do it in the respective Consumer's page.
     </div>
-  </div>
+
+    <div class="row mb-4" *ngFor="let row of selectedGroupPlugins">
+
+      <div class="col-md-4" *ngFor="let item of row.items">
+
+        <!-- CARD -->
+        <mat-card class="h-100 d-flex flex-column" [ngClass]="{'selected': isAdded(item.id)}">
+          <mat-card-content class="flex-fill">
+            <img src="assets/images/kong/plugins/{{item.id}}.png"
+                 class="mb-3"
+                 style="height: 78px"
+                 onerror="this.src='assets/images/kong/plugins/kong.svg'">
+            <h2 class="mat-h2 mat-title mb-2">{{item.name}}</h2>
+            <p class="text-muted mb-1">
+              {{item.description}}
+            </p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-flat-button class="w-100"
+                    (click)="onAddPlugin(item)"
+                    [disabled]="item.loading || isAdded(item.id)"
+                    color="accent">
+              <mat-progress-spinner mode="indeterminate"
+                                    *ngIf="item.loading"
+                                    color="primary" diameter="20" class="float-left mt-2"></mat-progress-spinner>
+              {{'konga.add_plugin' | translate}}
+            </button>
+          </mat-card-actions>
+        </mat-card>
+        <!--  /END CARD -->
+
+      </div>
+    </div>
+  </ng-container>
+
 </div>

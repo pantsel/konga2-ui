@@ -22,6 +22,7 @@ export class PluginSelectModalComponent implements OnInit {
   test: any;
   showGlobalPluginsInfoAlert: boolean;
 
+  allPlugins: any;
   globalPluginsNames = [];
 
   constructor(private dialogRef: MatDialogRef<PluginSelectModalComponent>,
@@ -147,6 +148,8 @@ export class PluginSelectModalComponent implements OnInit {
           return this.isGlobal(plugin);
         });
         this.globalPluginsNames = _.map(globalPlugins, plugin => plugin.name);
+
+        this.allPlugins = plugins;
       });
   }
 
