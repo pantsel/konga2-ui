@@ -19,6 +19,7 @@ export class PluginSelectModalComponent implements OnInit {
   availablePlugins: any;
 
   test: any;
+  addedPlugins: Array<any>;
 
   constructor(private dialogRef: MatDialogRef<PluginSelectModalComponent>,
               private matDialog: MatDialog,
@@ -91,6 +92,7 @@ export class PluginSelectModalComponent implements OnInit {
 
   }
 
+
   onAddPlugin(plugin) {
     plugin.loading = true;
     this.kong.get(`plugins/schema/${plugin.id}`)
@@ -111,6 +113,10 @@ export class PluginSelectModalComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe(result => {
           console.log('The create dialog was closed', result);
+          if (result) {
+            if (!this.addedPlugins) this.addedPlugins = [];
+            this.addedPlugins.push(result);
+          }
         });
 
       }, error => {
@@ -120,7 +126,7 @@ export class PluginSelectModalComponent implements OnInit {
 
 
   close(data?) {
-    this.dialogRef.close(data);
+    this.dialogRef.close(data || this.addedPlugins);
   }
 
 }

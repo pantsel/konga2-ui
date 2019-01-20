@@ -58,6 +58,47 @@
         </mat-chip-list>
       </ng-container>
 
+      <!-- SET -->
+      <ng-container *ngSwitchCase="'set'">
+
+        <ng-container *ngIf="field.elements?.one_of">
+          <mat-chip-list #chipList>
+            <mat-chip *ngFor="let item of form.get(field.name).controls; let i = index;" [selectable]="true"
+                      [removable]="true" (removed)="remove(i, field.name)">
+              {{item.value}}
+              <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+            <input placeholder="Add.."
+                   id="{{'input_' + field.name}}"
+                   [matChipInputFor]="chipList"
+                   [matAutocomplete]="auto"
+                   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                   [matChipInputAddOnBlur]="true">
+          </mat-chip-list>
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onChipAutocompleteOptionSelected($event, field.name)">
+            <mat-option *ngFor="let item of filterAvailableOptions(field.elements.one_of, form.get(field.name).value)" [value]="item">
+              {{item}}
+            </mat-option>
+          </mat-autocomplete>
+        </ng-container>
+
+        <ng-container *ngIf="!field.elements?.one_of">
+          <mat-chip-list #chipList>
+            <mat-chip *ngFor="let item of form.get(field.name).controls; let i = index;" [selectable]="true"
+                      [removable]="true" (removed)="remove(i, field.name)">
+              {{item.value}}
+              <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+            <input placeholder="Add.."
+                   [matChipInputFor]="chipList"
+                   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                   [matChipInputAddOnBlur]="true"
+                   (matChipInputTokenEnd)="add($event, field.name)">
+          </mat-chip-list>
+        </ng-container>
+
+      </ng-container>
+
       <!-- DEFAULT -->
       <ng-container *ngSwitchCase="'text'">
         <textarea matInput

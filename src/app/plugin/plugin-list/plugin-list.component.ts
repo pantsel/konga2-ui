@@ -75,6 +75,9 @@ export class PluginListComponent extends KongEntityDataTableComponent implements
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The addPlugin dialog was closed', result);
+      if (result) {
+        this.loadData();
+      }
     });
   }
 }

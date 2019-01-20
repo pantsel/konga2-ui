@@ -13,7 +13,7 @@ import {NotificationService} from '@app/core';
 import {TranslateService} from '@ngx-translate/core';
 import * as _ from 'lodash';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
-import {MatChipInputEvent} from '@angular/material';
+import {MatAutocompleteSelectedEvent, MatChipInputEvent} from '@angular/material';
 import {KongPlugin} from '@app/core/entities/kong-plugin';
 
 @Component({
@@ -50,10 +50,16 @@ export class KongFormComponent implements OnInit {
 
   ngOnInit() {
 
+    // Mutate existing Data in case of plugins.
+    // We need to bring the config properties to the top object level
+    // so that everything is compatible with our business logic.
+    // We will recreate the `config` object when we submit the form
     if (this.existingData && this.entity instanceof KongPlugin) {
       this.existingData = _.merge(this.existingData, this.existingData.config);
       delete this.existingData.config;
     }
+
+    console.log('existingData =>', this.existingData);
 
     this.fields = this.makeIterableFields(this.entity.fields || []);
     this.baseEndpoint = this.entity.endpoint;
@@ -61,6 +67,11 @@ export class KongFormComponent implements OnInit {
     this.createControls();
   }
 
+  /**
+   * Create iterable fields out of the
+   * object based schema Kong provides
+   * @param fields
+   */
   makeIterableFields(fields) {
     const iterable = _.map(fields, field => {
       const key = Object.keys(field)[0];
@@ -75,6 +86,10 @@ export class KongFormComponent implements OnInit {
     return iterable;
   }
 
+
+  /**
+   * Create the form controls
+   */
   createControls() {
     const controls = {};
     this.fields.forEach(field => {
@@ -88,13 +103,18 @@ export class KongFormComponent implements OnInit {
       let control;
 
       switch (field.type) {
+        case 'set':
         case 'array':
 
           field.default = field.default || [];
 
           // Monkey patch in case the default value comes as an empty object {}
-          if (_.isObject(field.default)) {
-            field.default = [];
+          try {
+            if (JSON.stringify(field.default) === '{}') {
+              field.default = []
+            };
+          }catch (e) {
+
           }
 
           control = this.fb.array(_.get(this.existingData, key, field.default));
@@ -107,10 +127,17 @@ export class KongFormComponent implements OnInit {
       controls[key] = control;
     });
 
+    console.log('createControls =>', controls)
+
     this.form = this.fb.group(controls);
   }
 
 
+  /**
+   * Add chip to array fields
+   * @param event
+   * @param field
+   */
   add(event: MatChipInputEvent, field): void {
     const input = event.input;
     const value = event.value;
@@ -127,6 +154,12 @@ export class KongFormComponent implements OnInit {
     }
   }
 
+
+  /**
+   * Remove chip from array fields
+   * @param index
+   * @param field
+   */
   remove(index: number, field: string): void {
     const control = this.form.get(field) as FormArray;
     if (index >= 0) {
@@ -134,6 +167,42 @@ export class KongFormComponent implements OnInit {
     }
   }
 
+
+  /**
+   * Chip with autocomplete select handler
+   * @param event
+   * @param field
+   */
+  onChipAutocompleteOptionSelected(event: MatAutocompleteSelectedEvent, field): void {
+    // const input = event.option.input;
+    const value = event.option.viewValue;
+
+    // Add our requirement
+    if ((value || '').trim()) {
+      const control = this.form.get(field) as FormArray;
+      control.push(this.fb.control(value.trim()));
+    }
+
+    const inputEl = document.getElementById(`input_${field}`);
+    if (inputEl) inputEl.value = '';
+  }
+
+  /**
+   * On an autocomplete chip, only show options
+   * that haven't already been selected
+   * @param availableOptions
+   * @param selectedOptions
+   */
+  filterAvailableOptions(availableOptions, selectedOptions) {
+    return _.difference(availableOptions, selectedOptions);
+  }
+
+
+
+  /**
+   * Submit the form
+   * @param data
+   */
   async submit(data) {
 
     this.submitting = true;
@@ -171,16 +240,9 @@ export class KongFormComponent implements OnInit {
     this.cd.detectChanges();
   }
 
+
   private async create(data) {
-
-    // Remove null values on create
-    for (const key in data) {
-      if (data[key] === null) {
-        delete data[key];
-      }
-    }
-
-    const finalData = this.requestData(data);
+    const finalData = this.requestData(this.cleanUpData(data));
     console.log('Create entity', this.baseEndpoint, finalData);
     return  this.kong.post(`${this.baseEndpoint}`, finalData).toPromise();
   }
@@ -195,16 +257,35 @@ export class KongFormComponent implements OnInit {
     let finalData;
 
     if (this.entity instanceof KongPlugin) {
-      finalData = {
-        name: data.name,
-        enabled: data.enabled,
-        config: _.pickBy(data, (value, key) => key !== 'name' && key !== 'enabled')
-      }
+
+      const topLevelKeys = ['name', 'enabled', 'consumer', 'service', 'route'];
+
+      const topLvlObj = _.pickBy(data, (value, key) => topLevelKeys.indexOf(key) > -1);
+      const configObj = {
+        config: _.pickBy(data, (value, key) => topLevelKeys.indexOf(key) < 0)
+      };
+
+      finalData = _.merge(topLvlObj, configObj);
+
+      // finalData = {
+      //   name: data.name,
+      //   enabled: data.enabled,
+      //   config: _.pickBy(data, (value, key) => key !== 'name' && key !== 'enabled')
+      // }
     }else{
       finalData = data;
     }
 
     return finalData;
+  }
+
+  private cleanUpData(data) {
+    for (const key in data) {
+      if (data[key] === null) {
+        delete data[key];
+      }
+    }
+    return data;
   }
 
 }
