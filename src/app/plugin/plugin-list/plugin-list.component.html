@@ -66,14 +66,14 @@
               <small class="text-secondary">{{item.id}}</small>
             </a>
           </td>
-          <td>
-            <span *ngIf="item.service?.id">{{'konga.menu.services' | translate}}</span>
-            <span *ngIf="item.route?.id">{{'konga.routes' | translate}}</span>
-            <span *ngIf="!item.route && !item.service">{{'konga.global' | translate}}</span>
-          </td>
-          <td>
-            <span *ngIf="!item.route && !item.service">{{'konga.all_entrypoints' | translate}}</span>
-          </td>
+          <!--<td>-->
+            <!--<span *ngIf="item.service?.id">{{'konga.menu.services' | translate}}</span>-->
+            <!--<span *ngIf="item.route?.id">{{'konga.routes' | translate}}</span>-->
+            <!--<span *ngIf="!item.route && !item.service">{{'konga.global' | translate}}</span>-->
+          <!--</td>-->
+          <!--<td>-->
+            <!--<span *ngIf="!item.route && !item.service">{{'konga.all_entrypoints' | translate}}</span>-->
+          <!--</td>-->
           <td>
             <a [routerLink]="['/consumers', item.consumer.id]" *ngIf="item.consumer?.id">
               <small>{{item.consumer.id}}</small>

@@ -14,6 +14,7 @@ import {PluginSelectModalComponent} from '@app/plugin/plugin-select-modal/plugin
 import {KnownPlugins} from '@app/plugin/fixtures/plugin.groups';
 import * as _ from 'lodash';
 import {PluginService} from '@app/plugin/plugin.service';
+import {KongPluginsList} from '@app/core/entities/kong-plugins-list';
 
 @Component({
   selector: 'anms-plugin-list',
@@ -35,7 +36,7 @@ export class PluginListComponent extends KongEntityDataTableComponent implements
               public matDialog: MatDialog) {
     super(kong, translate, dialog, notificationsService, store, connectionsService, fb, matDialog);
 
-    this.entity = new KongPlugin();
+    this.entity = new KongPluginsList();
 
     pluginService.itemAdded$.subscribe(item => this.loadData());
   }
