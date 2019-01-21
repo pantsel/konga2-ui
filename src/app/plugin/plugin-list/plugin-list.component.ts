@@ -109,6 +109,6 @@ export class PluginListComponent extends KongEntityDataTableComponent implements
   }
 
   isGlobal(plugin) {
-    return !plugin.consumer && !plugin.service && !plugin.route && !plugin.api && plugin.enabled;
+    return !plugin.service && !plugin.route && !plugin.api;
   }
 }

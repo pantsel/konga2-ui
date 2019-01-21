@@ -7,7 +7,7 @@ import {
   Output,
   EventEmitter
 } from '@angular/core';
-import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {KongApiService} from '@app/core/api/kong-api.service';
 import {NotificationService} from '@app/core';
 import {TranslateService} from '@ngx-translate/core';
@@ -15,6 +15,8 @@ import * as _ from 'lodash';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatAutocompleteSelectedEvent, MatChipInputEvent} from '@angular/material';
 import {KongPlugin} from '@app/core/entities/kong-plugin';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'anms-kong-form',
@@ -36,6 +38,11 @@ export class KongFormComponent implements OnInit {
   submitting: boolean;
   fields: any;
   baseEndpoint: string;
+  isPlugin: boolean;
+
+  // Consumers
+  consumers: any;
+  filteredConsumers: Observable<string[]>;
 
   // Chips stuff
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
@@ -50,11 +57,13 @@ export class KongFormComponent implements OnInit {
 
   ngOnInit() {
 
+    this.isPlugin = this.entity instanceof KongPlugin;
+
     // Mutate existing Data in case of plugins.
     // We need to bring the config properties to the top object level
     // so that everything is compatible with our business logic.
     // We will recreate the `config` object when we submit the form
-    if (this.existingData && this.entity instanceof KongPlugin) {
+    if (this.existingData && this.isPlugin) {
       this.existingData = _.merge(this.existingData, this.existingData.config);
       delete this.existingData.config;
     }
@@ -65,7 +74,35 @@ export class KongFormComponent implements OnInit {
     this.baseEndpoint = this.entity.endpoint;
     console.log('Fields =>', this.fields);
     this.createControls();
+    this.getConsumers();
   }
+
+
+  /**
+   * Get all Kong consumers to be used as auto-complete options
+   */
+  getConsumers() {
+    if (!this.isPlugin) return false;
+    this.kong.get(`consumers`)
+      .subscribe(consumers => {
+        console.log(`Got Consumers =>`, consumers);
+        this.consumers = consumers;
+        this.filteredConsumers = this.form.get('consumer').valueChanges.pipe(
+          startWith(''),
+          map(value => typeof value === 'string' ? value : (value.username || value.custom_id || value.id)),
+          map(value => this._filterConsumers(value))
+        );
+
+        let initialValue = null;
+        const existingConsumer = _.get(this.existingData, 'consumer');
+        if (existingConsumer) {
+          initialValue = _.find(this.consumers, item => item.id === existingConsumer.id) || existingConsumer;
+        }
+        this.form.get('consumer').patchValue(initialValue);
+        this.form.get('consumer').enable();
+      })
+  }
+
 
   /**
    * Create iterable fields out of the
@@ -130,6 +167,30 @@ export class KongFormComponent implements OnInit {
     console.log('createControls =>', controls)
 
     this.form = this.fb.group(controls);
+
+    if (this.isPlugin) {
+      this.form.addControl('consumer', new FormControl());
+      this.form.get('consumer').disable(); // We will enable this when we fetch the consumers from Kong
+    }
+  }
+
+
+  displayFn(consumer): string | undefined {
+    return consumer ? ( consumer.username || consumer.custom_id || consumer.id ) : undefined;
+  }
+
+  /**
+   * Filter consumer field auto-complete options based on input
+   * @param value
+   * @private
+   */
+  private _filterConsumers(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.consumers.filter(consumer => {
+      return ( consumer.username && consumer.username.toLowerCase().indexOf(filterValue) > -1 )
+        || ( consumer.custom_id && consumer.custom_id.toLowerCase().indexOf(filterValue) > -1 )
+        || consumer.id.toLowerCase().indexOf(filterValue) > -1
+    });
   }
 
 
@@ -184,7 +245,7 @@ export class KongFormComponent implements OnInit {
     }
 
     const inputEl = document.getElementById(`input_${field}`);
-    if (inputEl) inputEl.value = '';
+    if (inputEl) inputEl['value'] = '';
   }
 
   /**
@@ -256,7 +317,7 @@ export class KongFormComponent implements OnInit {
   private requestData(data) {
     let finalData;
 
-    if (this.entity instanceof KongPlugin) {
+    if (this.isPlugin) {
 
       const topLevelKeys = ['name', 'enabled', 'consumer', 'service', 'route'];
 
@@ -266,12 +327,6 @@ export class KongFormComponent implements OnInit {
       };
 
       finalData = _.merge(topLvlObj, configObj);
-
-      // finalData = {
-      //   name: data.name,
-      //   enabled: data.enabled,
-      //   config: _.pickBy(data, (value, key) => key !== 'name' && key !== 'enabled')
-      // }
     }else{
       finalData = data;
     }
@@ -285,6 +340,13 @@ export class KongFormComponent implements OnInit {
         delete data[key];
       }
     }
+
+    if (data.consumer) {
+      data.consumer = {
+        id: data.consumer.id
+      }
+    }
+
     return data;
   }
 

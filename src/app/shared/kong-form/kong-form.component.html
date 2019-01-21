@@ -4,6 +4,24 @@
 <form (submit)="submit(form.value)" [formGroup]="form" *ngIf="form">
   <div mat-dialog-content [style.max-height]="isModal ? '65vh' : 'inherit'" class="pt-1">
 
+    <!-- CONSUMER FIELD ON PLUGINS -->
+    <ng-container *ngIf="isPlugin">
+      <mat-form-field class="example-full-width" class="w-100" appearance="outline">
+        <mat-label>Consumer</mat-label>
+        <input type="text" placeholder="Search by username, custom_id or id"
+               matInput formControlName="consumer" [matAutocomplete]="auto">
+        <mat-progress-spinner mode="indeterminate"
+                              *ngIf="!consumers"
+                              matSuffix
+                              color="primary" diameter="30"></mat-progress-spinner>
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn">
+          <mat-option *ngFor="let consumer of filteredConsumers | async" [value]="consumer">
+            {{consumer.username || consumer.custom_id || consumer.id}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </ng-container>
+
     <mat-form-field [appearance]="field.type === 'boolean' ? 'fill' : 'outline'" class="w-100"
                     [ngClass]="{'decor': field.type === 'boolean'}"
                     *ngFor="let field of fields" [ngSwitch]="field.type">
