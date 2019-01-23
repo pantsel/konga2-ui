@@ -72,9 +72,16 @@ export class KongFormComponent implements OnInit {
     console.log('existingData =>', this.existingData);
 
     this.fields = this.makeIterableFields(this.entity.fields || []);
+    this.fields.forEach(field => {
+      if (field.type === 'record') {
+        field.fields = this.makeIterableFields(field.fields || []);
+      }
+    })
+    console.log('Iterable fields =>', this.fields);
+
     this.baseEndpoint = this.entity.endpoint;
     console.log('Fields =>', this.fields);
-    this.createControls();
+    this.createControls(this.fields);
     this.getConsumers();
   }
 
@@ -129,9 +136,9 @@ export class KongFormComponent implements OnInit {
   /**
    * Create the form controls
    */
-  createControls() {
+  createControls(fields) {
     const controls = {};
-    this.fields.forEach(field => {
+    fields.forEach(field => {
       const key = field.name;
 
       // Create validators
