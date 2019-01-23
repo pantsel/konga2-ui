@@ -1,0 +1,134 @@
+<ng-container *ngIf="form && fields" [formGroup]="form">
+  <ng-container *ngFor="let field of fields" [ngSwitch]="field.type">
+
+    <!-- STRING -->
+    <ng-container *ngSwitchCase="'string'">
+      <mat-form-field [appearance]="'outline'" class="w-100">
+        <mat-label>{{field.label}} <span *ngIf="field.required" class="text-danger">*</span></mat-label>
+        <!-- PLAIN STRING -->
+        <input *ngIf="!field.one_of" matInput formControlName="{{field.name}}">
+
+        <!-- SELECT -->
+        <mat-select *ngIf="field.one_of" formControlName="{{field.name}}">
+          <mat-option *ngFor="let item of field.one_of" [value]="item">
+            {{item}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </ng-container>
+
+    <!-- INTEGER -->
+    <ng-container *ngSwitchCase="'integer'">
+      <mat-form-field [appearance]="'outline'" class="w-100">
+        <mat-label>{{field.label}} <span *ngIf="field.required" class="text-danger">*</span></mat-label>
+        <input type="number" matInput formControlName="{{field.name}}">
+      </mat-form-field>
+
+    </ng-container>
+
+    <!-- NUMBER -->
+    <ng-container *ngSwitchCase="'number'">
+      <mat-form-field [appearance]="'outline'" class="w-100">
+        <mat-label>{{field.label}} <span *ngIf="field.required" class="text-danger">*</span></mat-label>
+        <input type="number" matInput formControlName="{{field.name}}">
+      </mat-form-field>
+    </ng-container>
+
+
+    <!-- BOOLEAN -->
+    <ng-container *ngSwitchCase="'boolean'">
+      <mat-form-field [appearance]="'fill'" class="w-100 decor">
+        <input matInput placeholder="Input" style="display: none" >
+        <mat-slide-toggle
+                formControlName="{{field.name}}">
+          {{field.label}}
+        </mat-slide-toggle>
+      </mat-form-field>
+    </ng-container>
+
+    <!-- ARRAY -->
+    <ng-container *ngSwitchCase="'array'">
+      <mat-form-field [appearance]="'outline'" class="w-100">
+        <mat-label>{{field.label}} <span *ngIf="field.required" class="text-danger">*</span></mat-label>
+        <mat-chip-list #chipList>
+          <mat-chip *ngFor="let item of form.get(field.name).controls; let i = index;" [selectable]="true"
+                    [removable]="true" (removed)="remove(i, field.name)">
+            {{item.value}}
+            <mat-icon matChipRemove>cancel</mat-icon>
+          </mat-chip>
+          <input placeholder="Add.."
+                 [matChipInputFor]="chipList"
+                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                 [matChipInputAddOnBlur]="true"
+                 (matChipInputTokenEnd)="add($event, field.name)">
+        </mat-chip-list>
+      </mat-form-field>
+    </ng-container>
+
+    <!-- SET -->
+    <!--<ng-container *ngSwitchCase="'set'">-->
+      <!--<mat-form-field [appearance]="'outline'" class="w-100">-->
+        <!--<mat-label>{{field.label}} <span *ngIf="field.required" class="text-danger">*</span></mat-label>-->
+        <!--<ng-container *ngIf="field.elements?.one_of">-->
+          <!--<mat-chip-list #chipList>-->
+            <!--<mat-chip *ngFor="let item of form.get(field.name).controls; let i = index;" [selectable]="true"-->
+                      <!--[removable]="true" (removed)="remove(i, field.name)">-->
+              <!--{{item.value}}-->
+              <!--<mat-icon matChipRemove>cancel</mat-icon>-->
+            <!--</mat-chip>-->
+            <!--<input placeholder="Add.."-->
+                   <!--id="{{'input_' + field.name}}"-->
+                   <!--[matChipInputFor]="chipList"-->
+                   <!--[matAutocomplete]="auto"-->
+                   <!--[matChipInputSeparatorKeyCodes]="separatorKeysCodes"-->
+                   <!--[matChipInputAddOnBlur]="true">-->
+          <!--</mat-chip-list>-->
+          <!--<mat-autocomplete #auto="matAutocomplete" (optionSelected)="onChipAutocompleteOptionSelected($event, field.name)">-->
+            <!--<mat-option *ngFor="let item of filterAvailableOptions(field.elements.one_of, form.get(field.name).value)" [value]="item">-->
+              <!--{{item}}-->
+            <!--</mat-option>-->
+          <!--</mat-autocomplete>-->
+        <!--</ng-container>-->
+
+        <!--<ng-container *ngIf="!field.elements?.one_of">-->
+          <!--<mat-chip-list #chipList>-->
+            <!--<mat-chip *ngFor="let item of form.get(field.name).controls; let i = index;" [selectable]="true"-->
+                      <!--[removable]="true" (removed)="remove(i, field.name)">-->
+              <!--{{item.value}}-->
+              <!--<mat-icon matChipRemove>cancel</mat-icon>-->
+            <!--</mat-chip>-->
+            <!--<input placeholder="Add.."-->
+                   <!--[matChipInputFor]="chipList"-->
+                   <!--[matChipInputSeparatorKeyCodes]="separatorKeysCodes"-->
+                   <!--[matChipInputAddOnBlur]="true"-->
+                   <!--(matChipInputTokenEnd)="add($event, field.name)">-->
+          <!--</mat-chip-list>-->
+        <!--</ng-container>-->
+      <!--</mat-form-field>-->
+
+    <!--</ng-container>-->
+
+    <!-- TEXT -->
+    <ng-container *ngSwitchCase="'text'">
+      <mat-form-field [appearance]="'outline'" class="w-100">
+        <mat-label>{{field.label}} <span *ngIf="field.required" class="text-danger">*</span></mat-label>
+        <textarea matInput
+                  cdkTextareaAutosize
+                  #autosize="cdkTextareaAutosize"
+                  formControlName="{{field.name}}"
+                  cdkAutosizeMinRows="2"
+                  cdkAutosizeMaxRows="5"></textarea>
+      </mat-form-field>
+    </ng-container>
+
+    <!-- DEFAULT -->
+    <ng-container *ngSwitchDefault>
+      <mat-form-field [appearance]="'outline'" class="w-100">
+        <mat-label>{{field.label}} <span *ngIf="field.required" class="text-danger">*</span></mat-label>
+        <input matInput formControlName="{{field.name}}">
+      </mat-form-field>
+
+    </ng-container>
+
+  </ng-container>
+</ng-container>

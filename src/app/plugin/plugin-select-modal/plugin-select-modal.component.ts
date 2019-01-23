@@ -58,11 +58,17 @@ export class PluginSelectModalComponent implements OnInit {
     // Put plugins in their respective groups
     this.pluginGroups.forEach(group => {
       group.plugins = _.pickBy(this.availablePlugins, (value, key) => {
-        if (this.context === 'consumer'
-          && !_.get(group, 'consumer.eligible') || _.get(group, 'consumer.except', []).indexOf(key) > -1) {
-          return false;
+        if (this.context !== 'consumer') {
+          return value.group === group.id;
+        }else {
+          if (!_.get(group, 'consumer.eligible') || _.get(group, 'consumer.except', []).indexOf(key) > -1) {
+            return false;
+          }else{
+            return value.group === group.id;
+          }
         }
-        return value.group === group.id;
+
+
       });
     });
 

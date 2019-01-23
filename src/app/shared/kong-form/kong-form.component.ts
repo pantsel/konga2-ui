@@ -182,10 +182,12 @@ export class KongFormComponent implements OnInit {
       this.form.addControl('consumer', new FormControl());
       this.form.get('consumer').disable(); // We will enable this when we fetch the consumers from Kong
     }
+
+    console.log('Form ==============>', this.form)
   }
 
 
-  createControls(fields) {
+  createControls(fields, path?) {
 
     const controls = {};
 
@@ -195,7 +197,7 @@ export class KongFormComponent implements OnInit {
       // Create validators
       const validators = [];
       if (field.required) validators.push(Validators.required);
-      if (field.match)  validators.push(Validators.pattern(field.match));
+      // if (field.match)  validators.push(Validators.pattern(field.match));
 
       let control;
 
@@ -213,12 +215,10 @@ export class KongFormComponent implements OnInit {
           }catch (e) {
 
           }
-
-          control = this.fb.array(_.get(this.existingData, key, field.default));
+          control = this.fb.array(_.get(this.existingData, path ? `${path}.${key}` : key, field.default));
           break;
         case 'record':
-          control = {};
-          control[key] = this.fb.group(this.createControls(field.fields));
+          control = this.fb.group(this.createControls(field.fields, field.name));
           break;
         default:
           control = [_.get(this.existingData, key, field.default), Validators.compose(validators)];

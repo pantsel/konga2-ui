@@ -148,6 +148,15 @@
       <ng-container *ngSwitchCase="'record'">
         <h3 class="mat-subheading-2 text-capitalize bg-light p-2">{{field.name}}</h3>
         <!-- TODO -->
+        <!--<div formGroupName="{{field.name}}">-->
+          <!--<anms-kong-form-fields [form]="form.get(field.name)"-->
+                                 <!--[fieldName]="field.name"-->
+                                 <!--[fields]="field.fields"></anms-kong-form-fields>-->
+        <!--</div>-->
+
+        <anms-kong-form-fields [form]="form.get(field.name)"
+                               [fieldName]="field.name"
+                               [fields]="field.fields"></anms-kong-form-fields>
 
       </ng-container>
 

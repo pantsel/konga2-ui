@@ -111,6 +111,7 @@ import {InspectionDialog, RawViewComponent} from './raw-view/raw-view.component'
 import {KongFormComponent} from '@app/shared/kong-form/kong-form.component';
 import { KongEntityModalComponent } from './kong-entity-modal/kong-entity-modal.component';
 import {FilterPipe} from '@app/shared/pipes/filter.pipe';
+import { KongFormFieldsComponent } from './kong-form-fields/kong-form-fields.component';
 
 @NgModule({
   imports: [
@@ -156,8 +157,8 @@ import {FilterPipe} from '@app/shared/pipes/filter.pipe';
     // Specify your library as an import
     NgxPermissionsModule
   ],
-  entryComponents: [InspectionDialog, KongEntityModalComponent],
-  declarations: [FilterPipe, BigInputComponent, BigInputActionComponent, RawViewComponent, InspectionDialog, KongFormComponent, KongEntityModalComponent],
+  entryComponents: [InspectionDialog, KongEntityModalComponent, KongFormFieldsComponent],
+  declarations: [FilterPipe, BigInputComponent, BigInputActionComponent, RawViewComponent, InspectionDialog, KongFormComponent, KongEntityModalComponent, KongFormFieldsComponent],
   exports: [
     CommonModule,
     FormsModule,
