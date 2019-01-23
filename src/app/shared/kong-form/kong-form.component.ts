@@ -81,7 +81,7 @@ export class KongFormComponent implements OnInit {
 
     this.baseEndpoint = this.entity.endpoint;
     console.log('Fields =>', this.fields);
-    this.createControls(this.fields);
+    this.initControls(this.fields);
     this.getConsumers();
   }
 
@@ -134,10 +134,61 @@ export class KongFormComponent implements OnInit {
 
 
   /**
-   * Create the form controls
+   * Initialize the form controls
    */
+  initControls(fields) {
+    // const controls = {};
+    // fields.forEach(field => {
+    //   const key = field.name;
+    //
+    //   // Create validators
+    //   const validators = [];
+    //   if (field.required) validators.push(Validators.required);
+    //   if (field.match)  validators.push(Validators.pattern(field.match));
+    //
+    //   let control;
+    //
+    //   switch (field.type) {
+    //     case 'set':
+    //     case 'array':
+    //
+    //       field.default = field.default || [];
+    //
+    //       // Monkey patch in case the default value comes as an empty object {}
+    //       try {
+    //         if (JSON.stringify(field.default) === '{}') {
+    //           field.default = []
+    //         };
+    //       }catch (e) {
+    //
+    //       }
+    //
+    //       control = this.fb.array(_.get(this.existingData, key, field.default));
+    //       break;
+    //     default:
+    //       control = [_.get(this.existingData, key, field.default), Validators.compose(validators)];
+    //
+    //   }
+    //
+    //   controls[key] = control;
+    // });
+
+    const controls = this.createControls(fields);
+    console.log('createControls =>', controls)
+
+    this.form = this.fb.group(controls);
+
+    if (this.isPlugin) {
+      this.form.addControl('consumer', new FormControl());
+      this.form.get('consumer').disable(); // We will enable this when we fetch the consumers from Kong
+    }
+  }
+
+
   createControls(fields) {
+
     const controls = {};
+
     fields.forEach(field => {
       const key = field.name;
 
@@ -165,6 +216,10 @@ export class KongFormComponent implements OnInit {
 
           control = this.fb.array(_.get(this.existingData, key, field.default));
           break;
+        case 'record':
+          control = {};
+          control[key] = this.fb.group(this.createControls(field.fields));
+          break;
         default:
           control = [_.get(this.existingData, key, field.default), Validators.compose(validators)];
 
@@ -173,15 +228,10 @@ export class KongFormComponent implements OnInit {
       controls[key] = control;
     });
 
-    console.log('createControls =>', controls)
-
-    this.form = this.fb.group(controls);
-
-    if (this.isPlugin) {
-      this.form.addControl('consumer', new FormControl());
-      this.form.get('consumer').disable(); // We will enable this when we fetch the consumers from Kong
-    }
+    return controls;
   }
+
+
 
 
   displayFn(consumer): string | undefined {
