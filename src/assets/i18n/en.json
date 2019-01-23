@@ -193,6 +193,7 @@
   "konga.consumer.acls.subtitle": "The groups who's access controlled resources this consumer can access",
   "konga.consumer.credentials.title": "Credentials",
   "konga.consumer.credentials.subtitle": "Assign Authentication credentials to the consumer",
+  "konga.consumer.plugins.list.title": "Consumer Plugins",
 
   "konga.menu.plugins": "Plugins",
   "konga.plugins.list.title": "Global Plugins",

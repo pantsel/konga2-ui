@@ -13,13 +13,15 @@ import { ConsumerKeyAuthComponent } from './consumer-key-auth/consumer-key-auth.
 import { ConsumerHmacAuthComponent } from './consumer-hmac-auth/consumer-hmac-auth.component';
 import { ConsumerOauth2Component } from './consumer-oauth2/consumer-oauth2.component';
 import { ConsumerJwtComponent } from './consumer-jwt/consumer-jwt.component';
+import {PluginModule} from '@app/plugin/plugin.module';
 
 @NgModule({
   declarations: [ConsumerComponent, ConsumerListComponent, ConsumerDetailsComponent, ConsumerGroupsComponent, ConsumerCredentialsComponent, ConsumerPluginsComponent, ConsumerBasicAuthComponent, ConsumerKeyAuthComponent, ConsumerHmacAuthComponent, ConsumerOauth2Component, ConsumerJwtComponent],
   imports: [
     CommonModule,
     SharedModule,
-    ConsumerRoutingModule
+    ConsumerRoutingModule,
+    PluginModule
   ]
 })
 export class ConsumerModule { }

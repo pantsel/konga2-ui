@@ -8,35 +8,59 @@ export const PluginGroups = [
   {
     id: 'security',
     name: 'Security',
+    consumer: {
+      eligible: true,
+      except: ['bot-detection', 'cors']
+    },
     plugins: {}
   },
   {
     id: 'traffic-control',
     name: 'Traffic Control',
+    consumer: {
+      eligible: true,
+      except: ['acl']
+    },
     plugins: {}
   },
   {
     id: 'serverless',
     name: 'Serverless',
+    consumer: {
+      eligible: true,
+      except: ['pre-function', 'post-function']
+    },
     plugins: {}
   },
   {
     id: 'analytics-monitoring',
+    consumer: {
+      eligible: true
+    },
     name: 'Analytics & Monitoring',
     plugins: {}
   },
   {
     id: 'transformations',
+    consumer: {
+      eligible: true
+    },
     name: 'Transformations',
     plugins: {}
   },
   {
     id: 'logging',
+    consumer: {
+      eligible: true
+    },
     name: 'Logging',
     plugins: {}
   },
   {
     id: 'other',
+    consumer: {
+      eligible: true
+    },
     name: 'Other',
     plugins: {
 
@@ -46,7 +70,7 @@ export const PluginGroups = [
 
 
 export const KnownPlugins = {
-  // Authentication
+    // Authentication
     'basic-auth': {
       name: 'Basic Authentication',
       description: 'Add Basic Authentication to your Services',

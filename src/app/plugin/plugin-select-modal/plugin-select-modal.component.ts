@@ -15,7 +15,7 @@ import {PluginService} from '@app/plugin/plugin.service';
 })
 export class PluginSelectModalComponent implements OnInit {
 
-  pluginGroups = PluginGroups;
+  pluginGroups: any;
   selectedGroupPlugins: any;
   availablePlugins: any;
 
@@ -58,6 +58,9 @@ export class PluginSelectModalComponent implements OnInit {
     // Put plugins in their respective groups
     this.pluginGroups.forEach(group => {
       group.plugins = _.pickBy(this.availablePlugins, (value, key) => {
+        if (!_.get(group, 'consumer.eligible') || _.get(group, 'consumer.except', []).indexOf(key) > -1) {
+          return false;
+        }
         return value.group === group.id;
       });
     });
@@ -165,7 +168,10 @@ export class PluginSelectModalComponent implements OnInit {
   }
 
   determineContext() {
-    if (_.get(this.data, 'extras.service.id')) {
+
+    if (this.data.context) {
+      this.context = this.data.context
+    } else if (_.get(this.data, 'extras.service.id')) {
       this.context = 'service'
     }else if (_.get(this.data, 'extras.route.id')) {  // Gather all route plugins in an array
       this.context = 'route'
@@ -175,6 +181,12 @@ export class PluginSelectModalComponent implements OnInit {
       this.showGlobalPluginsInfoAlert = true;
       this.context = 'global'
     }
+
+    // Filter out not available groups in case we're on the `consumer` context
+    this.pluginGroups = _.filter(PluginGroups, group => {
+      if (this.context !== 'consumer') return true;
+      return _.get(group, 'consumer.eligible')
+    })
   }
 
   isContextGlobal() {

@@ -30,6 +30,7 @@ export class KongFormComponent implements OnInit {
   @Input() entity: any;
   @Input() extras: any;
   @Input() isModal: boolean;
+  @Input() context: string;
   @Output() submitted: EventEmitter<any> = new EventEmitter();
 
   form: FormGroup;
@@ -94,12 +95,13 @@ export class KongFormComponent implements OnInit {
         );
 
         let initialValue = null;
-        const existingConsumer = _.get(this.existingData, 'consumer');
+        const existingConsumer = _.get(this.existingData, 'consumer') || _.get(this.extras, 'consumer');
         if (existingConsumer) {
           initialValue = _.find(this.consumers, item => item.id === existingConsumer.id) || existingConsumer;
         }
         this.form.get('consumer').patchValue(initialValue);
         this.form.get('consumer').enable();
+
       })
   }
 

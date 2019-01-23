@@ -13,6 +13,10 @@ export class KongEntityModalComponent implements OnInit {
   extras: any;
   isModal: boolean;
 
+  // The context from which we trigger this component.
+  // Can be `consumer`, `service`, `route` or undefined (global)
+  context: string;
+
   constructor(private dialogRef: MatDialogRef<KongEntityModalComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) {
 
@@ -20,6 +24,7 @@ export class KongEntityModalComponent implements OnInit {
     this.existingData = data.existingData;
     this.extras = data.extras;
     this.isModal = data.isModal;
+    this.context = data.context;
 
   }
 
